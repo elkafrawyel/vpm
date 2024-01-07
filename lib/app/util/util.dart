@@ -1,0 +1,30 @@
+import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+
+import '../../presentation/widgets/api_state_views/no_connection_view.dart';
+
+class Utils {
+  static String getImagePath(String name, {String format = 'png'}) {
+    return 'assets/images/$name.$format';
+  }
+
+  static void logMessage(String message, {bool isError = false}) {
+    if (kDebugMode) {
+      Get.log(message, isError: isError);
+    }
+  }
+
+  static hideGetXDialog() {
+    if (Get.isDialogOpen ?? false) {
+      Get.back();
+    }
+  }
+
+  static showNoConnectionDialog({String? text}) {
+    if (Get.isDialogOpen ?? false) {
+      Get.back();
+    }
+
+    Get.dialog(const NoConnectionView(), barrierDismissible: false);
+  }
+}

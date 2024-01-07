@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="channel_id" type="string">com.vpmsystems.parking</string>
+    <string name="map_key" translatable="false">AIzaSyCDzltRvdehaa-81Gh7T0JGW-s3x6igHMg</string>
+
+</resources>

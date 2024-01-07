@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="179" height="155" viewBox="0 0 179 155">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-1.805" y1="-2.719" x2="1.086" y2="1.289" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#1d80e6"/>
+      <stop offset="0.242" stop-color="#1d80e6"/>
+      <stop offset="0.859" stop-color="#1d80e6"/>
+      <stop offset="1" stop-color="#1d80e6"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_93" data-name="Group 93" style="mix-blend-mode: normal;isolation: isolate">
+    <path id="Ellipse_4" data-name="Ellipse 4" d="M0,64a64,64,0,1,1,64,64A64,64,0,0,1,0,64Z" transform="translate(23 27)" fill="url(#linear-gradient)" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_5" data-name="Ellipse 5" d="M0,10A10,10,0,1,1,10,20,10,10,0,0,1,0,10Z" transform="translate(2 10)" fill="#1d80e6" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_7" data-name="Ellipse 7" d="M0,7.5A7.5,7.5,0,1,1,7.5,15,7.5,7.5,0,0,1,0,7.5Z" transform="translate(164 9)" fill="#1d80e6" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_6" data-name="Ellipse 6" d="M0,5a5,5,0,1,1,5,5A5,5,0,0,1,0,5Z" transform="translate(88)" fill="#1d80e6" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_9" data-name="Ellipse 9" d="M0,3A3,3,0,1,1,3,6,3,3,0,0,1,0,3Z" transform="translate(141 140)" fill="#1d80e6" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_10" data-name="Ellipse 10" d="M0,4A4,4,0,1,1,4,8,4,4,0,0,1,0,4Z" transform="translate(0 87)" fill="#1d80e6" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_8" data-name="Ellipse 8" d="M0,3.5A3.5,3.5,0,1,1,3.5,7,3.5,3.5,0,0,1,0,3.5Z" transform="translate(154 101)" fill="#1d80e6" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_11" data-name="Ellipse 11" d="M0,2.5A2.5,2.5,0,1,1,2.5,5,2.5,2.5,0,0,1,0,2.5Z" transform="translate(35 143)" fill="#1d80e6" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Vector" d="M0,17.85C0,31.237,17.5,51,17.5,51S35,31.237,35,17.85A17.665,17.665,0,0,0,17.5,0,17.665,17.665,0,0,0,0,17.85Zm11.25,0a6.251,6.251,0,1,1,6.25,6.375A6.316,6.316,0,0,1,11.25,17.85Z" transform="translate(70 66)" fill="#fff" style="mix-blend-mode: normal;isolation: isolate"/>
+  </g>
+</svg>

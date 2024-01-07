@@ -1,0 +1,62 @@
+import 'dart:async';
+import 'dart:io';
+import 'dart:isolate';
+
+import 'package:fcm_config/fcm_config.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'app/util/util.dart';
+import 'data/providers/storage/local_provider.dart';
+import 'presentation/app.dart';
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (
+        X509Certificate cert,
+        String host,
+        int port,
+      ) =>
+          true;
+  }
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
+
+  // await Firebase.initializeApp(
+  //     options: DefaultFirebaseOptions.currentPlatform);
+  await LocalProvider().init();
+
+  // await FCMConfig.instance.init(
+  //   onBackgroundMessage: _firebaseMessagingBackgroundHandler,
+  //   defaultAndroidChannel:
+  //       const AndroidNotificationChannel('com.vpmsystems.parking', 'VPM'),
+  // );
+  //
+  // FCMConfig.instance.messaging.getToken().then((token) {
+  //   Utils.logMessage('Firebase Token:$token');
+  // });
+
+  runApp(const App());
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  Utils.logMessage("Handling a background message: ${message.messageId}");
+  // Get.find<HomeScreenController>().handleRemoteMessage(message);
+}

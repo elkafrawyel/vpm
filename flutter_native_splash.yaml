@@ -1,0 +1,16 @@
+flutter_native_splash:
+  color: "#1D80E6"
+  image: assets/images/launcher/logo_white.png
+  ios_content_mode: scaleAspectFit
+  android_gravity: top
+
+  android_12:
+    image: assets/images/launcher/logo_white.png
+    icon_background_color: "#1D80E6"
+
+  web: false
+  fullscreen: true
+
+
+
+#dart run flutter_native_splash:create
