@@ -33,6 +33,7 @@ class Res {
   static const String iconBooking = 'assets/icons/booking.svg';
   static const String iconMenu = 'assets/icons/menu.svg';
   static const String iconNewPassword = 'assets/icons/new_password.svg';
+  static const String iconScan = 'assets/icons/scan.svg';
 
   //========================== Images Assets  ===============================
 

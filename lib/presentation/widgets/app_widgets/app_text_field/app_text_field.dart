@@ -239,8 +239,8 @@ class AppTextFormFieldState extends State<AppTextFormField> {
                             child: SvgPicture.asset(
                               widget.prefixIcon!,
                               fit: BoxFit.fitHeight,
-                              height: 30,
-                              width: 30,
+                              height: 20,
+                              width: 20,
                               colorFilter: const ColorFilter.mode(
                                 hintColor,
                                 BlendMode.srcIn,

@@ -130,12 +130,15 @@ Map<String, String> ar = {
   'services': 'خدمات',
   'booking': 'الحجزات',
   'menu': 'القائمة',
-  'your_cars':'سياراتك',
+  'your_cars': 'سياراتك',
   'dark_mode': 'الوضع الليلي',
-  'help':'المساعدة',
-  'profile':'الملف الشخصي',
+  'help': 'المساعدة',
+  'profile': 'الملف الشخصي',
   'logout_message': 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
-
-
-
+  'add_car': 'أضافة سيارة جديدة',
+  'car_title': 'عنوان السيارة',
+  'choose_car_brand': 'اختر ماركة سيارتك.',
+  'choose_car_color': 'اختر لون سيارتك.',
+  'car_color': 'لون السيارة',
+  'car_brand':'ماركة السيارة',
 };

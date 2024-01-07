@@ -139,5 +139,10 @@ Map<String, String> en = {
   'help': 'Help',
   'profile': 'Profile',
   'logout_message': 'Are you sure you want to log out?',
-
+  'add_car': 'Add New Car',
+  'car_title': 'Car Title',
+  'choose_car_brand': 'Choose your car brand.',
+  'choose_car_color': 'Choose your car color.',
+  'car_color':'Car Color',
+  'car_brand':'Car Brand',
 };

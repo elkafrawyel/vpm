@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:vpm/app/util/constants.dart';
 
 class MyShimmerEffectUI extends StatelessWidget {
   final double width;
@@ -8,6 +9,7 @@ class MyShimmerEffectUI extends StatelessWidget {
   final Color? highlightColor;
   final BoxShape shapeShape;
   final int? seconds;
+  final double? radius;
 
   const MyShimmerEffectUI.rectangular({
     Key? key,
@@ -16,6 +18,7 @@ class MyShimmerEffectUI extends StatelessWidget {
     this.highlightColor,
     this.seconds,
     this.width = double.infinity,
+    this.radius,
   })  : shapeShape = BoxShape.rectangle,
         super(key: key);
 
@@ -26,6 +29,7 @@ class MyShimmerEffectUI extends StatelessWidget {
     this.highlightColor,
     this.seconds,
     this.width = double.infinity,
+    this.radius,
   })  : shapeShape = BoxShape.circle,
         super(key: key);
 
@@ -41,7 +45,9 @@ class MyShimmerEffectUI extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.grey,
             shape: shapeShape,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: shapeShape == BoxShape.circle
+                ? null
+                : BorderRadius.circular(radius ?? 0),
           ),
         ),
       );

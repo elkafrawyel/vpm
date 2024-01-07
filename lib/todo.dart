@@ -1,9 +1,10 @@
 ///
 ///
 ///
+/// barcode dialog in scan button on cars
 ///
-/// working on home icons
-/// 
+/// profile screen
+///
 ///
 ///
 ///
