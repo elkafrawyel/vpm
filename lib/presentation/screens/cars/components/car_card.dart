@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/app/res/res.dart';
 import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
-class MyCarCard extends StatelessWidget {
-  const MyCarCard({super.key});
+import '../../../widgets/app_widgets/app_dialog.dart';
+import 'qr_code_view.dart';
+
+class CarCard extends StatelessWidget {
+  const CarCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.0,
-      color: Color(0xffF4F4F4),
+      color: const Color(0xffF4F4F4),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kRadius),
       ),
@@ -60,8 +62,14 @@ class MyCarCard extends StatelessWidget {
                       underLine: true,
                     ),
                     10.pw,
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    GestureDetector(
+                      onTap: () {
+                        Get.dialog(
+                          const QrCodeView(
+                            qrValue: 'K5PVjMio16zgxcKtk',
+                          ),
+                        );
+                      },
                       child: AppText(
                         'Scan',
                         color: Theme.of(context).primaryColor,
@@ -70,11 +78,29 @@ class MyCarCard extends StatelessWidget {
                       ),
                     ),
                     10.pw,
-                    AppText(
-                      'Delete',
-                      color: Theme.of(context).colorScheme.error,
-                      fontWeight: FontWeight.w700,
-                      underLine: true,
+                    GestureDetector(
+                      onTap: () {
+                        scaleAlertDialog(
+                          context: context,
+                          title: 'delete'.tr,
+                          body: 'delete_message'.tr,
+                          cancelText: 'cancel'.tr,
+                          confirmText: 'submit'.tr,
+                          barrierDismissible: true,
+                          onCancelClick: () {
+                            Get.back();
+                          },
+                          onConfirmClick: () async {
+
+                          },
+                        );
+                      },
+                      child: AppText(
+                        'Delete',
+                        color: Theme.of(context).colorScheme.error,
+                        fontWeight: FontWeight.w700,
+                        underLine: true,
+                      ),
                     ),
                     // InkWell(
                     //   child: SvgPicture.asset(Res.iconScan),

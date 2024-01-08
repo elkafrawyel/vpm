@@ -140,5 +140,20 @@ Map<String, String> ar = {
   'choose_car_brand': 'اختر ماركة سيارتك.',
   'choose_car_color': 'اختر لون سيارتك.',
   'car_color': 'لون السيارة',
-  'car_brand':'ماركة السيارة',
+  'car_brand': 'ماركة السيارة',
+  'active': 'الحالية',
+  'completed': 'المكتملة',
+  'cancelled': 'الملغاة',
+  'all': 'الكل',
+  'daily': 'يومي',
+  'monthly': 'شهري',
+  'yearly': 'سنوي',
+  'account_balance': 'رصيد الحساب',
+  'select_one_of_the_following_to_recharge':
+      'حدد أحد الخيارات التالية لإعادة شحن حسابك.',
+  'charge_your_account': 'اشحن حسابك',
+  'birthday': 'تاريخ ميلادك',
+
+  'delete': 'الحذف',
+  'delete_message': 'هل أنت متأكد من الحذف؟',
 };

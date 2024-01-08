@@ -4,19 +4,19 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/controller/my_cars_controller/my_cars_controller.dart';
 import 'package:vpm/presentation/screens/add_car/add_car_screen.dart';
-import 'package:vpm/presentation/screens/my_cars/components/my_car_card.dart';
 import 'package:vpm/presentation/widgets/api_state_views/handel_api_state.dart';
 
-import 'components/my_car_shimmer_card.dart';
+import 'components/car_card.dart';
+import 'components/car_shimmer_card.dart';
 
-class MyCarsScreen extends StatefulWidget {
-  const MyCarsScreen({super.key});
+class CarsScreen extends StatefulWidget {
+  const CarsScreen({super.key});
 
   @override
-  State<MyCarsScreen> createState() => _MyCarsScreenState();
+  State<CarsScreen> createState() => _CarsScreenState();
 }
 
-class _MyCarsScreenState extends State<MyCarsScreen> {
+class _CarsScreenState extends State<CarsScreen> {
   @override
   void dispose() {
     Get.delete<MyCarsController>();
@@ -53,7 +53,7 @@ class _MyCarsScreenState extends State<MyCarsScreen> {
             shimmerLoader: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.separated(
-                itemBuilder: (context, index) => const MyCarShimmerCard(),
+                itemBuilder: (context, index) => const CarShimmerCard(),
                 separatorBuilder: (context, index) => 5.ph,
                 itemCount: 10,
               ),
@@ -61,7 +61,7 @@ class _MyCarsScreenState extends State<MyCarsScreen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.separated(
-                itemBuilder: (context, index) => const MyCarCard(),
+                itemBuilder: (context, index) => const CarCard(),
                 separatorBuilder: (context, index) => 5.ph,
                 itemCount: 10,
               ),

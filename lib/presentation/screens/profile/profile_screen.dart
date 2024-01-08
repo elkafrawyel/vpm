@@ -1,54 +1,45 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
-import 'package:vpm/presentation/widgets/app_widgets/app_text_field/app_text_field.dart';
+import 'package:vpm/presentation/widgets/app_widgets/app_date_selector.dart';
+import 'package:vpm/presentation/widgets/app_widgets/app_gender_picker.dart';
 
-import '../../../../app/res/res.dart';
-import '../../../../app/util/constants.dart';
-import '../../../widgets/app_widgets/app_image_picker_dialog.dart';
+import '../../../app/res/res.dart';
+import '../../../app/util/constants.dart';
+import '../../widgets/app_widgets/app_image_picker_dialog.dart';
+import '../../widgets/app_widgets/app_progress_button.dart';
+import '../../widgets/app_widgets/app_text_field/app_text_field.dart';
 
-class RegisterScreen extends StatefulWidget {
-  final bool completingProfile;
-  final String? name;
-  final String? email;
-  final String? profilePicture;
-
-  const RegisterScreen({
-    super.key,
-    this.completingProfile = false,
-    this.name,
-    this.email,
-    this.profilePicture,
-  });
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   File? image;
+  DateTime? birthday;
+  AppGender? appGender;
 
   late TextEditingController nameController;
   late TextEditingController emailController;
   late TextEditingController phoneController;
-  late TextEditingController passwordController = TextEditingController();
+  late TextEditingController genderController = TextEditingController();
 
   final GlobalKey<AppTextFormFieldState> _nameState = GlobalKey();
   final GlobalKey<AppTextFormFieldState> _emailState = GlobalKey();
   final GlobalKey<AppTextFormFieldState> _phoneState = GlobalKey();
-  final GlobalKey<AppTextFormFieldState> _passwordState = GlobalKey();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     phoneController = TextEditingController();
-    nameController = TextEditingController(text: widget.name ?? '');
-    emailController = TextEditingController(text: widget.email ?? '');
+    nameController = TextEditingController();
+    emailController = TextEditingController();
   }
 
   @override
@@ -64,13 +55,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.completingProfile ? 'complete_profile'.tr : 'sign_up'.tr,
+          'profile'.tr,
         ),
-        centerTitle: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(28.0),
+          padding: const EdgeInsets.all(18.0),
           child: Column(
             children: [
               20.ph,
@@ -80,12 +70,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: 120,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    image: widget.profilePicture != null
-                        ? DecorationImage(
-                            image: NetworkImage(widget.profilePicture!),
-                            fit: BoxFit.cover,
-                          )
-                        : image == null
+                    image:
+                        // profilePicture != null
+                        //     ? DecorationImage(
+                        //         image: NetworkImage(profilePicture!),
+                        //         fit: BoxFit.cover,
+                        //       )
+                        //     :
+                        image == null
                             ? const DecorationImage(
                                 image: AssetImage('assets/images/person.png'),
                                 fit: BoxFit.cover,
@@ -145,29 +137,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 appFieldType: AppFieldType.phone,
                 prefixIcon: Res.iconPhone,
               ),
-              // AppPhoneTextField(
-              //   key: _phoneState,
-              //   onChanged: (PhoneNumber phoneNumber) {
-              //     setState(() {
-              //       this.phoneNumber = phoneNumber;
-              //     });
-              //     debugPrint(phoneNumber.completeNumber);
-              //   },
-              // ),
-              if (!widget.completingProfile)
-                AppTextFormField(
-                  key: _passwordState,
-                  controller: passwordController,
-                  validateEmptyText: 'password_required'.tr,
-                  hintText: 'password'.tr,
-                  autoFillHints: const [AutofillHints.email],
-                  radius: kRadius,
-                  appFieldType: AppFieldType.password,
-                  prefixIcon: Res.iconPassword,
+              AppDateSelector(
+                hint: 'birthday'.tr,
+                onChanged: (DateTime? dateTime) {
+                  setState(() {
+                    birthday = dateTime;
+                  });
+                },
+              ),
+              InkWell(
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  showAppGenderDialog(
+                    context: context,
+                    onGenderPicked: (AppGender appGender) {
+                      setState(() {
+                        this.appGender = appGender;
+                        genderController.text = appGender.title;
+                      });
+                    },
+                  );
+                },
+                child: IgnorePointer(
+                  child: AppTextFormField(
+                    controller: genderController,
+                    radius: kRadius,
+                    hintText: 'gender'.tr,
+                    suffixIcon: Icons.keyboard_arrow_down,
+                    prefixIcon: appGender?.assetName,
+                  ),
                 ),
+              ),
               20.ph,
               AppProgressButton(
-                text: widget.completingProfile ? 'continue'.tr : 'sign_up'.tr,
+                text: 'save'.tr,
                 width: MediaQuery.sizeOf(context).width * 0.8,
                 onPressed: (animationController) async {
                   _register(animationController);
@@ -205,15 +208,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _phoneState.currentState?.shake();
 
       return;
-    }
-
-    if (!widget.completingProfile) {
-      if (passwordController.text.isEmpty ||
-          (_passwordState.currentState?.hasError ?? false)) {
-        _passwordState.currentState?.shake();
-
-        return;
-      }
     }
   }
 }

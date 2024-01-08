@@ -16,7 +16,7 @@ class AppTheme {
     ),
     primaryColor: LightThemeColor.primaryColor,
     focusColor: LightThemeColor.primaryColor,
-    splashColor: LightThemeColor.primaryColor,
+    splashColor: LightThemeColor.scaffoldBackground,
     canvasColor: LightThemeColor.scaffoldBackground,
     // Scrollbar color
     highlightColor: LightThemeColor.primaryColor,
@@ -114,7 +114,9 @@ class AppTheme {
       unselectedLabelStyle:
           TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
     ),
-    listTileTheme: const ListTileThemeData(iconColor: Colors.black),
+    listTileTheme: const ListTileThemeData(
+      iconColor: Colors.black,
+    ),
     bottomAppBarTheme:
         const BottomAppBarTheme(color: LightThemeColor.bottomBarColor),
   );
@@ -154,7 +156,6 @@ class AppTheme {
       elevation: 2,
       centerTitle: true,
       surfaceTintColor: Colors.transparent,
-
       backgroundColor: Colors.transparent,
       iconTheme: const IconThemeData(color: Colors.white),
       toolbarTextStyle: TextStyle(

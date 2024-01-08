@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -17,8 +18,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final AppConfigController appConfigController =
-      Get.put(AppConfigController(), permanent: true);
+  final AppConfigController appConfigController = Get.put(
+    AppConfigController(),
+    permanent: true,
+  );
 
   @override
   Widget build(BuildContext context) {

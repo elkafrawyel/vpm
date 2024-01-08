@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              padding: const EdgeInsets.symmetric(horizontal: 38.0),
               child: AppText(
                 'login_to_your_account'.tr,
                 fontSize: 18,
@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: emailController,
               validateEmptyText: 'email_required'.tr,
               hintText: 'email'.tr,
-              horizontalPadding: 18,
+              horizontalPadding: 28,
               autoFillHints: const [AutofillHints.email],
               radius: kRadius,
               appFieldType: AppFieldType.email,
@@ -80,15 +80,14 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: passwordController,
               validateEmptyText: 'password_required'.tr,
               hintText: 'password'.tr,
-              horizontalPadding: 18,
+              horizontalPadding: 28,
               autoFillHints: const [AutofillHints.email],
               radius: kRadius,
               appFieldType: AppFieldType.password,
               prefixIcon: Res.iconPassword,
             ),
-            10.ph,
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              padding: const EdgeInsets.symmetric(horizontal: 28.0),
               child: Row(
                 children: [
                   Checkbox.adaptive(
@@ -113,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
             10.ph,
             Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                padding: const EdgeInsets.symmetric(horizontal: 28.0),
                 child: AppProgressButton(
                   text: 'login'.tr,
                   width: MediaQuery.sizeOf(context).width,
@@ -130,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Get.to(() => const ForgetPasswordScreen());
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                padding: const EdgeInsets.symmetric(horizontal: 38.0),
                 child: AppText(
                   'forget_password?'.tr,
                   color: Theme.of(context).primaryColor,

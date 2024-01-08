@@ -14,7 +14,7 @@ class MyCarsController extends GeneralController {
 
   Future<void> getMyCars() async {
     operationReply = OperationReply.loading();
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 1));
     // operationReply = await _carsRepositoryIml.get();
     operationReply = OperationReply.success();
   }

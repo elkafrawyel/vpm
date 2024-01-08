@@ -8,8 +8,8 @@ import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/shimmer_widgets/shimmer_effect_ui.dart';
 
-class MyCarShimmerCard extends StatelessWidget {
-  const MyCarShimmerCard({super.key});
+class CarShimmerCard extends StatelessWidget {
+  const CarShimmerCard({super.key});
 
   @override
   Widget build(BuildContext context) {

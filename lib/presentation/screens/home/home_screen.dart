@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         builder: (homeScreenController) {
           return PersistentTabView(
             context,
-            // padding: const NavBarPadding.all(8),
+            padding: const NavBarPadding.all(8),
             navBarHeight: 70,
             controller: homeScreenController.controller,
             screens: homeScreenController.pages,
@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
               curve: Curves.ease,
               duration: Duration(milliseconds: 200),
             ),
-            navBarStyle: NavBarStyle.style6,
+            navBarStyle: NavBarStyle.style8,
             // Choose the nav bar style with this property.
           );
         });
@@ -89,7 +89,7 @@ class HomeScreen extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: SvgPicture.asset(
           svgName,
-          // fit: BoxFit.fitWidth,
+          fit: BoxFit.contain,
           colorFilter: ColorFilter.mode(
             selected
                 ? Theme.of(context).primaryColor
@@ -97,12 +97,14 @@ class HomeScreen extends StatelessWidget {
             BlendMode.srcIn,
           ),
         ),
+        contentPadding: 0,
         title: title,
         inactiveColorPrimary: Theme.of(context).iconTheme.color,
         activeColorPrimary: Theme.of(context).primaryColor,
         textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontWeight: selected ? FontWeight.w600 : FontWeight.w300,
+              fontWeight: selected ? FontWeight.w800 : FontWeight.w400,
               fontFamily: GoogleFonts.cairo().fontFamily,
+              fontSize: selected ? 12 : 10,
             ),
       );
 }

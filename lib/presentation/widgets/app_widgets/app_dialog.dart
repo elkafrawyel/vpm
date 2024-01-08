@@ -138,12 +138,18 @@ void scaleAlertDialog({
         scale: curve,
         child: GetPlatform.isIOS
             ? CupertinoAlertDialog(
-                title:
-                    AppText(title, fontWeight: FontWeight.w900, fontSize: 18),
+                title: AppText(
+                  title,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                ),
                 content: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child:
-                      AppText(body, fontWeight: FontWeight.w500, fontSize: 14),
+                  child: AppText(
+                    body,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
                 ),
                 actions: [
                   if (onConfirmClick != null)
@@ -166,13 +172,20 @@ void scaleAlertDialog({
                 ],
               )
             : AlertDialog(
-                title:
-                    AppText(title, fontWeight: FontWeight.w900, fontSize: 18),
-                content:
-                    AppText(body, fontWeight: FontWeight.w500, fontSize: 14),
+                title: AppText(
+                  title,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                ),
+                content: AppText(
+                  body,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                ),
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 actions: <Widget>[
                   if (onConfirmClick != null)
                     TextButton(

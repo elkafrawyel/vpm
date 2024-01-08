@@ -34,7 +34,6 @@ class _ParkingScreenState extends State<ParkingScreen>
     super.build(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
-      extendBody: true,
       appBar: AppBar(
         title: AppText(
           'parking'.tr,

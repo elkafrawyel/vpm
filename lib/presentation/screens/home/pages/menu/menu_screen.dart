@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:get/instance_manager.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/app/util/language/language_data.dart';
-import 'package:vpm/presentation/controller/app_config_controller.dart';
-import 'package:vpm/presentation/screens/my_cars/my_cars_screen.dart';
+import 'package:vpm/presentation/screens/profile/profile_screen.dart';
+import 'package:vpm/presentation/screens/wallet/wallet_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/language_views/app_language_switch.dart';
 
 import '../../../../../data/providers/storage/local_provider.dart';
 import '../../../../widgets/app_widgets/app_dialog.dart';
+import '../../../cars/cars_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -63,7 +60,14 @@ class _MenuScreenState extends State<MenuScreen> {
                 color: Theme.of(context).dividerColor,
                 size: 20,
               ),
-              onTap: () {},
+              onTap: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: const ProfileScreen(),
+                  withNavBar: true,
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
+              },
             ),
             ListTile(
               splashColor: Colors.transparent,
@@ -77,7 +81,7 @@ class _MenuScreenState extends State<MenuScreen> {
               onTap: () {
                 PersistentNavBarNavigator.pushNewScreen(
                   context,
-                  screen: const MyCarsScreen(),
+                  screen: const CarsScreen(),
                   withNavBar: true,
                   pageTransitionAnimation: PageTransitionAnimation.cupertino,
                 );
@@ -103,7 +107,14 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                 ],
               ),
-              onTap: () {},
+              onTap: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: const WalletScreen(),
+                  withNavBar: true,
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
+              },
             ),
             ListTile(
               splashColor: Colors.transparent,

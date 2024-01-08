@@ -34,6 +34,8 @@ class Res {
   static const String iconMenu = 'assets/icons/menu.svg';
   static const String iconNewPassword = 'assets/icons/new_password.svg';
   static const String iconScan = 'assets/icons/scan.svg';
+  static const String iconMale = 'assets/icons/male.svg';
+  static const String iconFemale = 'assets/icons/female.svg';
 
   //========================== Images Assets  ===============================
 
