@@ -19,11 +19,11 @@ class HomeScreenController extends GetxController {
 
     selectedTabIndex = 0;
     pages = [
-      ParkingScreen(),
-      ValetScreen(),
-      ServicesScreen(),
-      BookingScreen(),
-      MenuScreen(),
+      const ParkingScreen(),
+      const ValetScreen(),
+      const ServicesScreen(),
+      const BookingScreen(),
+      const MenuScreen(),
     ];
   }
 
