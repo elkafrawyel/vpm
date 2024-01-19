@@ -52,18 +52,21 @@ class _ParkingScreenState extends State<ParkingScreen>
     super.build(context);
     return SafeArea(
       child: Scaffold(
-          body: GoogleMap(
-        initialCameraPosition: CameraPosition(
-            target: LatLng(_originLatitude, _originLongitude), zoom: 15),
-        myLocationEnabled: true,
-        tiltGesturesEnabled: true,
-        compassEnabled: true,
-        scrollGesturesEnabled: true,
-        zoomGesturesEnabled: true,
-        onMapCreated: _onMapCreated,
-        markers: Set<Marker>.of(markers.values),
-        polylines: Set<Polyline>.of(polylines.values),
-      )),
+        body: GoogleMap(
+          initialCameraPosition: CameraPosition(
+            target: LatLng(_originLatitude, _originLongitude),
+            zoom: 15,
+          ),
+          myLocationEnabled: true,
+          tiltGesturesEnabled: true,
+          compassEnabled: true,
+          scrollGesturesEnabled: true,
+          zoomGesturesEnabled: true,
+          onMapCreated: _onMapCreated,
+          markers: Set<Marker>.of(markers.values),
+          polylines: Set<Polyline>.of(polylines.values),
+        ),
+      ),
     );
   }
 
@@ -71,17 +74,27 @@ class _ParkingScreenState extends State<ParkingScreen>
     mapController = controller;
   }
 
-  _addMarker(LatLng position, String id, BitmapDescriptor descriptor) {
+  _addMarker(
+    LatLng position,
+    String id,
+    BitmapDescriptor descriptor,
+  ) {
     MarkerId markerId = MarkerId(id);
-    Marker marker =
-        Marker(markerId: markerId, icon: descriptor, position: position);
+    Marker marker = Marker(
+      markerId: markerId,
+      icon: descriptor,
+      position: position,
+    );
     markers[markerId] = marker;
   }
 
   _addPolyLine() {
-    PolylineId id = PolylineId("poly");
+    PolylineId id = const PolylineId("poly");
     Polyline polyline = Polyline(
-        polylineId: id, color: Colors.red, points: polylineCoordinates);
+      polylineId: id,
+      color: Colors.red,
+      points: polylineCoordinates,
+    );
     polylines[id] = polyline;
     setState(() {});
   }

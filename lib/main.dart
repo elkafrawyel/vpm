@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:fcm_config/fcm_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 
 import 'app/util/util.dart';
 import 'data/providers/storage/local_provider.dart';
+import 'firebase_options.dart';
 import 'presentation/app.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -34,19 +36,22 @@ void main() async {
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
 
-  // await Firebase.initializeApp(
-  //     options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await LocalProvider().init();
 
-  // await FCMConfig.instance.init(
-  //   onBackgroundMessage: _firebaseMessagingBackgroundHandler,
-  //   defaultAndroidChannel:
-  //       const AndroidNotificationChannel('com.vpmsystems.parking', 'VPM'),
-  // );
-  //
-  // FCMConfig.instance.messaging.getToken().then((token) {
-  //   Utils.logMessage('Firebase Token:$token');
-  // });
+  await FCMConfig.instance.init(
+    onBackgroundMessage: _firebaseMessagingBackgroundHandler,
+    defaultAndroidChannel: const AndroidNotificationChannel(
+      'com.vpmsystems.parking',
+      'VPM',
+    ),
+  );
+
+  FCMConfig.instance.messaging.getToken().then((token) {
+    Utils.logMessage('Firebase Token:$token');
+  });
 
   runApp(const App());
 }
