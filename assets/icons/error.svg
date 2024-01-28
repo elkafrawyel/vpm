@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="172.847" height="151.364" viewBox="0 0 172.847 151.364">
+  <defs>
+    <linearGradient id="linear-gradient" x1="-0.659" y1="-0.545" x2="1.086" y2="1.289" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#de1800"/>
+      <stop offset="0.859" stop-color="#de1800"/>
+      <stop offset="1" stop-color="#de1800"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="x-square" width="54.293" height="54.293" transform="translate(0 0)" fill="none" style="mix-blend-mode: normal;isolation: isolate"/>
+    </clipPath>
+  </defs>
+  <g id="Group_7169" data-name="Group 7169" transform="translate(-2480.865 -11185)">
+    <path id="Ellipse_4" data-name="Ellipse 4" d="M0,62.5A62.5,62.5,0,1,1,62.5,125,62.5,62.5,0,0,1,0,62.5Z" transform="translate(2501.372 11211.367)" fill="url(#linear-gradient)" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_5" data-name="Ellipse 5" d="M0,9.765a9.765,9.765,0,1,1,9.765,9.765A9.765,9.765,0,0,1,0,9.765Z" transform="translate(2480.865 11194.765)" fill="#de1800" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_7" data-name="Ellipse 7" d="M0,7.324a7.324,7.324,0,1,1,7.324,7.324A7.324,7.324,0,0,1,0,7.324Z" transform="translate(2639.063 11193.789)" fill="#de1800" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_6" data-name="Ellipse 6" d="M0,4.883A4.883,4.883,0,1,1,4.883,9.765,4.883,4.883,0,0,1,0,4.883Z" transform="translate(2564.847 11185)" fill="#de1800" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_9" data-name="Ellipse 9" d="M0,2.93a2.93,2.93,0,1,1,2.93,2.93A2.93,2.93,0,0,1,0,2.93Z" transform="translate(2616.603 11321.714)" fill="#de1800" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_8" data-name="Ellipse 8" d="M0,3.418A3.418,3.418,0,1,1,3.418,6.836,3.418,3.418,0,0,1,0,3.418Z" transform="translate(2629.298 11283.631)" fill="#de1800" style="mix-blend-mode: normal;isolation: isolate"/>
+    <path id="Ellipse_11" data-name="Ellipse 11" d="M0,2.441A2.441,2.441,0,1,1,2.441,4.883,2.441,2.441,0,0,1,0,2.441Z" transform="translate(2513.09 11324.644)" fill="#de1800" style="mix-blend-mode: normal;isolation: isolate"/>
+    <g id="x-square-2" data-name="x-square" transform="translate(2537.737 11245.874)" clip-path="url(#clip-path)" style="mix-blend-mode: normal;isolation: isolate">
+      <rect id="x-square-3" data-name="x-square" width="54.293" height="54.293" transform="translate(0 0)" fill="none" style="mix-blend-mode: normal;isolation: isolate"/>
+      <path id="Vector" d="M36.146,0a4.518,4.518,0,0,1,4.518,4.518V36.146a4.518,4.518,0,0,1-4.518,4.518H4.518A4.518,4.518,0,0,1,0,36.146V4.518A4.518,4.518,0,0,1,4.518,0Z" transform="translate(6.69 6.9)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="mix-blend-mode: normal;isolation: isolate"/>
+      <path id="Vector-2" data-name="Vector" d="M0,0,13.555,13.555" transform="translate(20.245 20.455)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="mix-blend-mode: normal;isolation: isolate"/>
+      <path id="Vector-3" data-name="Vector" d="M13.555,0,0,13.555" transform="translate(20.245 20.455)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="mix-blend-mode: normal;isolation: isolate"/>
+    </g>
+  </g>
+</svg>

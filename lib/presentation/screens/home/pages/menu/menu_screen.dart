@@ -4,6 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/screens/profile/profile_screen.dart';
+import 'package:vpm/presentation/screens/users/users_screen.dart';
 import 'package:vpm/presentation/screens/wallet/wallet_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/language_views/app_language_switch.dart';
@@ -111,6 +112,24 @@ class _MenuScreenState extends State<MenuScreen> {
                 PersistentNavBarNavigator.pushNewScreen(
                   context,
                   screen: const WalletScreen(),
+                  withNavBar: true,
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
+              },
+            ),
+            ListTile(
+              splashColor: Colors.transparent,
+              leading: const Icon(Icons.group),
+              title: Text('users_management'.tr),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                color: Theme.of(context).dividerColor,
+                size: 20,
+              ),
+              onTap: () {
+                PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: const UsersScreen(),
                   withNavBar: true,
                   pageTransitionAnimation: PageTransitionAnimation.cupertino,
                 );

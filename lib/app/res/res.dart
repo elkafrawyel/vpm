@@ -24,6 +24,7 @@ class Res {
   static const String iconPhone = 'assets/icons/phone.svg';
   static const String iconPassword = 'assets/icons/password.svg';
   static const String iconSuccess = 'assets/icons/success.svg';
+  static const String iconError = 'assets/icons/error.svg';
   static const String iconLocation = 'assets/icons/location.svg';
   static const String iconPhoneVerified = 'assets/icons/phone_verified.svg';
   static const String iconForgetPassword = 'assets/icons/forget_password.svg';

@@ -143,7 +143,23 @@ class _WalletScreenState extends State<WalletScreen> {
                           ),
                         );
                       },
-                      onPaymentFailed: () {},
+                      onPaymentFailed: () {
+                        Get.dialog(
+                          AppDialogView(
+                            svgName: Res.iconError,
+                            title: 'Sorry!!',
+                            message: 'Payment UnSuccessful!',
+                            actionText: 'Go to Homepage',
+                            onActionClicked: () {
+                              /// this to close this dialog
+                              Get.back();
+
+                              /// this to close the payment screen
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        );
+                      },
                       screenTitle: 'charge_your_account'.tr,
                     ),
                     withNavBar: true,

@@ -159,4 +159,7 @@ Map<String, String> en = {
   'birthday': 'Birthday',
   'delete': 'Delete',
   'delete_message': 'Are you sure you want to delete?',
+  'users_management': 'Users Management',
+  'add_user': 'Add User',
+  'add_user_note': 'Note: You can add up to 3 users'
 };
