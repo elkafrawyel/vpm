@@ -1,13 +1,33 @@
 class RegisterRequest {
-  String? name, email, phone, password, countryCode, fcmToken, userType;
-
   RegisterRequest({
     this.name,
     this.email,
     this.phone,
     this.password,
-    this.countryCode,
-    this.fcmToken,
-    this.userType,
+    this.fileId,
   });
+
+  RegisterRequest.fromJson(dynamic json) {
+    name = json['name'];
+    email = json['email'];
+    phone = json['phone'];
+    password = json['password'];
+    fileId = json['file_id'];
+  }
+
+  String? name;
+  String? email;
+  String? phone;
+  String? password;
+  String? fileId;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['name'] = name;
+    map['email'] = email;
+    map['phone'] = phone;
+    map['password'] = password;
+    map['file_id'] = fileId;
+    return map;
+  }
 }

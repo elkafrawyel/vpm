@@ -29,7 +29,7 @@ class APIProvider {
         HttpHeaders.cacheControlHeader: 'no-Cache',
         HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
         HttpHeaders.authorizationHeader:
-        'Bearer ${LocalProvider().getUserToken()}',
+            'Bearer ${LocalProvider().getUser()?.token ?? 'No Token Found'}',
         HttpHeaders.acceptLanguageHeader: LocalProvider().getAppLanguage()
       },
       followRedirects: false,
@@ -38,14 +38,14 @@ class APIProvider {
       receiveTimeout: _requestTimeOut,
     ),
   )..interceptors.add(
-    PrettyDioLogger(
-      request: true,
-      requestBody: true,
-      requestHeader: true,
-      error: true,
-      maxWidth: 1000,
-    ),
-  );
+      PrettyDioLogger(
+        request: true,
+        requestBody: true,
+        requestHeader: true,
+        error: true,
+        maxWidth: 1000,
+      ),
+    );
 
   void updateAcceptedLanguageHeader(String language) {
     _client.options.headers[HttpHeaders.acceptLanguageHeader] = language;
@@ -57,7 +57,7 @@ class APIProvider {
       return;
     }
     _client.options.headers[HttpHeaders.authorizationHeader] =
-    '${tokenType ?? 'Bearer'} $token';
+        '${tokenType ?? 'Bearer'} $token';
   }
 
   Future<OperationReply<T>> get<T>({
@@ -98,11 +98,11 @@ class APIProvider {
           formData.files.addAll(files
               .map(
                 (e) => MapEntry(
-              e.key,
-              MultipartFile.fromFileSync(e.value.path,
-                  filename: e.value.path.split("/").last),
-            ),
-          )
+                  e.key,
+                  MultipartFile.fromFileSync(e.value.path,
+                      filename: e.value.path.split("/").last),
+                ),
+              )
               .toList());
         }
         Response response = await _client.post(
@@ -153,11 +153,11 @@ class APIProvider {
           formData.files.addAll(files
               .map(
                 (e) => MapEntry(
-              e.key,
-              MultipartFile.fromFileSync(e.value.path,
-                  filename: e.value.path.split("/").last),
-            ),
-          )
+                  e.key,
+                  MultipartFile.fromFileSync(e.value.path,
+                      filename: e.value.path.split("/").last),
+                ),
+              )
               .toList());
         }
         Response response = await _client.put(

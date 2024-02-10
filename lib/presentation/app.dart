@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
@@ -47,17 +47,29 @@ class _AppState extends State<App> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            builder: (context, navigatorWidget) {
-              try {
-                return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    textScaler: const TextScaler.linear(1.0),
-                  ),
-                  child: navigatorWidget ?? const SizedBox(),
-                );
-              } catch (e) {
-                return navigatorWidget ?? const SizedBox();
-              }
+            builder: (context, child) {
+              child = EasyLoading.init()(context, child);
+              EasyLoading.instance
+                ..displayDuration = const Duration(milliseconds: 2000)
+                ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+                ..loadingStyle = EasyLoadingStyle.custom
+                ..indicatorSize = 45.0
+                ..radius = 10.0
+                ..progressWidth = 3
+                ..progressColor = Colors.green
+                ..textColor = Colors.black
+                ..backgroundColor = Colors.white
+                ..indicatorColor = Colors.yellow
+                ..maskColor = Colors.blue.withOpacity(0.5)
+                ..userInteractions = true
+                ..dismissOnTap = false;
+              child = MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: const TextScaler.linear(1.0),
+                ),
+                child: child,
+              );
+              return child;
             },
           ),
         ),

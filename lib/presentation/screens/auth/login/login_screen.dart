@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
+import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../app/res/res.dart';
 import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../widgets/app_widgets/app_text_field/app_text_field.dart';
-import '../../home/home_screen.dart';
 import '../forget_password/forget_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,9 +22,24 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<AppTextFormFieldState> _emailState = GlobalKey();
   final GlobalKey<AppTextFormFieldState> _passwordState = GlobalKey();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  late TextEditingController emailController;
+
+  late TextEditingController passwordController;
+
   bool? rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController(
+      text: LocalProvider().get(LocalProviderKeys.email),
+    );
+    passwordController = TextEditingController(
+      text: LocalProvider().get(LocalProviderKeys.password),
+    );
+
+    rememberMe = LocalProvider().get(LocalProviderKeys.rememberMe) ?? false;
+  }
 
   @override
   void dispose() {
@@ -45,14 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Hero(
-                tag: 'logo',
-                child: Image.asset(
-                  Res.logoImage,
-                  height: 200,
-                  width: 300,
-                  fit: BoxFit.cover,
-                ),
+              child: Image.asset(
+                Res.logoImage,
+                height: 200,
+                width: 300,
+                fit: BoxFit.cover,
               ),
             ),
             Padding(
@@ -91,9 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Row(
                 children: [
                   Checkbox.adaptive(
-                    fillColor: MaterialStateProperty.all(
-                        Theme.of(context).scaffoldBackgroundColor),
-                    checkColor: Theme.of(context).primaryColor,
+                    // fillColor: MaterialStateProperty.all(
+                    //     Theme.of(context).scaffoldBackgroundColor),
+                    // checkColor: Theme.of(context).primaryColor,
                     value: rememberMe,
                     onChanged: (bool? value) {
                       setState(() {
@@ -144,8 +156,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login(AnimationController animationController) async {
-    Get.offAll(() => HomeScreen());
-    return;
     if (emailController.text.isEmpty ||
         (_emailState.currentState?.hasError ?? false)) {
       _emailState.currentState?.shake();

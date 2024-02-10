@@ -32,11 +32,11 @@ class _IntroScreenState extends State<IntroScreen> {
         fontSize: 16,
       ),
       skipFunctionOverride: () async {
-        await LocalProvider().save(LocalProviderKeys.intro, 1);
+        await LocalProvider().save(LocalProviderKeys.intro, true);
         Get.offAll(() => const WelcomeScreen());
       },
       onFinish: () async {
-        await LocalProvider().save(LocalProviderKeys.intro, 1);
+        await LocalProvider().save(LocalProviderKeys.intro, true);
         Get.offAll(() => const WelcomeScreen());
       },
       centerBackground: true,

@@ -7,7 +7,10 @@ class Res {
   static String appFontFamily = GoogleFonts.cairo().fontFamily ?? '';
 
   //========================== Api Endpoints  ===============================
-  static const apiLogin = 'login';
+  static const apiLogin = 'auth/login';
+  static const apiLogout = 'auth/logout';
+  static const apiRegister = 'auth/register';
+  static const apiUploadFile = 'storage/file';
 
   //========================== Animation Assets  ===============================
   static const String animApiLoading = 'assets/anim/api_loading.json';

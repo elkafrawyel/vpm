@@ -109,7 +109,7 @@ Map<String, String> en = {
   'intro_3_message': 'Extend Parking Time As You Need',
   'login_to_your_account': 'Login to your account',
   'invalid_email': 'Invalid email address',
-  'min_8_char': 'Minimum8Characters',
+  'min_6_char': 'Minimum6Characters',
   'remember_me': 'Remember me',
   'invalid_username': 'Invalid username',
   'complete_profile': 'Complete Profile',
@@ -161,5 +161,7 @@ Map<String, String> en = {
   'delete_message': 'Are you sure you want to delete?',
   'users_management': 'Users Management',
   'add_user': 'Add User',
-  'add_user_note': 'Note: You can add up to 3 users'
+  'add_user_note': 'Note: You can add up to 3 users',
+  'choose_your_image':'Please choose your profile image',
+  'uploading':'Uploading Picture...',
 };

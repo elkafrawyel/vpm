@@ -2,23 +2,25 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:vpm/presentation/screens/auth/welcome/welcome_screen.dart';
 
 import '../../../app/util/constants.dart';
 import '../../../app/util/util.dart';
+import '../../../domain/entities/models/user_model.dart';
 import '../../../presentation/controller/app_config_controller.dart';
-import '../../models/user_response.dart';
 import '../network/api_provider.dart';
 
 enum LocalProviderKeys {
   intro, // int
   language, //String
-  apiToken, //String
-  apiTokenType, //String
   notifications, //int
   userModel, //Json String
   loggedInBySocial, //int
   phoneVerified, //int,
   appTheme, //int  0-> light mode , 1-> dark mode
+  rememberMe,
+  email,
+  password,
 }
 
 class LocalProvider {
@@ -28,13 +30,13 @@ class LocalProvider {
     await GetStorage.init();
   }
 
-  String getAppLanguage() => get(LocalProviderKeys.language) ?? Constants.mainAppLanguage;
+  String getAppLanguage() =>
+      get(LocalProviderKeys.language) ?? Constants.mainAppLanguage;
 
-  String? getUserToken() => get(LocalProviderKeys.apiToken);
+  bool isLogged() => get(LocalProviderKeys.userModel) != null;
 
-  bool isLogged() => get(LocalProviderKeys.apiToken) != null;
-
-  bool isAr() => (get(LocalProviderKeys.language) ?? Constants.mainAppLanguage) == 'ar';
+  bool isAr() =>
+      (get(LocalProviderKeys.language) ?? Constants.mainAppLanguage) == 'ar';
 
   bool isDarkMode() => get(LocalProviderKeys.appTheme) == 1;
 
@@ -50,12 +52,25 @@ class LocalProvider {
     return value;
   }
 
-  Future<bool> saveUser(UserResponse? userResponse) async {
+  Future saveUserCredentials({
+    required String email,
+    required String password,
+  }) async {
+    await save(LocalProviderKeys.rememberMe, true);
+    await save(LocalProviderKeys.email, email);
+    await save(LocalProviderKeys.password, password);
+  }
+
+  Future<bool> saveUser(UserModel? userModel) async {
     try {
-      if (userResponse?.token != null) {
-        await save(LocalProviderKeys.apiToken, userResponse?.token ?? 'no token');
-        await save(LocalProviderKeys.userModel, jsonEncode(userResponse?.user?.toJson())); // userModel jsonString
-        APIProvider.instance.updateTokenHeader(userResponse?.token);
+      if (userModel != null) {
+        await save(
+          LocalProviderKeys.userModel,
+          jsonEncode(userModel.toJson()),
+        ); // userModel jsonString
+        APIProvider.instance.updateTokenHeader(
+          userModel.token,
+        );
 
         return true;
       } else {
@@ -78,11 +93,20 @@ class LocalProvider {
   }
 
   Future<void> signOut() async {
-    //fabricasupport@alqamzi.com
-    //fabricacs123456
-    //token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHBzOi8vYXBpLmFscWFtemkuY29tL2FwaS9sb2dpbiIsImlhdCI6MTY3OTIyODgwOSwiZXhwIjoxNjc5NDAxNjA5LCJuYmYiOjE2NzkyMjg4MDksImp0aSI6Inp2WWZSYnh3VVEzamhZMjYifQ.tMvVqygNO-0JTLF3UmU06pf2koE0SCfvE5i6o7h7I5o
+    bool rememberMe = get(LocalProviderKeys.rememberMe) ?? false;
+    bool intro = get(LocalProviderKeys.intro) ?? false;
+    String? email, password;
+    if (rememberMe) {
+      email = get(LocalProviderKeys.email);
+      password = get(LocalProviderKeys.password);
+    }
     await _box.erase();
+    await save(LocalProviderKeys.email, email);
+    await save(LocalProviderKeys.password, password);
+    await save(LocalProviderKeys.rememberMe, rememberMe);
+    await save(LocalProviderKeys.intro, intro);
     Get.find<AppConfigController>().isLoggedIn.value = false;
     APIProvider.instance.updateTokenHeader(null);
+    Utils.logMessage('User Logged Out Successfully');
   }
 }

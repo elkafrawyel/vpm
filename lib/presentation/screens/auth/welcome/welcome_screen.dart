@@ -3,11 +3,10 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/route_manager.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/controller/auth_controller/auth_binding.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../../../app/res/res.dart';
-import '../../../widgets/app_widgets/language_views/app_language_dialog.dart';
 import '../../../widgets/app_widgets/app_text.dart';
+import '../../../widgets/app_widgets/language_views/app_language_dialog.dart';
 import '../login/login_screen.dart';
 import '../register/register_screen.dart';
 import 'components/social_button.dart';
@@ -47,38 +46,35 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            AnimationConfiguration.staggeredGrid(
-              position: 1,
-              columnCount: 3,
-              duration: const Duration(milliseconds: 2000),
-              child: SlideAnimation(
-                horizontalOffset: 0,
-                verticalOffset: 500,
-                duration: const Duration(milliseconds: 2000),
-                child: ScaleAnimation(
-                  scale: 0.4,
-                  duration: const Duration(milliseconds: 2000),
-                  child: Hero(
-                    tag: 'logo',
-                    child: Image.asset(
-                      Res.logoImage,
-                      height: 200,
-                      width: 300,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // Hero(
-            //   tag: 'logo',
-            //   child: Image.asset(
-            //     Res.logoImage,
-            //     height: 200,
-            //     width: 300,
-            //     fit: BoxFit.cover,
+            // AnimationConfiguration.staggeredGrid(
+            //   position: 1,
+            //   columnCount: 3,
+            //   duration: const Duration(milliseconds: 2000),
+            //   child: SlideAnimation(
+            //     horizontalOffset: 0,
+            //     verticalOffset: 500,
+            //     duration: const Duration(milliseconds: 2000),
+            //     child: ScaleAnimation(
+            //       scale: 0.4,
+            //       duration: const Duration(milliseconds: 2000),
+            //       child: Hero(
+            //         tag: 'logo',
+            //         child: Image.asset(
+            //           Res.logoImage,
+            //           height: 200,
+            //           width: 300,
+            //           fit: BoxFit.cover,
+            //         ),
+            //       ),
+            //     ),
             //   ),
             // ),
+            Image.asset(
+              Res.logoImage,
+              height: 200,
+              width: 300,
+              fit: BoxFit.cover,
+            ),
             AppText(
               "let_you_in".tr,
               fontSize: 25,
@@ -143,12 +139,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 InkWell(
                   onTap: () {
                     Get.to(
-                        () => const RegisterScreen(
-                              completingProfile: true,
-                              name: 'Mahmoud Ashraf',
-                              email: 'mahmoud@gmail.com',
-                            ),
-                        binding: AuthBinding());
+                      () => const RegisterScreen(),
+                      binding: AuthBinding(),
+                    );
                   },
                   child: AppText(
                     'sign_up'.tr,

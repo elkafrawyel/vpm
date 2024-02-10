@@ -111,7 +111,7 @@ Map<String, String> ar = {
   'intro_3_message': 'قم بتمديد وقت ركن السيارة حسب حاجتك',
   'login_to_your_account': 'تسجيل الدخول إلى حسابك',
   'invalid_email': 'عنوان البريد الإلكتروني غير صالح',
-  'min_8_char': 'الحد الأدنى ٨ أحرف',
+  'min_6_char': 'الحد الأدنى ٦ أحرف',
   'remember_me': 'تذكرني',
   'invalid_username': 'أسم المستخدم غير مقبول',
   'complete_profile': 'أستكمال معلوماتك الشخصية',
@@ -157,5 +157,9 @@ Map<String, String> ar = {
   'delete_message': 'هل أنت متأكد من الحذف؟',
   'users_management': 'إدارة المستخدمين',
   'add_user': 'إضافة مستخدم جديد',
-  'add_user_note': 'ملاحظة: يمكنك إضافة ما يصل إلى 3 مستخدمين'
+  'add_user_note': 'ملاحظة: يمكنك إضافة ما يصل إلى 3 مستخدمين',
+  'choose_your_image':'الرجاء اختيار صورة ملفك الشخصي',
+  'uploading':'جارٍ رفع الصورة...',
+
+
 };

@@ -1,11 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart' as ok_toast;
-import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/app/res/res.dart';
 
 import 'operation_reply.dart';
 
@@ -63,14 +60,14 @@ abstract class InformationViewer {
   }
 
   static showSnackBar(
-    String message, {
+    String? message, {
     bool popPage = false,
     int duration = 5,
     Color? bgColor,
   }) {
     BuildContext? context = Get.context;
 
-    if (context == null) {
+    if (context == null || (message ?? '').isEmpty) {
       return;
     }
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -80,7 +77,7 @@ abstract class InformationViewer {
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         content: Text(
-          message,
+          message!,
           style: const TextStyle(
             color: Colors.white,
             fontSize: 16,

@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
 import '../../app/config/app_theme.dart';
 import '../../app/util/util.dart';
 import '../../data/providers/storage/local_provider.dart';
@@ -29,11 +30,13 @@ class AppConfigController extends GetxController {
   onReady() {
     super.onReady();
 
-    ever(isLoggedIn, (callback) async{
+    ever(isLoggedIn, (callback) async {
+      Utils.logMessage('Ever called on logged in callback');
       if (callback) {
         Get.offAll(() => const HomeScreen(), binding: HomeScreenBinding());
       } else {
-        if (LocalProvider().get(LocalProviderKeys.intro) == null||LocalProvider().get(LocalProviderKeys.intro) == 0) {
+        if (LocalProvider().get(LocalProviderKeys.intro) == null ||
+            !LocalProvider().get(LocalProviderKeys.intro)) {
           Get.offAll(() => const IntroScreen());
         } else {
           Get.offAll(() => const WelcomeScreen(), binding: AuthBinding());

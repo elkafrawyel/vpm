@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/config/app_color.dart';
@@ -9,7 +10,11 @@ import 'package:vpm/presentation/screens/wallet/wallet_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/language_views/app_language_switch.dart';
 
+import '../../../../../app/util/information_viewer.dart';
+import '../../../../../app/util/operation_reply.dart';
+import '../../../../../data/models/general_response.dart';
 import '../../../../../data/providers/storage/local_provider.dart';
+import '../../../../../data/repositories/auth_repository.dart';
 import '../../../../widgets/app_widgets/app_dialog.dart';
 import '../../../cars/cars_screen.dart';
 
@@ -201,6 +206,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     Get.back();
                   },
                   onConfirmClick: () async {
+                    Get.back();
                     _logout();
                   },
                 );
@@ -214,6 +220,17 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   void _logout() async {
-    await LocalProvider().signOut();
+    EasyLoading.show();
+
+    OperationReply operationReply = await AuthRepositoryIml().logOut();
+    if (operationReply.isSuccess()) {
+      GeneralResponse generalResponse = operationReply.result;
+      EasyLoading.dismiss();
+      InformationViewer.showSuccessToast(msg: generalResponse.message);
+      await Future.delayed(const Duration(milliseconds: 500));
+      await LocalProvider().signOut();
+    } else {
+      InformationViewer.showSnackBar(operationReply.message);
+    }
   }
 }

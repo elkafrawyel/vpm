@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
+import 'package:vpm/app/util/information_viewer.dart';
+import 'package:vpm/presentation/controller/auth_controller/auth_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text_field/app_text_field.dart';
 
@@ -124,7 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 hintText: 'name'.tr,
                 radius: kRadius,
                 validateEmptyText: 'name_is_required'.tr,
-                appFieldType: AppFieldType.name,
+                appFieldType: AppFieldType.text,
                 prefixIcon: Res.iconName,
               ),
               AppTextFormField(
@@ -191,29 +193,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _register(AnimationController animationController) async {
-    if (nameController.text.isEmpty ||
-        (_nameState.currentState?.hasError ?? false)) {
-      _nameState.currentState?.shake();
-      return;
-    } else if (emailController.text.isEmpty ||
-        (_emailState.currentState?.hasError ?? false)) {
-      _emailState.currentState?.shake();
-
-      return;
-    } else if (phoneController.text.isEmpty ||
-        (_phoneState.currentState?.hasError ?? false)) {
-      _phoneState.currentState?.shake();
-
+    if (image == null) {
+      FocusManager.instance.primaryFocus?.unfocus();
+      InformationViewer.showSnackBar('choose_your_image'.tr);
       return;
     }
+    // else if (nameController.text.isEmpty ||
+    //     (_nameState.currentState?.hasError ?? false)) {
+    //   _nameState.currentState?.shake();
+    //   return;
+    // } else if (emailController.text.isEmpty ||
+    //     (_emailState.currentState?.hasError ?? false)) {
+    //   _emailState.currentState?.shake();
+    //
+    //   return;
+    // } else if (phoneController.text.isEmpty ||
+    //     (_phoneState.currentState?.hasError ?? false)) {
+    //   _phoneState.currentState?.shake();
+    //
+    //   return;
+    // }
+    //
+    // if (!widget.completingProfile) {
+    //   if (passwordController.text.isEmpty ||
+    //       (_passwordState.currentState?.hasError ?? false)) {
+    //     _passwordState.currentState?.shake();
+    //
+    //     return;
+    //   }
+    // }
 
-    if (!widget.completingProfile) {
-      if (passwordController.text.isEmpty ||
-          (_passwordState.currentState?.hasError ?? false)) {
-        _passwordState.currentState?.shake();
-
-        return;
-      }
-    }
+    await Get.find<AuthController>().register(
+      animationController: animationController,
+      name: nameController.text,
+      email: nameController.text,
+      phone: phoneController.text,
+      password: passwordController.text,
+      image: image!,
+    );
   }
 }
