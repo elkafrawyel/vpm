@@ -33,15 +33,18 @@ class AuthRepositoryIml extends AuthRepository {
     required RegisterRequest registerRequest,
   }) async {
     return await APIProvider.instance.post<UserResponse>(
-      endPoint: Res.apiLogin,
+      endPoint: Res.apiRegister,
       fromJson: UserResponse.fromJson,
       requestBody: registerRequest.toJson(),
     );
   }
 
   @override
-  Future<OperationReply<UserResponse>> profile({required int userId}) async {
-    return OperationReply.failed();
+  Future<OperationReply<UserResponse>> profile() async {
+    return APIProvider.instance.get(
+      endPoint: Res.apiProfile,
+      fromJson: UserResponse.fromJson,
+    );
   }
 
   @override
@@ -97,7 +100,11 @@ class AuthRepositoryIml extends AuthRepository {
   Future<OperationReply<UserResponse>> updateProfileInformation({
     required UpdateProfileRequest updateProfileRequest,
   }) async {
-    return OperationReply.failed();
+    return APIProvider.instance.patch<UserResponse>(
+      endPoint: Res.apiUpdateProfile,
+      requestBody: updateProfileRequest.toJson(),
+      fromJson: UserResponse.fromJson,
+    );
   }
 
   @override

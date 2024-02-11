@@ -15,7 +15,7 @@ abstract class AuthRepository {
 
   Future<OperationReply<UserResponse>> register({required RegisterRequest registerRequest});
 
-  Future<OperationReply<UserResponse>> profile({required int userId});
+  Future<OperationReply<UserResponse>> profile();
 
   Future<OperationReply<UserResponse>> updateProfileInformation({required UpdateProfileRequest updateProfileRequest});
 

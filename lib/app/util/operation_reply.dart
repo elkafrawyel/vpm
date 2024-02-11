@@ -5,7 +5,8 @@ class OperationReply<ReturnType> {
   String message;
   ReturnType? result;
 
-  OperationReply(this.status, {this.message = "Some thing went wrong", this.result});
+  OperationReply(this.status,
+      {this.message = "Some thing went wrong", this.result});
 
   load() => status = OperationStatus.loading;
 
@@ -19,6 +20,10 @@ class OperationReply<ReturnType> {
     return status == OperationStatus.success;
   }
 
+  bool isEmpty() {
+    return status == OperationStatus.empty;
+  }
+
   bool isError() {
     return status == OperationStatus.failed;
   }
@@ -26,30 +31,84 @@ class OperationReply<ReturnType> {
   ///casts the object to another type ONLY IF it holds no data
   as<NewType>() {
     assert(result == null);
-    return OperationReply<NewType>(status, message: message);
+    return OperationReply<NewType>(
+      status,
+      message: message,
+    );
   }
 
-  factory OperationReply.init({String message = "Some thing went wrong", result}) {
-    return OperationReply(OperationStatus.init, message: message, result: result);
+  factory OperationReply.init({
+    String message = "Some thing went wrong",
+    result,
+  }) {
+    return OperationReply(
+      OperationStatus.init,
+      message: message,
+      result: result,
+    );
   }
 
-  factory OperationReply.loading({String message = "Some thing went wrong", result}) {
-    return OperationReply(OperationStatus.loading, message: message, result: result);
+  factory OperationReply.loading({
+    String message = "Some thing went wrong",
+    result,
+  }) {
+    return OperationReply(
+      OperationStatus.loading,
+      message: message,
+      result: result,
+    );
   }
 
-  factory OperationReply.failed({String message = "Some thing went wrong", result}) {
-    return OperationReply(OperationStatus.failed, message: message, result: result);
+  factory OperationReply.failed({
+    String message = "Some thing went wrong",
+    result,
+  }) {
+    return OperationReply(
+      OperationStatus.failed,
+      message: message,
+      result: result,
+    );
   }
 
-  factory OperationReply.connectionDown({String message = "Some thing went wrong", result}) {
-    return OperationReply(OperationStatus.disConnected, message: message, result: result);
+  factory OperationReply.connectionDown({
+    String message = "Some thing went wrong",
+    result,
+  }) {
+    return OperationReply(
+      OperationStatus.disConnected,
+      message: message,
+      result: result,
+    );
   }
 
-  factory OperationReply.success({String message = "Some thing went wrong", result}) {
-    return OperationReply(OperationStatus.success, message: message, result: result);
+  factory OperationReply.success({
+    String message = "Some thing went wrong",
+    result,
+  }) {
+    return OperationReply(
+      OperationStatus.success,
+      message: message,
+      result: result,
+    );
   }
 
-  factory OperationReply.fromReply(OperationReply reply, {OperationStatus? status, String? message, result}) {
+  factory OperationReply.empty({
+    String message = "Some thing went wrong",
+    result,
+  }) {
+    return OperationReply(
+      OperationStatus.empty,
+      message: message,
+      result: result,
+    );
+  }
+
+  factory OperationReply.fromReply(
+    OperationReply reply, {
+    OperationStatus? status,
+    String? message,
+    result,
+  }) {
     return OperationReply(
       status ?? reply.status,
       message: message ?? reply.message,
@@ -58,4 +117,11 @@ class OperationReply<ReturnType> {
   }
 }
 
-enum OperationStatus { init, loading, success, failed, disConnected }
+enum OperationStatus {
+  init,
+  loading,
+  success,
+  empty,
+  failed,
+  disConnected,
+}

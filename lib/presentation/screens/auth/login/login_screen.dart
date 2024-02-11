@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
@@ -20,9 +19,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<AppTextFormFieldState> _emailState = GlobalKey();
+  final GlobalKey<AppTextFormFieldState> _phoneState = GlobalKey();
   final GlobalKey<AppTextFormFieldState> _passwordState = GlobalKey();
-  late TextEditingController emailController;
+  late TextEditingController phoneController;
 
   late TextEditingController passwordController;
 
@@ -31,8 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    emailController = TextEditingController(
-      text: LocalProvider().get(LocalProviderKeys.email),
+    phoneController = TextEditingController(
+      text: LocalProvider().get(LocalProviderKeys.phone),
     );
     passwordController = TextEditingController(
       text: LocalProvider().get(LocalProviderKeys.password),
@@ -44,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     super.dispose();
-    emailController.dispose();
+    phoneController.dispose();
     passwordController.dispose();
   }
 
@@ -77,15 +76,15 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             10.ph,
             AppTextFormField(
-              key: _emailState,
-              controller: emailController,
-              validateEmptyText: 'email_required'.tr,
-              hintText: 'email'.tr,
+              key: _phoneState,
+              controller: phoneController,
+              validateEmptyText: 'phone_required'.tr,
+              hintText: 'phone'.tr,
               horizontalPadding: 28,
-              autoFillHints: const [AutofillHints.email],
+              autoFillHints: const [AutofillHints.telephoneNumber],
               radius: kRadius,
-              appFieldType: AppFieldType.email,
-              prefixIcon: Res.iconEmail,
+              appFieldType: AppFieldType.phone,
+              prefixIcon: Res.iconPhone,
             ),
             AppTextFormField(
               key: _passwordState,
@@ -156,9 +155,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login(AnimationController animationController) async {
-    if (emailController.text.isEmpty ||
-        (_emailState.currentState?.hasError ?? false)) {
-      _emailState.currentState?.shake();
+    if (phoneController.text.isEmpty ||
+        (_phoneState.currentState?.hasError ?? false)) {
+      _phoneState.currentState?.shake();
       return;
     }
 
@@ -169,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     Get.find<AuthController>().login(
-      email: emailController.text,
+      phone: phoneController.text,
       password: passwordController.text,
       animationController: animationController,
       rememberMe: rememberMe,

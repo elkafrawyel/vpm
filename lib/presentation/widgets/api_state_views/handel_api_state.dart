@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vpm/presentation/widgets/api_state_views/api_empty_view.dart';
+
 import '../../../app/util/operation_reply.dart';
 import '../../controller/general_controller.dart';
 import 'api_connection_error_view.dart';
@@ -42,6 +44,10 @@ class HandleApiState extends StatelessWidget {
             errorText: generalController!.operationReply.message,
             retry: generalController!.refreshApiCall,
           );
+        case OperationStatus.empty:
+          return ApiEmptyView(
+            emptyText: generalController!.operationReply.message,
+          );
         case OperationStatus.disConnected:
           return const ApiConnectionErrorView();
         default:
@@ -59,6 +65,10 @@ class HandleApiState extends StatelessWidget {
           return ApiErrorView(errorText: operationReply!.message);
         case OperationStatus.disConnected:
           return const ApiConnectionErrorView();
+        case OperationStatus.empty:
+          return ApiEmptyView(
+            emptyText: generalController!.operationReply.message,
+          );
         default:
           return const SizedBox();
       }

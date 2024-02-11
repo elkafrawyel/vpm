@@ -3,12 +3,15 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/instance_manager.dart';
 import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
+import 'package:vpm/app/util/operation_reply.dart';
+import 'package:vpm/data/models/general_response.dart';
 import 'package:vpm/presentation/controller/users_controller/users_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text_field/app_text_field.dart';
 
 import '../../../../app/res/res.dart';
+import '../../../../app/util/information_viewer.dart';
 
 class AddUserScreen extends StatefulWidget {
   const AddUserScreen({super.key});
@@ -104,14 +107,21 @@ class _AddUserScreenState extends State<AddUserScreen> {
       passwordState.currentState?.shake();
       return;
     }
-    animationController.forward();
 
-    await Get.find<UsersController>().addUser(
+    OperationReply operationReply = await Get.find<UsersController>().addUser(
+      context: context,
+      animationController: animationController,
       name: nameController.text,
       phone: phoneController.text,
       password: passwordController.text,
     );
 
-    animationController.reverse();
+    if (operationReply.isSuccess() && mounted) {
+      GeneralResponse generalResponse = operationReply.result;
+      InformationViewer.showSnackBar(generalResponse.message);
+      Navigator.of(context).pop(true);
+    } else {
+      InformationViewer.showSnackBar(operationReply.message);
+    }
   }
 }

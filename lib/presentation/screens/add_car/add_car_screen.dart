@@ -21,17 +21,20 @@ class AddCarScreen extends StatefulWidget {
 class _AddCarScreenState extends State<AddCarScreen> {
   File? image;
   late TextEditingController carNameController;
+  late TextEditingController carNumberController;
 
   @override
   void initState() {
     super.initState();
     carNameController = TextEditingController();
+    carNumberController = TextEditingController();
   }
 
   @override
   void dispose() {
     super.dispose();
     carNameController.dispose();
+    carNumberController.dispose();
   }
 
   @override
@@ -110,6 +113,11 @@ class _AddCarScreenState extends State<AddCarScreen> {
               AppTextFormField(
                 controller: carNameController,
                 hintText: 'car_title'.tr,
+              ),
+              10.ph,
+              AppTextFormField(
+                controller: carNumberController,
+                hintText: 'car_number'.tr,
               ),
               10.ph,
               Padding(

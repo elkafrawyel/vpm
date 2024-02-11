@@ -10,7 +10,11 @@ class Res {
   static const apiLogin = 'auth/login';
   static const apiLogout = 'auth/logout';
   static const apiRegister = 'auth/register';
+  static const apiProfile = 'auth/profile';
   static const apiUploadFile = 'storage/file';
+  static const apiUpdateProfile = 'auth/profile';
+  static const apiCreateContact = 'customer/contact';
+  static const apiAllContact = 'customer/contacts';
 
   //========================== Animation Assets  ===============================
   static const String animApiLoading = 'assets/anim/api_loading.json';
@@ -43,8 +47,6 @@ class Res {
 
   //========================== Images Assets  ===============================
 
-  static const splashImage = "assets/images/splash_bg.jpg";
-
   static const facebookImage = "assets/images/social/facebook.png";
   static const instagramImage = "assets/images/social/instagram.png";
   static const twitterImage = "assets/images/social/twitter.png";
@@ -52,5 +54,6 @@ class Res {
   static const logoWhiteImage = "assets/images/launcher/logo_white.png";
   static const logoImage = "assets/images/launcher/logo.png";
 
-  static const notFoundImage = "assets/images/not_found.jpg";
+  static const notFoundImage = "assets/images/not_found.png";
+  static const personImage = "assets/images/person.png";
 }

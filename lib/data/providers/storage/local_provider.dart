@@ -19,7 +19,7 @@ enum LocalProviderKeys {
   phoneVerified, //int,
   appTheme, //int  0-> light mode , 1-> dark mode
   rememberMe,
-  email,
+  phone,
   password,
 }
 
@@ -53,11 +53,11 @@ class LocalProvider {
   }
 
   Future saveUserCredentials({
-    required String email,
+    required String phone,
     required String password,
   }) async {
     await save(LocalProviderKeys.rememberMe, true);
-    await save(LocalProviderKeys.email, email);
+    await save(LocalProviderKeys.phone, phone);
     await save(LocalProviderKeys.password, password);
   }
 
@@ -71,7 +71,6 @@ class LocalProvider {
         APIProvider.instance.updateTokenHeader(
           userModel.token,
         );
-
         return true;
       } else {
         Utils.logMessage('Failed to save user...');
@@ -97,11 +96,11 @@ class LocalProvider {
     bool intro = get(LocalProviderKeys.intro) ?? false;
     String? email, password;
     if (rememberMe) {
-      email = get(LocalProviderKeys.email);
+      email = get(LocalProviderKeys.phone);
       password = get(LocalProviderKeys.password);
     }
     await _box.erase();
-    await save(LocalProviderKeys.email, email);
+    await save(LocalProviderKeys.phone, email);
     await save(LocalProviderKeys.password, password);
     await save(LocalProviderKeys.rememberMe, rememberMe);
     await save(LocalProviderKeys.intro, intro);

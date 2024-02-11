@@ -1,13 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
+import 'package:vpm/domain/entities/models/user_model.dart';
+import 'package:vpm/presentation/controller/profile_controller/profile_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_date_selector.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_gender_picker.dart';
 
 import '../../../app/res/res.dart';
 import '../../../app/util/constants.dart';
+import '../../widgets/app_widgets/app_cached_image.dart';
 import '../../widgets/app_widgets/app_image_picker_dialog.dart';
 import '../../widgets/app_widgets/app_progress_button.dart';
 import '../../widgets/app_widgets/app_text_field/app_text_field.dart';
@@ -20,7 +23,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final ProfileController profileController = Get.find();
+  late UserModel? userModel;
   File? image;
+  String? profilePicture;
   DateTime? birthday;
   AppGender? appGender;
 
@@ -37,9 +43,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
 
-    phoneController = TextEditingController();
-    nameController = TextEditingController();
-    emailController = TextEditingController();
+    userModel = profileController.userModel;
+    nameController = TextEditingController(text: userModel?.name);
+    emailController = TextEditingController(text: userModel?.email);
+    phoneController = TextEditingController(text: userModel?.phone);
+    profilePicture = userModel?.avatar?.filePath;
+    birthday = DateTime.tryParse(userModel?.birthday);
+    appGender = userModel?.gender == null
+        ? null
+        : userModel!.gender == 'male'
+            ? AppGender.male
+            : AppGender.female;
+    genderController = TextEditingController(text: appGender?.title);
   }
 
   @override
@@ -65,48 +80,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               20.ph,
               Center(
-                child: Container(
-                  height: 120,
-                  width: 120,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image:
-                        // profilePicture != null
-                        //     ? DecorationImage(
-                        //         image: NetworkImage(profilePicture!),
-                        //         fit: BoxFit.cover,
-                        //       )
-                        //     :
-                        image == null
-                            ? const DecorationImage(
-                                image: AssetImage('assets/images/person.png'),
-                                fit: BoxFit.cover,
-                              )
-                            : DecorationImage(
-                                image: FileImage(image!),
-                                fit: BoxFit.cover,
-                              ),
-                  ),
+                child: Stack(
                   alignment: AlignmentDirectional.bottomEnd,
-                  child: InkWell(
-                    onTap: () {
-                      _chooseProfile();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: const Color(0xff1D80E6),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 20,
+                  children: [
+                    image == null
+                        ? AppCachedImage(
+                            imageUrl: profilePicture,
+                            isCircular: true,
+                            width: 120,
+                            height: 120,
+                          )
+                        : AppCachedImage(
+                            localFile: image,
+                            isCircular: true,
+                            width: 120,
+                            height: 120,
+                          ),
+                    InkWell(
+                      onTap: () {
+                        _chooseProfile();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xff1D80E6),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(4.0),
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
               20.ph,
@@ -116,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 hintText: 'name'.tr,
                 radius: kRadius,
                 validateEmptyText: 'name_is_required'.tr,
-                appFieldType: AppFieldType.name,
+                appFieldType: AppFieldType.text,
                 prefixIcon: Res.iconName,
               ),
               AppTextFormField(
@@ -139,6 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               AppDateSelector(
                 hint: 'birthday'.tr,
+                selectedDate: birthday,
                 onChanged: (DateTime? dateTime) {
                   setState(() {
                     birthday = dateTime;
@@ -173,7 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 text: 'save'.tr,
                 width: MediaQuery.sizeOf(context).width * 0.8,
                 onPressed: (animationController) async {
-                  _register(animationController);
+                  updateProfile(animationController);
                 },
               ),
             ],
@@ -193,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         });
   }
 
-  void _register(AnimationController animationController) async {
+  void updateProfile(AnimationController animationController) async {
     if (nameController.text.isEmpty ||
         (_nameState.currentState?.hasError ?? false)) {
       _nameState.currentState?.shake();
@@ -209,5 +219,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       return;
     }
+
+    profileController.updateProfile(
+      animationController: animationController,
+      name: nameController.text,
+      email: emailController.text,
+      phone: phoneController.text,
+      image: image,
+      birthday: birthday,
+      gender: appGender,
+    );
   }
 }

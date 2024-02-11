@@ -136,7 +136,8 @@ Map<String, String> ar = {
   'profile': 'الملف الشخصي',
   'logout_message': 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
   'add_car': 'أضافة سيارة جديدة',
-  'car_title': 'عنوان السيارة',
+  'car_title': 'إسم السيارة',
+  'car_number': 'رقم السيارة',
   'choose_car_brand': 'اختر ماركة سيارتك.',
   'choose_car_color': 'اختر لون سيارتك.',
   'car_color': 'لون السيارة',
@@ -158,8 +159,6 @@ Map<String, String> ar = {
   'users_management': 'إدارة المستخدمين',
   'add_user': 'إضافة مستخدم جديد',
   'add_user_note': 'ملاحظة: يمكنك إضافة ما يصل إلى 3 مستخدمين',
-  'choose_your_image':'الرجاء اختيار صورة ملفك الشخصي',
-  'uploading':'جارٍ رفع الصورة...',
-
-
+  'choose_your_image': 'الرجاء اختيار صورة ملفك الشخصي',
+  'uploading': 'جارٍ رفع الصورة...',
 };
