@@ -11,6 +11,7 @@ import 'package:vpm/presentation/screens/wallet/wallet_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/language_views/app_language_switch.dart';
+import 'package:vpm/presentation/widgets/shimmer_widgets/shimmer_effect_ui.dart';
 
 import '../../../../../app/util/information_viewer.dart';
 import '../../../../../app/util/operation_reply.dart';
@@ -45,7 +46,10 @@ class _MenuScreenState extends State<MenuScreen> {
                 30.ph,
                 Center(
                   child: profileController.loading
-                      ? const CircularProgressIndicator.adaptive()
+                      ? const MyShimmerEffectUI.circular(
+                          height: 120,
+                          width: 120,
+                        )
                       : InkWell(
                           onTap: () {
                             PersistentNavBarNavigator.pushNewScreen(
@@ -66,23 +70,28 @@ class _MenuScreenState extends State<MenuScreen> {
                         ),
                 ),
                 10.ph,
-                InkWell(
-                  onTap: () {
-                    PersistentNavBarNavigator.pushNewScreen(
-                      context,
-                      screen: const ProfileScreen(),
-                      withNavBar: true,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
-                    );
-                  },
-                  child: AppText(
-                    profileController.userModel?.name ?? '',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    centerText: false,
-                  ),
-                ),
+                profileController.loading
+                    ? const MyShimmerEffectUI.rectangular(
+                        height: 13,
+                        width: 150,
+                      )
+                    : InkWell(
+                        onTap: () {
+                          PersistentNavBarNavigator.pushNewScreen(
+                            context,
+                            screen: const ProfileScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.cupertino,
+                          );
+                        },
+                        child: AppText(
+                          profileController.userModel?.name ?? '',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          centerText: false,
+                        ),
+                      ),
                 ListTile(
                   splashColor: Colors.transparent,
                   leading: const Icon(Icons.person),
@@ -96,25 +105,6 @@ class _MenuScreenState extends State<MenuScreen> {
                     PersistentNavBarNavigator.pushNewScreen(
                       context,
                       screen: const ProfileScreen(),
-                      withNavBar: true,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
-                    );
-                  },
-                ),
-                ListTile(
-                  splashColor: Colors.transparent,
-                  leading: const Icon(Icons.directions_car),
-                  title: Text('your_cars'.tr),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).dividerColor,
-                    size: 20,
-                  ),
-                  onTap: () {
-                    PersistentNavBarNavigator.pushNewScreen(
-                      context,
-                      screen: const CarsScreen(),
                       withNavBar: true,
                       pageTransitionAnimation:
                           PageTransitionAnimation.cupertino,
@@ -151,6 +141,26 @@ class _MenuScreenState extends State<MenuScreen> {
                     );
                   },
                 ),
+                ListTile(
+                  splashColor: Colors.transparent,
+                  leading: const Icon(Icons.directions_car),
+                  title: Text('your_cars'.tr),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).dividerColor,
+                    size: 20,
+                  ),
+                  onTap: () {
+                    PersistentNavBarNavigator.pushNewScreen(
+                      context,
+                      screen: const CarsScreen(),
+                      withNavBar: true,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
+                    );
+                  },
+                ),
+
                 ListTile(
                   splashColor: Colors.transparent,
                   leading: const Icon(Icons.group),

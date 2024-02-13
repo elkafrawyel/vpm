@@ -16,6 +16,11 @@ class Res {
   static const apiCreateContact = 'customer/contact';
   static const apiAllContact = 'customer/contacts';
   static const apiDeleteUser = 'customer/contact';
+  static const apiCarColors = 'car-variants/car-colors-list';
+  static const apiCarTypes = 'car-variants/car-types-list';
+  static const apiAddCars = 'customer/car';
+  static const apiAllCars = 'customer/cars';
+  static const apiDeleteCar = 'customer/car';
 
   //========================== Animation Assets  ===============================
   static const String animApiLoading = 'assets/anim/api_loading.json';
@@ -45,6 +50,8 @@ class Res {
   static const String iconScan = 'assets/icons/scan.svg';
   static const String iconMale = 'assets/icons/male.svg';
   static const String iconFemale = 'assets/icons/female.svg';
+  static const String iconEmptyUsers = 'assets/icons/empty_users.svg';
+  static const String iconEmptyCars = 'assets/icons/empty_cars.svg';
 
   //========================== Images Assets  ===============================
 

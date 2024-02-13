@@ -82,6 +82,9 @@ class UsersController extends GeneralController {
       GeneralResponse generalResponse = operationReply.result;
       InformationViewer.showSnackBar(generalResponse.message);
       usersList.remove(user);
+      if (usersList.isEmpty) {
+        this.operationReply = OperationReply.empty();
+      }
       update();
     } else {
       InformationViewer.showSnackBar(operationReply.message);

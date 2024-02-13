@@ -42,6 +42,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> getUserProfile() async {
+    loading = true;
     OperationReply operationReply = await AuthRepositoryIml().profile();
 
     if (operationReply.isSuccess()) {
@@ -49,6 +50,7 @@ class ProfileController extends GetxController {
       userModel = userResponse?.userModel;
       Utils.logMessage('User Model ===>\n${userModel?.toJson().toString()}');
     }
+    loading = false;
   }
 
   void updateProfile({

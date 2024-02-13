@@ -53,6 +53,7 @@ class _AppState extends State<App> {
                 ..displayDuration = const Duration(milliseconds: 2000)
                 ..indicatorType = EasyLoadingIndicatorType.fadingCircle
                 ..loadingStyle = EasyLoadingStyle.custom
+                ..maskType = EasyLoadingMaskType.black
                 ..indicatorSize = 45.0
                 ..radius = 10.0
                 ..progressWidth = 3

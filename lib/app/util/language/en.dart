@@ -165,5 +165,10 @@ Map<String, String> en = {
   'add_user_note': 'Note: You can add up to 3 users',
   'choose_your_image': 'Please choose your profile image',
   'uploading': 'Uploading Picture...',
-  'edit_user': 'Edit User'
+  'edit_user': 'Edit User',
+  'add_new_user':'Add new user',
+  'no_users':'Sorry, No Users Found.',
+  'add_new_car':'Add New Car',
+  'no_cars':'Sorry, No Cars Found.',
+  'choose_car_image':'Choose your car image.',
 };

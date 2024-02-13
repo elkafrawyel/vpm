@@ -6,6 +6,8 @@ import 'package:vpm/data/providers/network/api_provider.dart';
 
 import '../../app/util/operation_reply.dart';
 import '../../domain/repositories/lookups_repository.dart';
+import '../models/car_colors_response.dart';
+import '../models/car_types_response.dart';
 
 class LookUpsRepositoryIml extends LookUpsRepository {
   @override
@@ -21,6 +23,22 @@ class LookUpsRepositoryIml extends LookUpsRepository {
         MapEntry('file', file),
       ],
       onUploadProgress: onUploadProgress,
+    );
+  }
+
+  @override
+  Future<OperationReply<CarColorsResponse>> getCarColors() async {
+    return await APIProvider.instance.get(
+      endPoint: Res.apiCarColors,
+      fromJson: CarColorsResponse.fromJson,
+    );
+  }
+
+  @override
+  Future<OperationReply<CarTypesResponse>> getCarTypes() async {
+    return await APIProvider.instance.get(
+      endPoint: Res.apiCarTypes,
+      fromJson: CarTypesResponse.fromJson,
     );
   }
 }

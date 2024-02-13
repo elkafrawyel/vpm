@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/instance_manager.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/app/res/res.dart';
-import 'package:vpm/presentation/controller/users_controller/users_controller.dart';
+import 'package:vpm/presentation/controller/my_cars_controller/my_cars_controller.dart';
+import 'package:vpm/presentation/screens/add_car/add_car_screen.dart';
 
+import '../../../../app/res/res.dart';
 import '../../../widgets/app_widgets/app_text.dart';
-import '../../add_user/add_user_screen.dart';
 
-class UsersEmptyView extends StatelessWidget {
-  const UsersEmptyView({super.key});
+class CarsEmptyView extends StatelessWidget {
+  const CarsEmptyView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +22,10 @@ class UsersEmptyView extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             SvgPicture.asset(
-              Res.iconEmptyUsers,
+              Res.iconEmptyCars,
             ),
             AppText(
-              "no_users".tr,
+              "no_cars".tr,
               fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Theme.of(context).primaryColor,
@@ -38,14 +38,14 @@ class UsersEmptyView extends StatelessWidget {
                 onPressed: () async {
                   await PersistentNavBarNavigator.pushNewScreen(
                     context,
-                    screen: const AddUserScreen(),
+                    screen: const AddCarScreen(),
                     withNavBar: true,
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );
-                  Get.find<UsersController>().getAllContacts();
+                  Get.find<MyCarsController>().getMyCars(loading:false);
                 },
                 child: AppText(
-                  'add_new_user'.tr,
+                  'add_new_car'.tr,
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),

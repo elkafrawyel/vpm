@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
+import 'package:vpm/domain/entities/models/car_model.dart';
+import 'package:vpm/presentation/controller/my_cars_controller/my_cars_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
@@ -10,21 +12,25 @@ import '../../../widgets/app_widgets/app_dialog.dart';
 import 'qr_code_view.dart';
 
 class CarCard extends StatelessWidget {
-  const CarCard({super.key});
+  final CarModel car;
+
+  const CarCard({
+    super.key,
+    required this.car,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.0,
-      color: const Color(0xffF4F4F4),
+      // color:   Color(0xffF4F4F4),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kRadius),
       ),
       child: Row(
         children: [
-          const AppCachedImage(
-            imageUrl:
-                'https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/2020-Chevrolet-Corvette-Stingray/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&width=960',
+          AppCachedImage(
+            imageUrl: car.image?.filePath,
             width: 130,
             height: 120,
             radius: 4,
@@ -36,23 +42,26 @@ class CarCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppText(
-                  'Car Title',
+                  car.name ?? '',
                   fontSize: 16,
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w700,
                 ),
-                const AppText(
-                  '4x4 Truck',
+                5.ph,
+                AppText(
+                  car.type?.name ?? '',
                   fontSize: 14,
                   // color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w400,
                 ),
-                const AppText(
-                  'AFD 6397',
+                5.ph,
+                AppText(
+                  car.number ?? '',
                   color: hintColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 12,
                 ),
+                5.ph,
                 Row(
                   children: [
                     AppText(
@@ -91,7 +100,8 @@ class CarCard extends StatelessWidget {
                             Get.back();
                           },
                           onConfirmClick: () async {
-
+                            Get.back();
+                            Get.find<MyCarsController>().deleteCar(car);
                           },
                         );
                       },

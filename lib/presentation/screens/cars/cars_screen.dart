@@ -4,6 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/controller/my_cars_controller/my_cars_controller.dart';
 import 'package:vpm/presentation/screens/add_car/add_car_screen.dart';
+import 'package:vpm/presentation/screens/cars/components/cars_empty_view.dart';
 import 'package:vpm/presentation/widgets/api_state_views/handel_api_state.dart';
 
 import 'components/car_card.dart';
@@ -36,13 +37,14 @@ class _CarsScreenState extends State<CarsScreen> {
           Icons.add,
           color: Colors.white,
         ),
-        onPressed: () {
-          PersistentNavBarNavigator.pushNewScreen(
+        onPressed: () async {
+          await PersistentNavBarNavigator.pushNewScreen(
             context,
             screen: const AddCarScreen(),
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
+          Get.find<MyCarsController>().getMyCars(loading: false);
         },
       ),
       body: GetBuilder<MyCarsController>(
@@ -50,6 +52,7 @@ class _CarsScreenState extends State<CarsScreen> {
         builder: (myCarsController) {
           return HandleApiState.controller(
             generalController: myCarsController,
+            emptyView: const CarsEmptyView(),
             shimmerLoader: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.separated(
@@ -60,10 +63,15 @@ class _CarsScreenState extends State<CarsScreen> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView.separated(
-                itemBuilder: (context, index) => const CarCard(),
-                separatorBuilder: (context, index) => 5.ph,
-                itemCount: 10,
+              child: RefreshIndicator(
+                onRefresh: myCarsController.refreshApiCall,
+                child: ListView.separated(
+                  itemBuilder: (context, index) => CarCard(
+                    car: myCarsController.cars[index],
+                  ),
+                  separatorBuilder: (context, index) => 5.ph,
+                  itemCount: myCarsController.cars.length,
+                ),
               ),
             ),
           );

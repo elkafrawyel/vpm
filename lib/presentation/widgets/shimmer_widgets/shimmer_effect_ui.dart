@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:vpm/app/util/constants.dart';
 
 class MyShimmerEffectUI extends StatelessWidget {
   final double width;
@@ -35,8 +34,8 @@ class MyShimmerEffectUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(
-        baseColor: baseColor ?? Colors.grey[300]!,
-        highlightColor: highlightColor ?? Colors.white,
+        baseColor: baseColor ?? Colors.grey.shade200,
+        highlightColor: highlightColor ?? Colors.white70,
         period: Duration(seconds: seconds ?? 2),
         child: Container(
           padding: EdgeInsets.zero,
