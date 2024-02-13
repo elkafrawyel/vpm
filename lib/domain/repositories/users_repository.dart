@@ -12,9 +12,12 @@ abstract class UsersRepository {
   });
 
   Future<OperationReply> editUser({
-    required int id,
+    required String id,
     required String name,
     required String phone,
-    required String password,
+  });
+
+  Future<OperationReply<GeneralResponse>> deleteUser({
+    required String userId,
   });
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:vpm/app/util/information_viewer.dart';
 import 'package:vpm/app/util/operation_reply.dart';
 import 'package:vpm/data/models/contacts_response.dart';
+import 'package:vpm/data/models/general_response.dart';
 import 'package:vpm/data/repositories/users_repository.dart';
 
 import '../general_controller.dart';
@@ -16,17 +19,19 @@ class UsersController extends GeneralController {
     getAllContacts();
   }
 
-  List<ContactModel> contactsList = [];
+  List<ContactModel> usersList = [];
 
-  Future getAllContacts() async {
-    operationReply = OperationReply.loading();
+  Future getAllContacts({bool loading = true}) async {
+    if (loading) {
+      operationReply = OperationReply.loading();
+    }
     operationReply = await _userRepositoryImpl.getAllUsers();
 
     if (operationReply.isSuccess()) {
       ContactsResponse contactsResponse = operationReply.result;
-      contactsList = contactsResponse.data ?? [];
+      usersList = contactsResponse.data ?? [];
 
-      if (contactsList.isEmpty) {
+      if (usersList.isEmpty) {
         operationReply = OperationReply.empty(
           message: 'There are no contacts',
         );
@@ -37,6 +42,7 @@ class UsersController extends GeneralController {
   }
 
   Future<OperationReply> addUser({
+    String? userId,
     required String name,
     required String phone,
     required String password,
@@ -44,11 +50,18 @@ class UsersController extends GeneralController {
     required BuildContext context,
   }) async {
     animationController.forward();
-    OperationReply operationReply = await _userRepositoryImpl.addUser(
-      name: name,
-      phone: phone,
-      password: password,
-    );
+
+    OperationReply operationReply = userId == null
+        ? await _userRepositoryImpl.addUser(
+            name: name,
+            phone: phone,
+            password: password,
+          )
+        : await _userRepositoryImpl.editUser(
+            id: userId,
+            name: name,
+            phone: phone,
+          );
     animationController.reverse();
 
     return operationReply;
@@ -57,5 +70,21 @@ class UsersController extends GeneralController {
   @override
   Future<void> refreshApiCall() async {
     getAllContacts();
+  }
+
+  void deleteUser(ContactModel user) async {
+    EasyLoading.show();
+    OperationReply operationReply = await _userRepositoryImpl.deleteUser(
+      userId: user.id!,
+    );
+    EasyLoading.dismiss();
+    if (operationReply.isSuccess()) {
+      GeneralResponse generalResponse = operationReply.result;
+      InformationViewer.showSnackBar(generalResponse.message);
+      usersList.remove(user);
+      update();
+    } else {
+      InformationViewer.showSnackBar(operationReply.message);
+    }
   }
 }

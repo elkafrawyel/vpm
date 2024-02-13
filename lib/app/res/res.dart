@@ -15,6 +15,7 @@ class Res {
   static const apiUpdateProfile = 'auth/profile';
   static const apiCreateContact = 'customer/contact';
   static const apiAllContact = 'customer/contacts';
+  static const apiDeleteUser = 'customer/contact';
 
   //========================== Animation Assets  ===============================
   static const String animApiLoading = 'assets/anim/api_loading.json';

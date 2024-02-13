@@ -1,11 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/app/res/res.dart';
 import 'package:vpm/app/util/constants.dart';
-import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
-import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/shimmer_widgets/shimmer_effect_ui.dart';
 
 class CarShimmerCard extends StatelessWidget {
@@ -15,7 +10,7 @@ class CarShimmerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.0,
-      color: Color(0xffF4F4F4),
+      color: const Color(0xffF4F4F4),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kRadius),
       ),

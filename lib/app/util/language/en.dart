@@ -141,7 +141,7 @@ Map<String, String> en = {
   'logout_message': 'Are you sure you want to log out?',
   'add_car': 'Add New Car',
   'car_title': 'Car Name',
-  'car_number':'Car Number',
+  'car_number': 'Car Number',
   'choose_car_brand': 'Choose your car brand.',
   'choose_car_color': 'Choose your car color.',
   'car_color': 'Car Color',
@@ -163,6 +163,7 @@ Map<String, String> en = {
   'users_management': 'Users Management',
   'add_user': 'Add User',
   'add_user_note': 'Note: You can add up to 3 users',
-  'choose_your_image':'Please choose your profile image',
-  'uploading':'Uploading Picture...',
+  'choose_your_image': 'Please choose your profile image',
+  'uploading': 'Uploading Picture...',
+  'edit_user': 'Edit User'
 };

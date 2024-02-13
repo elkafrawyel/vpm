@@ -12,6 +12,7 @@ class HandleApiState extends StatelessWidget {
   final OperationReply? operationReply;
   final Widget child;
   final Widget? shimmerLoader;
+  final Widget? emptyView;
 
   const HandleApiState.controller({
     Key? key,
@@ -19,6 +20,7 @@ class HandleApiState extends StatelessWidget {
     required this.child,
     this.operationReply,
     this.shimmerLoader,
+    this.emptyView,
   }) : super(key: key);
 
   const HandleApiState.operation({
@@ -27,6 +29,7 @@ class HandleApiState extends StatelessWidget {
     required this.child,
     this.generalController,
     this.shimmerLoader,
+    this.emptyView,
   }) : super(key: key);
 
   @override
@@ -45,9 +48,10 @@ class HandleApiState extends StatelessWidget {
             retry: generalController!.refreshApiCall,
           );
         case OperationStatus.empty:
-          return ApiEmptyView(
-            emptyText: generalController!.operationReply.message,
-          );
+          return emptyView ??
+              ApiEmptyView(
+                emptyText: generalController!.operationReply.message,
+              );
         case OperationStatus.disConnected:
           return const ApiConnectionErrorView();
         default:
@@ -66,9 +70,10 @@ class HandleApiState extends StatelessWidget {
         case OperationStatus.disConnected:
           return const ApiConnectionErrorView();
         case OperationStatus.empty:
-          return ApiEmptyView(
-            emptyText: generalController!.operationReply.message,
-          );
+          return emptyView ??
+              ApiEmptyView(
+                emptyText: generalController!.operationReply.message,
+              );
         default:
           return const SizedBox();
       }

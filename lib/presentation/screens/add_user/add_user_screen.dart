@@ -4,17 +4,20 @@ import 'package:get/instance_manager.dart';
 import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/operation_reply.dart';
+import 'package:vpm/data/models/contacts_response.dart';
 import 'package:vpm/data/models/general_response.dart';
 import 'package:vpm/presentation/controller/users_controller/users_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text_field/app_text_field.dart';
 
-import '../../../../app/res/res.dart';
-import '../../../../app/util/information_viewer.dart';
+import '../../../app/res/res.dart';
+import '../../../app/util/information_viewer.dart';
 
 class AddUserScreen extends StatefulWidget {
-  const AddUserScreen({super.key});
+  final ContactModel? user;
+
+  const AddUserScreen({super.key, this.user});
 
   @override
   State<AddUserScreen> createState() => _AddUserScreenState();
@@ -32,16 +35,16 @@ class _AddUserScreenState extends State<AddUserScreen> {
   @override
   void initState() {
     super.initState();
-    nameController = TextEditingController();
+    nameController = TextEditingController(text: widget.user?.name ?? '');
     passwordController = TextEditingController();
-    phoneController = TextEditingController();
+    phoneController = TextEditingController(text: widget.user?.phone ?? '');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('add_user'.tr),
+        title: Text(widget.user == null ? 'add_user'.tr : 'edit_user'.tr),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -63,19 +66,22 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 prefixIcon: Res.iconPhone,
                 appFieldType: AppFieldType.phone,
               ),
-              AppTextFormField(
-                key: passwordState,
-                controller: passwordController,
-                hintText: 'password'.tr,
-                prefixIcon: Res.iconPassword,
-                appFieldType: AppFieldType.password,
-              ),
+              if (widget.user == null)
+                AppTextFormField(
+                  key: passwordState,
+                  controller: passwordController,
+                  hintText: 'password'.tr,
+                  prefixIcon: Res.iconPassword,
+                  appFieldType: AppFieldType.password,
+                ),
               30.ph,
               AppProgressButton(
                 onPressed: (animationController) async {
                   _addUser(animationController);
                 },
-                child: AppText('add_user'.tr),
+                child: AppText(
+                  widget.user == null ? 'add_user'.tr : 'edit_user'.tr,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -103,12 +109,13 @@ class _AddUserScreenState extends State<AddUserScreen> {
     } else if (phoneController.text.isEmpty) {
       phoneState.currentState?.shake();
       return;
-    } else if (passwordController.text.isEmpty) {
+    } else if (passwordController.text.isEmpty && widget.user == null) {
       passwordState.currentState?.shake();
       return;
     }
 
     OperationReply operationReply = await Get.find<UsersController>().addUser(
+      userId: widget.user?.id,
       context: context,
       animationController: animationController,
       name: nameController.text,
@@ -119,7 +126,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
     if (operationReply.isSuccess() && mounted) {
       GeneralResponse generalResponse = operationReply.result;
       InformationViewer.showSnackBar(generalResponse.message);
-      Navigator.of(context).pop(true);
+      Navigator.of(context).pop();
     } else {
       InformationViewer.showSnackBar(operationReply.message);
     }

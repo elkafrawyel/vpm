@@ -59,7 +59,7 @@ class _AppState extends State<App> {
                 ..progressColor = Colors.green
                 ..textColor = Colors.black
                 ..backgroundColor = Colors.white
-                ..indicatorColor = Colors.yellow
+                ..indicatorColor = Theme.of(context).primaryColor
                 ..maskColor = Colors.blue.withOpacity(0.5)
                 ..userInteractions = true
                 ..dismissOnTap = false;

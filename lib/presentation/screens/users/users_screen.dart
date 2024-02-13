@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/data/repositories/users_repository.dart';
 import 'package:vpm/presentation/controller/users_controller/users_controller.dart';
-import 'package:vpm/presentation/screens/users/components/add_user_screen.dart';
+import 'package:vpm/presentation/screens/add_user/add_user_screen.dart';
+import 'package:vpm/presentation/screens/users/components/user_card.dart';
+import 'package:vpm/presentation/screens/users/components/user_shimmer_card.dart';
 import 'package:vpm/presentation/widgets/api_state_views/handel_api_state.dart';
-import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
-import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
+
+import 'components/users_empty_view.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
@@ -54,40 +55,25 @@ class _UsersScreenState extends State<UsersScreen> {
         builder: (_) {
           return HandleApiState.controller(
             generalController: usersController,
+            emptyView: const UsersEmptyView(),
+            shimmerLoader: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.separated(
+                itemBuilder: (context, index) => const UserShimmerCard(),
+                separatorBuilder: (context, index) => Divider(
+                  thickness: .5,
+                  indent: 18,
+                  endIndent: 18,
+                  color: Colors.grey.shade700,
+                ),
+                itemCount: 10,
+              ),
+            ),
             child: RefreshIndicator(
               onRefresh: usersController.refreshApiCall,
               child: ListView.separated(
-                itemBuilder: (context, index) => ListTile(
-                  horizontalTitleGap: 8,
-                  leading: AppCachedImage(
-                    imageUrl:
-                        usersController.contactsList[index].avatar?.filePath,
-                    isCircular: true,
-                    borderWidth: 2,
-                    height: 70,
-                    width: 70,
-                    borderColor: Theme.of(context).primaryColor,
-                  ),
-                  title: AppText(
-                    usersController.contactsList[index].name ?? '',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  // subtitle: const AppText('Son'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.edit),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.clear),
-                        color: errorColor,
-                      ),
-                    ],
-                  ),
+                itemBuilder: (context, index) => UserCard(
+                  user: usersController.usersList[index],
                 ),
                 separatorBuilder: (context, index) => Divider(
                   thickness: .5,
@@ -95,7 +81,7 @@ class _UsersScreenState extends State<UsersScreen> {
                   endIndent: 18,
                   color: Colors.grey.shade700,
                 ),
-                itemCount: usersController.contactsList.length,
+                itemCount: usersController.usersList.length,
               ),
             ),
           );

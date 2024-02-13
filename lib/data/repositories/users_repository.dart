@@ -25,13 +25,19 @@ class UserRepositoryImpl extends UsersRepository {
   }
 
   @override
-  Future<OperationReply> editUser({
-    required int id,
+  Future<OperationReply<GeneralResponse>> editUser({
+    required String id,
     required String name,
     required String phone,
-    required String password,
   }) {
-    throw UnimplementedError();
+    return APIProvider.instance.patch(
+      endPoint: "${Res.apiCreateContact}/$id",
+      fromJson: GeneralResponse.fromJson,
+      requestBody: {
+        "name": name,
+        "phone": phone,
+      },
+    );
   }
 
   @override
@@ -39,6 +45,17 @@ class UserRepositoryImpl extends UsersRepository {
     return APIProvider.instance.get<ContactsResponse>(
       endPoint: "${Res.apiAllContact}?per_page=1000",
       fromJson: ContactsResponse.fromJson,
+    );
+  }
+
+  @override
+  Future<OperationReply<GeneralResponse>> deleteUser({
+    required String userId,
+  }) async {
+    return APIProvider.instance.delete<GeneralResponse>(
+      endPoint: '${Res.apiDeleteUser}/$userId',
+      fromJson: GeneralResponse.fromJson,
+      requestBody: {},
     );
   }
 }
