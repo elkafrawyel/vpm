@@ -18,6 +18,13 @@ import '../../../data/repositories/lookups_repository.dart';
 
 class ProfileController extends GetxController {
   UserModel? _userModel;
+  final AuthRepositoryIml _authRepositoryIml;
+  final LookUpsRepositoryIml _lookUpsRepositoryIml;
+
+  ProfileController(
+    this._authRepositoryIml,
+    this._lookUpsRepositoryIml,
+  );
 
   @override
   void onInit() {
@@ -43,7 +50,7 @@ class ProfileController extends GetxController {
 
   Future<void> getUserProfile() async {
     loading = true;
-    OperationReply operationReply = await AuthRepositoryIml().profile();
+    OperationReply operationReply = await _authRepositoryIml.profile();
 
     if (operationReply.isSuccess()) {
       UserResponse? userResponse = operationReply.result;
@@ -67,7 +74,7 @@ class ProfileController extends GetxController {
     String? fileId = userModel?.avatar?.id;
     if (image != null) {
       OperationReply<UploadFileResponse> uploadOperationReply =
-          await LookUpsRepositoryIml().uploadFile(
+          await _lookUpsRepositoryIml.uploadFile(
         file: image,
         onUploadProgress: (double percent) {
           EasyLoading.showProgress(
@@ -89,7 +96,7 @@ class ProfileController extends GetxController {
 
     animationController.forward();
     OperationReply operationReply =
-        await AuthRepositoryIml().updateProfileInformation(
+        await _authRepositoryIml.updateProfileInformation(
       updateProfileRequest: UpdateProfileRequest(
         name: name,
         email: email,

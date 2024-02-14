@@ -54,7 +54,7 @@ class _AppState extends State<App> {
                 ..indicatorType = EasyLoadingIndicatorType.fadingCircle
                 ..loadingStyle = EasyLoadingStyle.custom
                 ..maskType = EasyLoadingMaskType.black
-                ..indicatorSize = 45.0
+                ..indicatorSize = 50.0
                 ..radius = 10.0
                 ..progressWidth = 3
                 ..progressColor = Colors.green
@@ -62,6 +62,10 @@ class _AppState extends State<App> {
                 ..backgroundColor = Colors.white
                 ..indicatorColor = Theme.of(context).primaryColor
                 ..maskColor = Colors.blue.withOpacity(0.5)
+                ..textStyle = const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                )
                 ..userInteractions = true
                 ..dismissOnTap = false;
               child = MediaQuery(

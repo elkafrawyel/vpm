@@ -4,8 +4,6 @@ import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
-import '../../../app/res/res.dart';
-
 // Get.dialog(
 //   AppDialogView(
 //     svgName: Res.iconSuccess,
@@ -57,7 +55,7 @@ class AppDialogView extends StatelessWidget {
       height: 300,
       margin: const EdgeInsets.symmetric(
         vertical: 200,
-        horizontal: 28,
+        horizontal: 18,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(kRadius),
@@ -79,6 +77,7 @@ class AppDialogView extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.bold,
               ),
+              10.ph,
               AppText(
                 message,
                 fontSize: 16,
@@ -88,16 +87,15 @@ class AppDialogView extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
               20.ph,
-              ElevatedButton(
-                onPressed: onActionClicked,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 28.0,
-                    vertical: 8.0,
-                  ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: onActionClicked.call,
                   child: AppText(
                     actionText,
                     color: Colors.white,
+                    fontSize: 18,
                   ),
                 ),
               )
