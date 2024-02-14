@@ -14,7 +14,7 @@ class CarModel {
     name = json['name'];
     number = json['number'];
     createdAt = json['created_at'];
-    color = json['color'] != null ? Color.fromJson(json['color']) : null;
+    color = json['color'] != null ? ColorModel.fromJson(json['color']) : null;
     type = json['type'] != null ? Type.fromJson(json['type']) : null;
     image = json['image'] != null ? Image.fromJson(json['image']) : null;
   }
@@ -23,7 +23,7 @@ class CarModel {
   String? name;
   String? number;
   String? createdAt;
-  Color? color;
+  ColorModel? color;
   Type? type;
   Image? image;
 
@@ -32,7 +32,7 @@ class CarModel {
     String? name,
     String? number,
     String? createdAt,
-    Color? color,
+    ColorModel? color,
     Type? type,
     Image? image,
   }) =>
@@ -139,15 +139,15 @@ class Type {
   }
 }
 
-class Color {
-  Color({
+class ColorModel {
+  ColorModel({
     this.id,
     this.name,
     this.code,
     this.createdAt,
   });
 
-  Color.fromJson(dynamic json) {
+  ColorModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
     code = json['code'];
@@ -159,13 +159,13 @@ class Color {
   String? code;
   String? createdAt;
 
-  Color copyWith({
+  ColorModel copyWith({
     String? id,
     String? name,
     String? code,
     String? createdAt,
   }) =>
-      Color(
+      ColorModel(
         id: id ?? this.id,
         name: name ?? this.name,
         code: code ?? this.code,

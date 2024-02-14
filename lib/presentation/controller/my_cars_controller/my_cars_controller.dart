@@ -88,50 +88,88 @@ class MyCarsController extends GeneralController {
   }
 
   Future<OperationReply> addCar({
+    String? carId,
     required AnimationController animationController,
     required String name,
     required String number,
     required CarTypeModel selectedType,
     required CarColorModel selectedColor,
-    required File image,
+    File? image,
+    String? fileId,
   }) async {
     OperationReply<GeneralResponse> operationReply;
-    OperationReply<UploadFileResponse> uploadOperationReply =
-        await LookUpsRepositoryIml().uploadFile(
-      file: image,
-      onUploadProgress: (double percent) {
-        EasyLoading.showProgress(
-          percent,
-          status: 'uploading'.tr,
-        );
-      },
-    );
-    //todo dismiss uploading view
-    EasyLoading.dismiss();
-    if (uploadOperationReply.isSuccess()) {
-      UploadFileResponse? uploadFileResponse = uploadOperationReply.result;
-      if (uploadFileResponse?.data?.id != null) {
-        animationController.forward();
-        operationReply = await _carsRepositoryIml.addCar(
-          addCarRequest: AddCarRequest(
-            name: name,
-            number: number,
-            fileId: uploadFileResponse?.data?.id,
-            carColorId: selectedColor.id,
-            carTypeId: selectedType.id,
-          ),
-        );
-        return operationReply;
+    if (image != null) {
+      OperationReply<UploadFileResponse> uploadOperationReply =
+          await LookUpsRepositoryIml().uploadFile(
+        file: image,
+        onUploadProgress: (double percent) {
+          EasyLoading.showProgress(
+            percent,
+            status: 'uploading'.tr,
+          );
+        },
+      );
+      //todo dismiss uploading view
+      EasyLoading.dismiss();
+      if (uploadOperationReply.isSuccess()) {
+        UploadFileResponse? uploadFileResponse = uploadOperationReply.result;
+        if (uploadFileResponse?.data?.id != null) {
+          animationController.forward();
+          operationReply = carId == null
+              ? await _carsRepositoryIml.addCar(
+                  addCarRequest: AddCarRequest(
+                    name: name,
+                    number: number,
+                    fileId: uploadFileResponse?.data?.id,
+                    carColorId: selectedColor.id,
+                    carTypeId: selectedType.id,
+                  ),
+                )
+              : await _carsRepositoryIml.updateCar(
+                  carId: carId,
+                  addCarRequest: AddCarRequest(
+                    name: name,
+                    number: number,
+                    fileId: uploadFileResponse?.data?.id,
+                    carColorId: selectedColor.id,
+                    carTypeId: selectedType.id,
+                  ),
+                );
+          return operationReply;
+        } else {
+          return operationReply = OperationReply.failed(
+            message: uploadFileResponse?.message ?? '',
+          );
+        }
       } else {
+        InformationViewer.showSnackBar(uploadOperationReply.message);
         return operationReply = OperationReply.failed(
-          message: uploadFileResponse?.message ?? '',
+          message: uploadOperationReply.message,
         );
       }
     } else {
-      InformationViewer.showSnackBar(uploadOperationReply.message);
-      return operationReply = OperationReply.failed(
-        message: uploadOperationReply.message,
-      );
+      animationController.forward();
+      operationReply = carId == null
+          ? await _carsRepositoryIml.addCar(
+              addCarRequest: AddCarRequest(
+                name: name,
+                number: number,
+                fileId: fileId,
+                carColorId: selectedColor.id,
+                carTypeId: selectedType.id,
+              ),
+            )
+          : await _carsRepositoryIml.updateCar(
+              carId: carId,
+              addCarRequest: AddCarRequest(
+                name: name,
+                number: number,
+                fileId: fileId,
+                carColorId: selectedColor.id,
+                carTypeId: selectedType.id,
+              ),
+            );
+      return operationReply;
     }
   }
 

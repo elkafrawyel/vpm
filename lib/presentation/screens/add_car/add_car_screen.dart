@@ -7,7 +7,9 @@ import 'package:get/state_manager.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/app/util/operation_reply.dart';
+import 'package:vpm/domain/entities/models/car_model.dart';
 import 'package:vpm/presentation/controller/my_cars_controller/my_cars_controller.dart';
+import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_drop_menu.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
@@ -20,7 +22,12 @@ import '../../../data/models/general_response.dart';
 import '../../widgets/app_widgets/app_image_picker_dialog.dart';
 
 class AddCarScreen extends StatefulWidget {
-  const AddCarScreen({super.key});
+  final CarModel? car;
+
+  const AddCarScreen({
+    super.key,
+    this.car,
+  });
 
   @override
   State<AddCarScreen> createState() => _AddCarScreenState();
@@ -40,10 +47,19 @@ class _AddCarScreenState extends State<AddCarScreen> {
   @override
   void initState() {
     super.initState();
-    myCarsController.getCarColors();
-    myCarsController.getCarTypes();
-    carNameController = TextEditingController();
-    carNumberController = TextEditingController();
+    carNameController = TextEditingController(text: widget.car?.name ?? '');
+    carNumberController = TextEditingController(text: widget.car?.number ?? '');
+
+    myCarsController.getCarColors().then((value) {
+      selectedColor = myCarsController.carColors
+          .firstWhereOrNull((element) => element.id == widget.car?.color?.id);
+      myCarsController.loadingCarColors.refresh();
+    });
+    myCarsController.getCarTypes().then((value) {
+      selectedType = myCarsController.carTypes
+          .firstWhereOrNull((element) => element.id == widget.car?.type?.id);
+      myCarsController.loadingCarTypes.refresh();
+    });
   }
 
   @override
@@ -68,62 +84,60 @@ class _AddCarScreenState extends State<AddCarScreen> {
             children: [
               Center(
                 child: image != null
-                    ? GestureDetector(
+                    ? InkWell(
                         onTap: () {
                           _chooseImage();
                         },
-                        child: Container(
-                          height: 150,
-                          width: MediaQuery.sizeOf(context).width * 0.8,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(kRadius),
-                            image: DecorationImage(
-                              image: FileImage(image!),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                        child: Stack(
                           alignment: AlignmentDirectional.bottomEnd,
-                          child: InkWell(
+                          children: [
+                            AppCachedImage(
+                              localFile: image,
+                              height: 150,
+                              width: MediaQuery.sizeOf(context).width * 0.8,
+                              radius: 8,
+                            ),
+                            editIcon(),
+                          ],
+                        ),
+                      )
+                    : widget.car?.image?.filePath != null
+                        ? InkWell(
+                            onTap: () {
+                              _chooseImage();
+                            },
+                            child: Stack(
+                              alignment: AlignmentDirectional.bottomEnd,
+                              children: [
+                                AppCachedImage(
+                                  imageUrl: widget.car?.image?.filePath,
+                                  height: 150,
+                                  width: MediaQuery.sizeOf(context).width * 0.8,
+                                  radius: 8,
+                                ),
+                                editIcon(),
+                              ],
+                            ),
+                          )
+                        : GestureDetector(
                             onTap: () {
                               _chooseImage();
                             },
                             child: Container(
+                              height: 150,
+                              width: MediaQuery.sizeOf(context).width * 0.8,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: const Color(0xff1D80E6),
+                                color: const Color(0xffECECEC),
+                                borderRadius: BorderRadius.circular(kRadius),
                               ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(4.0),
+                              child: const Center(
                                 child: Icon(
-                                  Icons.edit,
-                                  color: Colors.white,
-                                  size: 20,
+                                  Icons.image,
+                                  size: 60,
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          _chooseImage();
-                        },
-                        child: Container(
-                          height: 150,
-                          width: MediaQuery.sizeOf(context).width * 0.8,
-                          decoration: BoxDecoration(
-                            color: const Color(0xffECECEC),
-                            borderRadius: BorderRadius.circular(kRadius),
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.image,
-                              size: 60,
-                            ),
-                          ),
-                        ),
-                      ),
               ),
               20.ph,
               AppTextFormField(
@@ -151,6 +165,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
                       : AppDropMenu<CarTypeModel>(
                           hint: 'car_brand'.tr,
                           items: myCarsController.carTypes,
+                          initialValue: selectedType,
                           expanded: true,
                           bordered: true,
                           onChanged: (CarTypeModel? brand) {
@@ -172,6 +187,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
                       : AppDropMenu<CarColorModel>(
                           hint: 'car_color'.tr,
                           items: myCarsController.carColors,
+                          initialValue: selectedColor,
                           expanded: true,
                           bordered: true,
                           onChanged: (CarColorModel? color) {
@@ -198,6 +214,26 @@ class _AddCarScreenState extends State<AddCarScreen> {
     );
   }
 
+  Widget editIcon() => InkWell(
+        onTap: () {
+          _chooseImage();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: const Color(0xff1D80E6),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Icon(
+              Icons.edit,
+              color: Colors.white,
+              size: 20,
+            ),
+          ),
+        ),
+      );
+
   void _chooseImage() {
     showAppImageDialog(
         context: context,
@@ -209,7 +245,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
   }
 
   void _addCar(AnimationController animationController) async {
-    if (image == null) {
+    if (image == null && widget.car == null) {
       FocusManager.instance.primaryFocus?.unfocus();
       InformationViewer.showSnackBar('choose_car_image'.tr);
       return;
@@ -231,11 +267,13 @@ class _AddCarScreenState extends State<AddCarScreen> {
 
     OperationReply operationReply = await myCarsController.addCar(
       animationController: animationController,
+      carId: widget.car?.id,
       name: carNameController.text,
       number: carNumberController.text,
       selectedType: selectedType!,
       selectedColor: selectedColor!,
-      image: image!,
+      image: image,
+      fileId: widget.car?.image?.id,
     );
 
     if (operationReply.isSuccess() && mounted) {

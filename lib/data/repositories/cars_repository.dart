@@ -21,7 +21,7 @@ class CarsRepositoryIml extends CarsRepository {
     required AddCarRequest addCarRequest,
   }) async {
     return await APIProvider.instance.post(
-      endPoint: Res.apiAddCars,
+      endPoint: Res.apiCar,
       fromJson: GeneralResponse.fromJson,
       requestBody: addCarRequest.toJson(),
     );
@@ -32,7 +32,7 @@ class CarsRepositoryIml extends CarsRepository {
     required String carId,
   }) async {
     return await APIProvider.instance.delete<GeneralResponse>(
-      endPoint: "${Res.apiDeleteCar}/$carId",
+      endPoint: "${Res.apiCar}/$carId",
       fromJson: GeneralResponse.fromJson,
       requestBody: {},
     );
@@ -42,8 +42,11 @@ class CarsRepositoryIml extends CarsRepository {
   Future<OperationReply<GeneralResponse>> updateCar({
     required String carId,
     required AddCarRequest addCarRequest,
-  }) {
-    // TODO: implement update
-    throw UnimplementedError();
+  }) async {
+    return await APIProvider.instance.patch<GeneralResponse>(
+      endPoint: "${Res.apiCar}/$carId",
+      fromJson: GeneralResponse.fromJson,
+      requestBody: addCarRequest.toJson(),
+    );
   }
 }

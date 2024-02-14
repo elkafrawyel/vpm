@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/domain/entities/models/car_model.dart';
 import 'package:vpm/presentation/controller/my_cars_controller/my_cars_controller.dart';
+import 'package:vpm/presentation/screens/add_car/add_car_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
@@ -23,7 +25,7 @@ class CarCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.0,
-      // color:   Color(0xffF4F4F4),
+      color: const Color(0xffF4F4F4),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kRadius),
       ),
@@ -64,11 +66,23 @@ class CarCard extends StatelessWidget {
                 5.ph,
                 Row(
                   children: [
-                    AppText(
-                      'Edit',
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w700,
-                      underLine: true,
+                    GestureDetector(
+                      onTap: () async {
+                        await PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: AddCarScreen(car: car),
+                          withNavBar: true,
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
+                        Get.find<MyCarsController>().getMyCars(loading: false);
+                      },
+                      child: AppText(
+                        'Edit',
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w700,
+                        underLine: true,
+                      ),
                     ),
                     10.pw,
                     GestureDetector(

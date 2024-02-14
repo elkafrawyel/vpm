@@ -18,9 +18,8 @@ class Res {
   static const apiDeleteUser = 'customer/contact';
   static const apiCarColors = 'car-variants/car-colors-list';
   static const apiCarTypes = 'car-variants/car-types-list';
-  static const apiAddCars = 'customer/car';
+  static const apiCar = 'customer/car';
   static const apiAllCars = 'customer/cars';
-  static const apiDeleteCar = 'customer/car';
 
   //========================== Animation Assets  ===============================
   static const String animApiLoading = 'assets/anim/api_loading.json';

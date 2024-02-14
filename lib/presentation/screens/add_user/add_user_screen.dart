@@ -115,9 +115,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
     }
 
     OperationReply operationReply = await Get.find<UsersController>().addUser(
+      animationController: animationController,
       userId: widget.user?.id,
       context: context,
-      animationController: animationController,
       name: nameController.text,
       phone: phoneController.text,
       password: passwordController.text,
