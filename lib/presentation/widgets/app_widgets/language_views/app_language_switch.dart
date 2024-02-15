@@ -34,12 +34,15 @@ class _AppLanguageSwitchState extends State<AppLanguageSwitch> {
             [Theme.of(context).primaryColor],
           ],
           onToggle: (int? index) async {
-            setState(() {
-              this.index = index ?? 0;
-            });
+            if (index == null) {
+              return;
+            }
             await LanguageData.changeLanguage(
-              LanguageData.languageList()[index ?? 0],
+              LanguageData.languageList()[index],
             );
+            setState(() {
+              this.index = index;
+            });
           },
         ),
       ),

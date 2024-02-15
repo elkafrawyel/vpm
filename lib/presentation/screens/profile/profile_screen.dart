@@ -204,23 +204,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void updateProfile(AnimationController animationController) async {
-    if (nameController.text.isEmpty ||
-        (_nameState.currentState?.hasError ?? false)) {
+    if (nameController.text.isEmpty || (_nameState.currentState?.hasError ?? false)) {
       _nameState.currentState?.shake();
       return;
-    } else if (emailController.text.isEmpty ||
-        (_emailState.currentState?.hasError ?? false)) {
+    } else if (emailController.text.isEmpty || (_emailState.currentState?.hasError ?? false)) {
       _emailState.currentState?.shake();
-
       return;
-    } else if (phoneController.text.isEmpty ||
-        (_phoneState.currentState?.hasError ?? false)) {
+    } else if (phoneController.text.isEmpty || (_phoneState.currentState?.hasError ?? false)) {
       _phoneState.currentState?.shake();
-
       return;
     }
 
     profileController.updateProfile(
+      context: context,
       animationController: animationController,
       name: nameController.text,
       email: emailController.text,

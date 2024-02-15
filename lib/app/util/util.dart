@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:vpm/presentation/controller/app_config_controller.dart';
 
 import '../../presentation/widgets/api_state_views/no_connection_view.dart';
 
@@ -26,5 +28,18 @@ class Utils {
     }
 
     Get.dialog(const NoConnectionView(), barrierDismissible: false);
+  }
+
+  String formatNumbers(
+    String number, {
+    String? symbol,
+    int? digits = 1,
+  }) {
+    return '${NumberFormat.decimalPatternDigits(
+      locale: Get.locale?.languageCode == 'ar' ? 'ar_EG' : 'en_US',
+      decimalDigits: digits,
+    ).format(
+      num.parse(number),
+    )} ${symbol ?? (Get.locale?.languageCode == 'ar' ? 'ريال' : 'SAR')}';
   }
 }

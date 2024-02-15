@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:vpm/presentation/screens/auth/welcome/welcome_screen.dart';
@@ -11,7 +12,7 @@ import '../../../presentation/controller/app_config_controller.dart';
 import '../network/api_provider.dart';
 
 enum LocalProviderKeys {
-  intro, // int
+  intro, // bool
   language, //String
   notifications, //int
   userModel, //Json String
@@ -28,15 +29,35 @@ class LocalProvider {
 
   init() async {
     await GetStorage.init();
+    //set keys default values
+    dynamic language = get(LocalProviderKeys.language);
+    if (language == null) {
+      save(LocalProviderKeys.language, Constants.mainAppLanguage);
+    }
+
+    dynamic intro = get(LocalProviderKeys.intro);
+    if (intro == null) {
+      save(LocalProviderKeys.intro, false);
+    }
+
+    dynamic rememberMe = get(LocalProviderKeys.rememberMe);
+    if (rememberMe == null) {
+      save(LocalProviderKeys.rememberMe, false);
+    }
+
+    dynamic notifications = get(LocalProviderKeys.notifications);
+    if (notifications == null) {
+      save(LocalProviderKeys.notifications, true);
+    }
+
+    debugPrint('LocalProvider initialization.');
   }
 
-  String getAppLanguage() =>
-      get(LocalProviderKeys.language) ?? Constants.mainAppLanguage;
+  String getAppLanguage() => get(LocalProviderKeys.language);
 
   bool isLogged() => get(LocalProviderKeys.userModel) != null;
 
-  bool isAr() =>
-      (get(LocalProviderKeys.language) ?? Constants.mainAppLanguage) == 'ar';
+  bool isAr() => get(LocalProviderKeys.language) == 'ar';
 
   bool isDarkMode() => get(LocalProviderKeys.appTheme) == 1;
 
@@ -92,8 +113,8 @@ class LocalProvider {
   }
 
   Future<void> signOut() async {
-    bool rememberMe = get(LocalProviderKeys.rememberMe) ?? false;
-    bool intro = get(LocalProviderKeys.intro) ?? false;
+    bool rememberMe = get(LocalProviderKeys.rememberMe);
+    bool intro = get(LocalProviderKeys.intro);
     String? email, password;
     if (rememberMe) {
       email = get(LocalProviderKeys.phone);

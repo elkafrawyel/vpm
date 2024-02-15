@@ -172,4 +172,6 @@ Map<String, String> ar = {
   'location_permission': 'خدمات الموقع',
   'location_permission_message':
       'لم يتم تمكين خدمات الموقع، ونحتاج منك تمكينه حتى نتمكن من الحصول على موقعك الدقيق.',
+  'pay':'دفع',
+
 };

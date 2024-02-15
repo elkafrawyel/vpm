@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vpm/data/providers/storage/local_provider.dart';
 
 class Constants {
   // Colors
@@ -12,6 +13,7 @@ class Constants {
   static String mainAppLanguage = Get.deviceLocale?.languageCode ?? 'en';
   static String defaultUserType = 'client';
   static String defaultApiTokenType = 'Bearer';
+
 }
 
 double kRadius = 18;

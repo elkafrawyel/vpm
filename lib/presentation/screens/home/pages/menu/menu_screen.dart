@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/controller/profile_controller/profile_controller.dart';
+import 'package:vpm/presentation/screens/home/pages/menu/components/logout_view.dart';
+import 'package:vpm/presentation/screens/home/pages/menu/components/user_info_view.dart';
 import 'package:vpm/presentation/screens/profile/profile_screen.dart';
 import 'package:vpm/presentation/screens/users/users_screen.dart';
-import 'package:vpm/presentation/screens/wallet/wallet_screen.dart';
-import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
-import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/language_views/app_language_switch.dart';
-import 'package:vpm/presentation/widgets/shimmer_widgets/shimmer_effect_ui.dart';
 
-import '../../../../../app/util/information_viewer.dart';
-import '../../../../../app/util/operation_reply.dart';
-import '../../../../../data/models/general_response.dart';
-import '../../../../../data/providers/storage/local_provider.dart';
-import '../../../../../data/repositories/auth_repository.dart';
-import '../../../../widgets/app_widgets/app_dialog.dart';
 import '../../../cars/cars_screen.dart';
+import 'components/wallet_view.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -29,69 +20,19 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  final ProfileController profileController = Get.find();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('menu'.tr),
       ),
-      body: GetBuilder<ProfileController>(builder: (_) {
-        return RefreshIndicator(
-          onRefresh: profileController.getUserProfile,
-          child: SingleChildScrollView(
+      body: GetBuilder<ProfileController>(
+        builder: (_) {
+          return SingleChildScrollView(
             child: Column(
               children: [
                 30.ph,
-                Center(
-                  child: profileController.loading
-                      ? const MyShimmerEffectUI.circular(
-                          height: 120,
-                          width: 120,
-                        )
-                      : InkWell(
-                          onTap: () {
-                            PersistentNavBarNavigator.pushNewScreen(
-                              context,
-                              screen: const ProfileScreen(),
-                              withNavBar: true,
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.cupertino,
-                            );
-                          },
-                          child: AppCachedImage(
-                            imageUrl:
-                                profileController.userModel?.avatar?.filePath,
-                            isCircular: true,
-                            width: 120,
-                            height: 120,
-                          ),
-                        ),
-                ),
-                10.ph,
-                profileController.loading
-                    ? const MyShimmerEffectUI.rectangular(
-                        height: 13,
-                        width: 150,
-                      )
-                    : InkWell(
-                        onTap: () {
-                          PersistentNavBarNavigator.pushNewScreen(
-                            context,
-                            screen: const ProfileScreen(),
-                            withNavBar: true,
-                            pageTransitionAnimation:
-                                PageTransitionAnimation.cupertino,
-                          );
-                        },
-                        child: AppText(
-                          profileController.userModel?.name ?? '',
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          centerText: false,
-                        ),
-                      ),
+                const UserInfoView(),
                 ListTile(
                   splashColor: Colors.transparent,
                   leading: const Icon(Icons.person),
@@ -106,41 +47,11 @@ class _MenuScreenState extends State<MenuScreen> {
                       context,
                       screen: const ProfileScreen(),
                       withNavBar: true,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
+                      pageTransitionAnimation: PageTransitionAnimation.cupertino,
                     );
                   },
                 ),
-                ListTile(
-                  splashColor: Colors.transparent,
-                  leading: const Icon(Icons.wallet),
-                  title: Text('wallet'.tr),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const AppText(
-                        '(1000 SAR)',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
-                      10.pw,
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        color: Theme.of(context).dividerColor,
-                        size: 20,
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    PersistentNavBarNavigator.pushNewScreen(
-                      context,
-                      screen: const WalletScreen(),
-                      withNavBar: true,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
-                    );
-                  },
-                ),
+                const WalletView(),
                 ListTile(
                   splashColor: Colors.transparent,
                   leading: const Icon(Icons.directions_car),
@@ -155,12 +66,10 @@ class _MenuScreenState extends State<MenuScreen> {
                       context,
                       screen: const CarsScreen(),
                       withNavBar: true,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
+                      pageTransitionAnimation: PageTransitionAnimation.cupertino,
                     );
                   },
                 ),
-
                 ListTile(
                   splashColor: Colors.transparent,
                   leading: const Icon(Icons.group),
@@ -175,8 +84,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       context,
                       screen: const UsersScreen(),
                       withNavBar: true,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
+                      pageTransitionAnimation: PageTransitionAnimation.cupertino,
                     );
                   },
                 ),
@@ -221,58 +129,13 @@ class _MenuScreenState extends State<MenuScreen> {
                   trailing: const AppLanguageSwitch(),
                   onTap: () {},
                 ),
-                ListTile(
-                  splashColor: Colors.transparent,
-                  leading: const Icon(
-                    Icons.logout,
-                    color: errorColor,
-                  ),
-                  title: Text(
-                    'logout'.tr,
-                    style: const TextStyle(
-                      color: errorColor,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  onTap: () {
-                    scaleAlertDialog(
-                      context: context,
-                      title: 'logout'.tr,
-                      body: 'logout_message'.tr,
-                      cancelText: 'cancel'.tr,
-                      confirmText: 'submit'.tr,
-                      barrierDismissible: true,
-                      onCancelClick: () {
-                        Get.back();
-                      },
-                      onConfirmClick: () async {
-                        Get.back();
-                        _logout();
-                      },
-                    );
-                  },
-                ),
+                const LogOutView(),
                 200.ph,
               ],
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
-  }
-
-  void _logout() async {
-    EasyLoading.show();
-
-    OperationReply operationReply = await AuthRepositoryIml().logOut();
-    if (operationReply.isSuccess()) {
-      GeneralResponse generalResponse = operationReply.result;
-      EasyLoading.dismiss();
-      InformationViewer.showSuccessToast(msg: generalResponse.message);
-      await Future.delayed(const Duration(milliseconds: 500));
-      await LocalProvider().signOut();
-    } else {
-      InformationViewer.showSnackBar(operationReply.message);
-    }
   }
 }

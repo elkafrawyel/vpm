@@ -176,4 +176,5 @@ Map<String, String> en = {
   'location_permission': 'Location Permission',
   'location_permission_message':
       'Location permission is not enabled ,we need you to enable it so that we can get your exact location.',
+  'pay':'Pay',
 };

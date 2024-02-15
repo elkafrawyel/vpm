@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vpm/app/extensions/space.dart';
+import 'package:vpm/app/util/util.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
+
+import '../../../../../../app/util/constants.dart';
 
 class ServiceCard extends StatelessWidget {
   const ServiceCard({super.key});
@@ -12,7 +15,7 @@ class ServiceCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppCachedImage(
+          const AppCachedImage(
             imageUrl:
                 'https://media.licdn.com/dms/image/D4D12AQGA6odm93XONA/article-cover_image-shrink_720_1280/0/1675839423933?e=2147483647&v=beta&t=k4l6SyDe2-U9qtTTYJeUHcWNpeeCBqzEnso-okTBjIU',
             width: 140,
@@ -24,7 +27,7 @@ class ServiceCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppText(
+                const AppText(
                   'Car Wash Service Card is a service card for the',
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
@@ -39,7 +42,7 @@ class ServiceCard extends StatelessWidget {
                 ),
                 5.ph,
                 AppText(
-                  '200.0 SAR',
+                  Utils().formatNumbers('200'),
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   color: Theme.of(context).primaryColor,

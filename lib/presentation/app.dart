@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -25,6 +27,10 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    PlatformDispatcher.instance.onLocaleChanged = () {
+      print("Locale changed");
+      setState(() {});
+    };
     String appLanguage = LocalProvider().getAppLanguage();
     return Obx(
       () => FocusRemover(
@@ -32,8 +38,7 @@ class _AppState extends State<App> {
           child: GetMaterialApp(
             home: Container(color: Theme.of(context).scaffoldBackgroundColor),
             debugShowCheckedModeBanner:
-                Environment.appMode == AppMode.staging ||
-                    Environment.appMode == AppMode.testing,
+                Environment.appMode == AppMode.staging || Environment.appMode == AppMode.testing,
             defaultTransition: Transition.cupertino,
             transitionDuration: const Duration(milliseconds: 300),
             title: 'VPM',

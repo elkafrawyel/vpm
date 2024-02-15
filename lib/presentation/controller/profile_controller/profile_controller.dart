@@ -61,6 +61,7 @@ class ProfileController extends GetxController {
   }
 
   void updateProfile({
+    required BuildContext context,
     required AnimationController animationController,
     required String name,
     required String email,
@@ -114,6 +115,7 @@ class ProfileController extends GetxController {
     if (operationReply.isSuccess()) {
       UserResponse? userResponse = operationReply.result;
       userModel = userResponse?.userModel;
+      Navigator.pop(context);
       InformationViewer.showSnackBar(userResponse?.message);
     } else {
       InformationViewer.showSnackBar(operationReply.message);
