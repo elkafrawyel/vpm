@@ -74,8 +74,7 @@ class ProfileController extends GetxController {
 
     String? fileId = userModel?.avatar?.id;
     if (image != null) {
-      OperationReply<UploadFileResponse> uploadOperationReply =
-          await _lookUpsRepositoryIml.uploadFile(
+      OperationReply<UploadFileResponse> uploadOperationReply = await _lookUpsRepositoryIml.uploadFile(
         file: image,
         onUploadProgress: (double percent) {
           EasyLoading.showProgress(
@@ -92,19 +91,18 @@ class ProfileController extends GetxController {
           return;
         }
         fileId = uploadFileResponse?.data?.id;
+      } else {
+        InformationViewer.showSnackBar(uploadOperationReply.message);
       }
     }
 
     animationController.forward();
-    OperationReply operationReply =
-        await _authRepositoryIml.updateProfileInformation(
+    OperationReply operationReply = await _authRepositoryIml.updateProfileInformation(
       updateProfileRequest: UpdateProfileRequest(
         name: name,
         email: email,
         phone: phone,
-        birthday: birthday == null
-            ? userModel?.birthday
-            : DateFormat('yyyy-MM-dd').format(birthday),
+        birthday: birthday == null ? userModel?.birthday : DateFormat('yyyy-MM-dd').format(birthday),
         gender: gender == null ? userModel?.gender : gender.name,
         fileId: fileId,
       ),
@@ -115,8 +113,10 @@ class ProfileController extends GetxController {
     if (operationReply.isSuccess()) {
       UserResponse? userResponse = operationReply.result;
       userModel = userResponse?.userModel;
-      Navigator.pop(context);
       InformationViewer.showSnackBar(userResponse?.message);
+
+      if (!context.mounted) return;
+      Navigator.pop(context);
     } else {
       InformationViewer.showSnackBar(operationReply.message);
     }

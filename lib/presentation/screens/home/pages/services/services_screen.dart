@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vpm/presentation/controller/services_controller/services_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/services/components/service_card.dart';
+import 'package:vpm/presentation/screens/home/pages/services/components/services_empty_view.dart';
 import 'package:vpm/presentation/widgets/api_state_views/handel_api_state.dart';
 
+import '../../../../controller/advertisements_controller/advertisements_controller.dart';
 import 'components/service_shimmer_card.dart';
 
-class ServicesScreen extends StatefulWidget {
-  const ServicesScreen({super.key});
+class AdvertisementsScreen extends StatefulWidget {
+  const AdvertisementsScreen({super.key});
 
   @override
-  State<ServicesScreen> createState() => _ServicesScreenState();
+  State<AdvertisementsScreen> createState() => _AdvertisementsScreenState();
 }
 
-class _ServicesScreenState extends State<ServicesScreen> {
-  final ServicesController servicesController = Get.find();
+class _AdvertisementsScreenState extends State<AdvertisementsScreen> {
+  final AdvertisementsController servicesController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
       appBar: AppBar(
         title: Text('services'.tr),
       ),
-      body: GetBuilder<ServicesController>(
+      body: GetBuilder<AdvertisementsController>(
         builder: (context) {
           return HandleApiState.controller(
             generalController: servicesController,
+            emptyView: const ServicesEmptyView(),
             shimmerLoader: Padding(
               padding: const EdgeInsets.all(18.0),
               child: ListView.separated(
@@ -44,14 +46,14 @@ class _ServicesScreenState extends State<ServicesScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: ListView.separated(
-                  itemBuilder: (context, index) => const ServiceCard(),
+                  itemBuilder: (context, index) => ServiceCard(service: servicesController.services[index]),
                   separatorBuilder: (context, index) => Divider(
                     thickness: .5,
                     indent: 18,
                     endIndent: 18,
                     color: Colors.grey.shade700,
                   ),
-                  itemCount: 10,
+                  itemCount: servicesController.services.length,
                 ),
               ),
             ),

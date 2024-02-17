@@ -121,13 +121,11 @@ Map<String, String> en = {
   'enter_digits': 'Enter the 4 digit code sent to:',
   'file_code_error': '*Please fill up all the cells properly',
   "don't_receive_code": 'Didn’t receive the SMS?',
-  'code_verify_message':
-      'We\'ve sent a 4 digit code to your phone number. Please enter the verification code.',
+  'code_verify_message': 'We\'ve sent a 4 digit code to your phone number. Please enter the verification code.',
   'new_code': 'Request new code in',
   'reSend': 'Resend',
   'forget_password': 'Forget Password',
-  'write_your_phone':
-      'Write your phone number to send a new verification code.',
+  'write_your_phone': 'Write your phone number to send a new verification code.',
   'create_new_password': 'Create Your New Password',
   'parking': 'Parking',
   'valet': 'Valet',
@@ -154,8 +152,7 @@ Map<String, String> en = {
   'monthly': 'Monthly',
   'yearly': 'Yearly',
   'account_balance': 'Account Balance',
-  'select_one_of_the_following_to_recharge':
-      'Select one of the following options to recharge your account.',
+  'select_one_of_the_following_to_recharge': 'Select one of the following options to recharge your account.',
   'charge_your_account': 'Charge your Account',
   'birthday': 'Birthday',
   'delete': 'Delete',
@@ -176,5 +173,8 @@ Map<String, String> en = {
   'location_permission': 'Location Permission',
   'location_permission_message':
       'Location permission is not enabled ,we need you to enable it so that we can get your exact location.',
-  'pay':'Pay',
+  'pay': 'Pay',
+  'empty_services': 'There are no services available right now.',
+  'type_amount': 'Type the amount you want to charge your wallet with.',
+  "amount":'Amount'
 };

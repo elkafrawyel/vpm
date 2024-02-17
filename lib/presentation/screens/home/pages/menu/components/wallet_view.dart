@@ -21,8 +21,8 @@ class WalletView extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          GetBuilder<WallerController>(
-            init: WallerController(),
+          GetBuilder<WalletController>(
+            init: WalletController(),
             builder: (walletController) {
               return walletController.loading
                   ? const MyShimmerEffectUI.rectangular(

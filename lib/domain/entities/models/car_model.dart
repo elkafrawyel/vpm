@@ -1,3 +1,5 @@
+import 'package:vpm/domain/entities/models/image_model.dart';
+
 class CarModel {
   CarModel({
     this.id,
@@ -16,7 +18,7 @@ class CarModel {
     createdAt = json['created_at'];
     color = json['color'] != null ? ColorModel.fromJson(json['color']) : null;
     type = json['type'] != null ? Type.fromJson(json['type']) : null;
-    image = json['image'] != null ? Image.fromJson(json['image']) : null;
+    image = json['image'] != null ? ImageModel.fromJson(json['image']) : null;
   }
 
   String? id;
@@ -25,7 +27,7 @@ class CarModel {
   String? createdAt;
   ColorModel? color;
   Type? type;
-  Image? image;
+  ImageModel? image;
 
   CarModel copyWith({
     String? id,
@@ -34,7 +36,7 @@ class CarModel {
     String? createdAt,
     ColorModel? color,
     Type? type,
-    Image? image,
+    ImageModel? image,
   }) =>
       CarModel(
         id: id ?? this.id,
@@ -61,43 +63,6 @@ class CarModel {
     if (image != null) {
       map['image'] = image?.toJson();
     }
-    return map;
-  }
-}
-
-class Image {
-  Image({
-    this.id,
-    this.filePath,
-    this.originalName,
-  });
-
-  Image.fromJson(dynamic json) {
-    id = json['id'];
-    filePath = json['file_path'];
-    originalName = json['original_name'];
-  }
-
-  String? id;
-  String? filePath;
-  String? originalName;
-
-  Image copyWith({
-    String? id,
-    String? filePath,
-    String? originalName,
-  }) =>
-      Image(
-        id: id ?? this.id,
-        filePath: filePath ?? this.filePath,
-        originalName: originalName ?? this.originalName,
-      );
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['file_path'] = filePath;
-    map['original_name'] = originalName;
     return map;
   }
 }

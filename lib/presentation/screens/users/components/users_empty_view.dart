@@ -15,44 +15,42 @@ class UsersEmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SvgPicture.asset(
-              Res.iconEmptyUsers,
-            ),
-            AppText(
-              "no_users".tr,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Theme.of(context).primaryColor,
-              centerText: true,
-            ),
-            30.ph,
-            SizedBox(
-              width: MediaQuery.of(context).size.width * .8,
-              child: ElevatedButton(
-                onPressed: () async {
-                  await PersistentNavBarNavigator.pushNewScreen(
-                    context,
-                    screen: const AddUserScreen(),
-                    withNavBar: true,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  );
-                  Get.find<UsersController>().getAllContacts();
-                },
-                child: AppText(
-                  'add_new_user'.tr,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SvgPicture.asset(
+            Res.iconEmptyUsers,
+          ),
+          AppText(
+            "no_users".tr,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: Theme.of(context).primaryColor,
+            centerText: true,
+          ),
+          30.ph,
+          SizedBox(
+            width: MediaQuery.of(context).size.width * .8,
+            child: ElevatedButton(
+              onPressed: () async {
+                await PersistentNavBarNavigator.pushNewScreen(
+                  context,
+                  screen: const AddUserScreen(),
+                  withNavBar: true,
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
+                Get.find<UsersController>().getAllContacts();
+              },
+              child: AppText(
+                'add_new_user'.tr,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

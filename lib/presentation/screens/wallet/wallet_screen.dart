@@ -3,10 +3,11 @@ import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/app/util/util.dart';
+import 'package:vpm/data/models/payment_options_response.dart';
 import 'package:vpm/presentation/controller/wallet_controller/wallet_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
-
+import 'package:vpm/presentation/widgets/app_widgets/app_text_field/app_text_field.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -16,7 +17,14 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
-  final WallerController wallerController = Get.find();
+  final WalletController walletController = Get.find();
+
+  @override
+  void dispose() {
+    super.dispose();
+    walletController.selectedPaymentOption = null;
+    walletController.amountController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +53,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       color: Theme.of(context).scaffoldBackgroundColor,
                     ),
                     10.ph,
-                    GetBuilder<WallerController>(
+                    GetBuilder<WalletController>(
                       builder: (wallerController) {
                         return AppText(
                           Utils().formatNumbers(
@@ -64,15 +72,25 @@ class _WalletScreenState extends State<WalletScreen> {
             10.ph,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28.0),
+              child: AppText('type_amount'.tr),
+            ),
+            AppTextFormField(
+              controller: walletController.amountController,
+              hintText: 'amount'.tr,
+              horizontalPadding: 28,
+              keyboardType: TextInputType.phone,
+            ),
+            20.ph,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28.0),
               child: AppText(
                 'select_one_of_the_following_to_recharge'.tr,
                 fontWeight: FontWeight.w300,
               ),
             ),
-            10.ph,
-            GetBuilder<WallerController>(
+            GetBuilder<WalletController>(
               builder: (_) => Column(
-                children: wallerController.options
+                children: walletController.paymentOptions
                     .map(
                       (e) => Padding(
                         padding: const EdgeInsets.symmetric(
@@ -83,17 +101,17 @@ class _WalletScreenState extends State<WalletScreen> {
                           children: [
                             Radio(
                               value: e,
-                              groupValue: wallerController.selectedOption,
-                              onChanged: (WalletOptions? value) {
+                              groupValue: walletController.selectedPaymentOption,
+                              onChanged: (PaymentOptionModel? value) {
                                 if (value == null) {
                                   return;
                                 }
-                                wallerController.changeSelectedAmount(value);
+                                walletController.changeSelectedAmount(value);
                               },
                             ),
                             AppText(
                               '${'pay'.tr} ${Utils().formatNumbers(
-                                e.text,
+                                e.price.toString(),
                               )}',
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
@@ -106,17 +124,19 @@ class _WalletScreenState extends State<WalletScreen> {
               ),
             ),
             10.ph,
-            Padding(
-              padding: const EdgeInsets.all(38.0),
-              child: AppProgressButton(
-                width: MediaQuery.sizeOf(context).width,
-                text: 'submit'.tr,
-                onPressed: (animationController) async {
-                  wallerController.requestRechargeBalance(
-                    context,
-                    animationController,
-                  );
-                },
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(38.0),
+                child: AppProgressButton(
+                  width: MediaQuery.sizeOf(context).width,
+                  text: 'submit'.tr,
+                  onPressed: (animationController) async {
+                    walletController.requestRechargeBalance(
+                      context,
+                      animationController,
+                    );
+                  },
+                ),
               ),
             ),
             200.ph,

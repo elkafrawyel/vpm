@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/controller/profile_controller/profile_controller.dart';
+import 'package:vpm/presentation/controller/wallet_controller/wallet_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/menu/components/logout_view.dart';
 import 'package:vpm/presentation/screens/home/pages/menu/components/user_info_view.dart';
 import 'package:vpm/presentation/screens/profile/profile_screen.dart';
@@ -26,115 +27,119 @@ class _MenuScreenState extends State<MenuScreen> {
       appBar: AppBar(
         title: Text('menu'.tr),
       ),
-      body: GetBuilder<ProfileController>(
-        builder: (_) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                30.ph,
-                const UserInfoView(),
-                ListTile(
-                  splashColor: Colors.transparent,
-                  leading: const Icon(Icons.person),
-                  title: Text('profile'.tr),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).dividerColor,
-                    size: 20,
-                  ),
-                  onTap: () {
-                    PersistentNavBarNavigator.pushNewScreen(
-                      context,
-                      screen: const ProfileScreen(),
-                      withNavBar: true,
-                      pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                    );
-                  },
-                ),
-                const WalletView(),
-                ListTile(
-                  splashColor: Colors.transparent,
-                  leading: const Icon(Icons.directions_car),
-                  title: Text('your_cars'.tr),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).dividerColor,
-                    size: 20,
-                  ),
-                  onTap: () {
-                    PersistentNavBarNavigator.pushNewScreen(
-                      context,
-                      screen: const CarsScreen(),
-                      withNavBar: true,
-                      pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                    );
-                  },
-                ),
-                ListTile(
-                  splashColor: Colors.transparent,
-                  leading: const Icon(Icons.group),
-                  title: Text('users_management'.tr),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).dividerColor,
-                    size: 20,
-                  ),
-                  onTap: () {
-                    PersistentNavBarNavigator.pushNewScreen(
-                      context,
-                      screen: const UsersScreen(),
-                      withNavBar: true,
-                      pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                    );
-                  },
-                ),
-                ListTile(
-                  splashColor: Colors.transparent,
-                  leading: const Icon(Icons.settings),
-                  title: Text('settings'.tr),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).dividerColor,
-                    size: 20,
-                  ),
-                  onTap: () {},
-                ),
-                ListTile(
-                  splashColor: Colors.transparent,
-                  leading: const Icon(Icons.help),
-                  title: Text('help'.tr),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Theme.of(context).dividerColor,
-                    size: 20,
-                  ),
-                  onTap: () {},
-                ),
-                // ListTile(
-                //   leading: const Icon(Icons.dark_mode_outlined),
-                //   title: Text('dark_mode'.tr),
-                //   trailing: Obx(
-                //     () => Switch.adaptive(
-                //       value: Get.find<AppConfigController>().isDarkMode.value,
-                //       onChanged: (bool value) {
-                //         Get.find<AppConfigController>().toggleAppTheme();
-                //       },
-                //     ),
-                //   ),
-                // ),
-                ListTile(
-                  splashColor: Colors.transparent,
-                  leading: const Icon(Icons.language),
-                  title: Text('language'.tr),
-                  trailing: const AppLanguageSwitch(),
-                  onTap: () {},
-                ),
-                const LogOutView(),
-                200.ph,
-              ],
-            ),
-          );
+      body: RefreshIndicator(
+        onRefresh: () async {
+          Get.find<ProfileController>().getUserProfile();
+          final WalletController walletController = Get.find<WalletController>();
+          walletController.getWalletBalance();
+          walletController.getPaymentOptions();
         },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              30.ph,
+              const UserInfoView(),
+              ListTile(
+                splashColor: Colors.transparent,
+                leading: const Icon(Icons.person),
+                title: Text('profile'.tr),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).dividerColor,
+                  size: 20,
+                ),
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: const ProfileScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+              ),
+              const WalletView(),
+              ListTile(
+                splashColor: Colors.transparent,
+                leading: const Icon(Icons.directions_car),
+                title: Text('your_cars'.tr),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).dividerColor,
+                  size: 20,
+                ),
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: const CarsScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+              ),
+              ListTile(
+                splashColor: Colors.transparent,
+                leading: const Icon(Icons.group),
+                title: Text('users_management'.tr),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).dividerColor,
+                  size: 20,
+                ),
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: const UsersScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+              ),
+              ListTile(
+                splashColor: Colors.transparent,
+                leading: const Icon(Icons.settings),
+                title: Text('settings'.tr),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).dividerColor,
+                  size: 20,
+                ),
+                onTap: () {},
+              ),
+              ListTile(
+                splashColor: Colors.transparent,
+                leading: const Icon(Icons.help),
+                title: Text('help'.tr),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).dividerColor,
+                  size: 20,
+                ),
+                onTap: () {},
+              ),
+              // ListTile(
+              //   leading: const Icon(Icons.dark_mode_outlined),
+              //   title: Text('dark_mode'.tr),
+              //   trailing: Obx(
+              //     () => Switch.adaptive(
+              //       value: Get.find<AppConfigController>().isDarkMode.value,
+              //       onChanged: (bool value) {
+              //         Get.find<AppConfigController>().toggleAppTheme();
+              //       },
+              //     ),
+              //   ),
+              // ),
+              ListTile(
+                splashColor: Colors.transparent,
+                leading: const Icon(Icons.language),
+                title: Text('language'.tr),
+                trailing: const AppLanguageSwitch(),
+                onTap: () {},
+              ),
+              const LogOutView(),
+              200.ph,
+            ],
+          ),
+        ),
       ),
     );
   }

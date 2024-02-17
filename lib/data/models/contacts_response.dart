@@ -1,3 +1,5 @@
+import '../../domain/entities/models/image_model.dart';
+
 class ContactsResponse {
   ContactsResponse({
     this.data,
@@ -56,7 +58,7 @@ class ContactModel {
     gender = json['gender'];
     birthday = json['birthday'];
     createdAt = json['created_at'];
-    avatar = json['avatar'] != null ? Avatar.fromJson(json['avatar']) : null;
+    avatar = json['avatar'] != null ? ImageModel.fromJson(json['avatar']) : null;
   }
 
   String? id;
@@ -69,7 +71,7 @@ class ContactModel {
   dynamic gender;
   dynamic birthday;
   String? createdAt;
-  Avatar? avatar;
+  ImageModel? avatar;
 
   ContactModel copyWith({
     String? id,
@@ -82,7 +84,7 @@ class ContactModel {
     dynamic gender,
     dynamic birthday,
     String? createdAt,
-    Avatar? avatar,
+    ImageModel? avatar,
   }) =>
       ContactModel(
         id: id ?? this.id,
@@ -113,43 +115,6 @@ class ContactModel {
     if (avatar != null) {
       map['avatar'] = avatar?.toJson();
     }
-    return map;
-  }
-}
-
-class Avatar {
-  Avatar({
-    this.id,
-    this.filePath,
-    this.originalName,
-  });
-
-  Avatar.fromJson(dynamic json) {
-    id = json['id'];
-    filePath = json['file_path'];
-    originalName = json['original_name'];
-  }
-
-  String? id;
-  String? filePath;
-  String? originalName;
-
-  Avatar copyWith({
-    String? id,
-    String? filePath,
-    String? originalName,
-  }) =>
-      Avatar(
-        id: id ?? this.id,
-        filePath: filePath ?? this.filePath,
-        originalName: originalName ?? this.originalName,
-      );
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['file_path'] = filePath;
-    map['original_name'] = originalName;
     return map;
   }
 }

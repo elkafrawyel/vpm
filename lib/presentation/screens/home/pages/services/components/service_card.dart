@@ -1,56 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/util.dart';
+import 'package:vpm/domain/entities/models/AdvertisementModel.dart';
+import 'package:vpm/presentation/screens/webview_screen/webview_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
-import '../../../../../../app/util/constants.dart';
-
 class ServiceCard extends StatelessWidget {
-  const ServiceCard({super.key});
+  final AdvertisementModel service;
+
+  const ServiceCard({
+    super.key,
+    required this.service,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const AppCachedImage(
-            imageUrl:
-                'https://media.licdn.com/dms/image/D4D12AQGA6odm93XONA/article-cover_image-shrink_720_1280/0/1675839423933?e=2147483647&v=beta&t=k4l6SyDe2-U9qtTTYJeUHcWNpeeCBqzEnso-okTBjIU',
-            width: 140,
-            height: 120,
-            radius: 8,
-          ),
-          10.pw,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const AppText(
-                  'Car Wash Service Card is a service card for the',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  maxLines: 2,
-                ),
-                5.ph,
-                const AppText(
-                  'car cleaner service card is a service card for the car cleaner service card for the car cleaner service card for the',
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  maxLines: 3,
-                ),
-                5.ph,
-                AppText(
-                  Utils().formatNumbers('200'),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Theme.of(context).primaryColor,
-                )
-              ],
+    return GestureDetector(
+      onTap: () {
+        if (service.link != null && service.title != null) {
+          PersistentNavBarNavigator.pushNewScreen(
+            context,
+            screen: WebviewScreen(paymentUrl: service.link!, screenTitle: service.title!),
+            withNavBar: true,
+            pageTransitionAnimation: PageTransitionAnimation.cupertino,
+          );
+        }
+      },
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AppCachedImage(
+              imageUrl: service.image?.filePath,
+              width: 140,
+              height: 120,
+              radius: 8,
             ),
-          ),
-        ],
+            10.pw,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppText(
+                    service.title ?? '',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    maxLines: 2,
+                  ),
+                  5.ph,
+                  AppText(
+                    service.details ?? '',
+                    fontSize: 13,
+                    fontWeight: FontWeight.w400,
+                    maxLines: 3,
+                  ),
+                  5.ph,
+                  AppText(
+                    service.amount == null ? '' : Utils().formatNumbers(service.amount!),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Theme.of(context).primaryColor,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

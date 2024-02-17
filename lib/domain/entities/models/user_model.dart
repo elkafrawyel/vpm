@@ -1,3 +1,5 @@
+import 'image_model.dart';
+
 class UserModel {
   UserModel({
     this.id,
@@ -25,7 +27,7 @@ class UserModel {
     isVerified = json['is_verified'];
     isCompleted = json['is_completed'];
     token = json['token'];
-    avatar = json['avatar'] != null ? Avatar.fromJson(json['avatar']) : null;
+    avatar = json['avatar'] != null ? ImageModel.fromJson(json['avatar']) : null;
     createdAt = json['created_at'];
   }
 
@@ -39,7 +41,7 @@ class UserModel {
   bool? isVerified;
   bool? isCompleted;
   String? token;
-  Avatar? avatar;
+  ImageModel? avatar;
   String? createdAt;
 
   UserModel copyWith({
@@ -53,7 +55,7 @@ class UserModel {
     bool? isVerified,
     bool? isCompleted,
     String? token,
-    Avatar? avatar,
+    ImageModel? avatar,
     String? createdAt,
   }) =>
       UserModel(
@@ -87,43 +89,6 @@ class UserModel {
       map['avatar'] = avatar?.toJson();
     }
     map['created_at'] = createdAt;
-    return map;
-  }
-}
-
-class Avatar {
-  Avatar({
-    this.id,
-    this.filePath,
-    this.originalName,
-  });
-
-  Avatar.fromJson(dynamic json) {
-    id = json['id'];
-    filePath = json['file_path'];
-    originalName = json['original_name'];
-  }
-
-  String? id;
-  String? filePath;
-  String? originalName;
-
-  Avatar copyWith({
-    String? id,
-    String? filePath,
-    String? originalName,
-  }) =>
-      Avatar(
-        id: id ?? this.id,
-        filePath: filePath ?? this.filePath,
-        originalName: originalName ?? this.originalName,
-      );
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['file_path'] = filePath;
-    map['original_name'] = originalName;
     return map;
   }
 }

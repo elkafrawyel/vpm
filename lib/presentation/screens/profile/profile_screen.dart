@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     emailController = TextEditingController(text: userModel?.email);
     phoneController = TextEditingController(text: userModel?.phone);
     profilePicture = userModel?.avatar?.filePath;
-    birthday = DateTime.tryParse(userModel?.birthday);
+    birthday = userModel?.birthday == null ? null : DateTime.tryParse(userModel?.birthday);
     appGender = userModel?.gender == null
         ? null
         : userModel!.gender == 'male'

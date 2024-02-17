@@ -26,7 +26,7 @@ class HomeScreenController extends GetxController {
     pages = [
       const ParkingScreen(),
       const ValetScreen(),
-      const ServicesScreen(),
+      const AdvertisementsScreen(),
       const BookingScreen(),
       const MenuScreen(),
     ];
