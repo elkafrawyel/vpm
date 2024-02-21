@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vpm/data/providers/storage/local_provider.dart';
 
 class Constants {
   // Colors
@@ -14,6 +15,9 @@ class Constants {
   static String defaultUserType = 'client';
   static String defaultApiTokenType = 'Bearer';
 
+  static String googleMapKey = Platform.isAndroid
+      ? "AIzaSyB7eEtobQfFWQi98pidBqX_dz88w1v2CQs"
+      : "AIzaSyDHefDrUK9kOVHe2t3Gpcw6cGAoA8O-6e4";
 }
 
 double kRadius = 18;

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:vpm/presentation/screens/auth/welcome/welcome_screen.dart';
 
 import '../../../app/util/constants.dart';
 import '../../../app/util/util.dart';
@@ -12,7 +11,7 @@ import '../../../presentation/controller/app_config_controller.dart';
 import '../network/api_provider.dart';
 
 enum LocalProviderKeys {
-  intro, // bool
+  introScreen, // bool
   language, //String
   notifications, //int
   userModel, //Json String
@@ -27,7 +26,7 @@ enum LocalProviderKeys {
 class LocalProvider {
   final GetStorage _box = GetStorage();
 
-  init() async {
+  Future init() async {
     await GetStorage.init();
     //set keys default values
     dynamic language = get(LocalProviderKeys.language);
@@ -35,9 +34,9 @@ class LocalProvider {
       save(LocalProviderKeys.language, Constants.mainAppLanguage);
     }
 
-    dynamic intro = get(LocalProviderKeys.intro);
+    dynamic intro = get(LocalProviderKeys.introScreen);
     if (intro == null) {
-      save(LocalProviderKeys.intro, false);
+      save(LocalProviderKeys.introScreen, 0);
     }
 
     dynamic rememberMe = get(LocalProviderKeys.rememberMe);
@@ -68,9 +67,9 @@ class LocalProvider {
   }
 
   dynamic get(LocalProviderKeys localProviderKeys) {
-    dynamic value = GetStorage().read(localProviderKeys.name);
     // Utils.logMessage('Getting value of ${localProviderKeys.name} => $value');
-    return value;
+
+    return GetStorage().read(localProviderKeys.name);
   }
 
   Future saveUserCredentials({
@@ -114,7 +113,7 @@ class LocalProvider {
 
   Future<void> signOut() async {
     bool rememberMe = get(LocalProviderKeys.rememberMe);
-    bool intro = get(LocalProviderKeys.intro);
+    bool intro = get(LocalProviderKeys.introScreen) == 1;
     String? email, password;
     if (rememberMe) {
       email = get(LocalProviderKeys.phone);
@@ -124,7 +123,7 @@ class LocalProvider {
     await save(LocalProviderKeys.phone, email);
     await save(LocalProviderKeys.password, password);
     await save(LocalProviderKeys.rememberMe, rememberMe);
-    await save(LocalProviderKeys.intro, intro);
+    await save(LocalProviderKeys.introScreen, intro);
     Get.find<AppConfigController>().isLoggedIn.value = false;
     APIProvider.instance.updateTokenHeader(null);
     Utils.logMessage('User Logged Out Successfully');

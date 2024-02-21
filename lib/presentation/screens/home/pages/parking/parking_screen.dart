@@ -20,25 +20,33 @@ class _ParkingScreenState extends State<ParkingScreen>
     return GetBuilder<ParkingController>(
       builder: (_) {
         return Scaffold(
-          body: parkingController.myLocation == null
-              ? const SizedBox()
-              : GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                      parkingController.myLocation!.latitude,
-                      parkingController.myLocation!.longitude,
-                    ),
-                    zoom: 15,
-                  ),
-                  myLocationEnabled: true,
-                  tiltGesturesEnabled: true,
-                  compassEnabled: true,
-                  scrollGesturesEnabled: true,
-                  zoomGesturesEnabled: true,
-                  onMapCreated: parkingController.onMapCreated,
-                  // markers: Set<Marker>.of(markers.values),
-                  // polylines: Set<Polyline>.of(polylines.values),
-                ),
+          floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () {
+              parkingController.getRouteToDestination(
+                destination:
+                    const LatLng(37.77704909733175, -122.40843415260316), //ios
+                // destination: const LatLng(37.77704909733175, -122.40843415260316), //android
+              );
+            },
+          ),
+          body: GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: parkingController.myLocation,
+              zoom: 15,
+            ),
+            myLocationEnabled: true,
+            tiltGesturesEnabled: true,
+            compassEnabled: true,
+            scrollGesturesEnabled: true,
+            zoomGesturesEnabled: true,
+            onMapCreated: parkingController.onMapCreated,
+            markers: Set<Marker>.of(parkingController.markers.values),
+            polylines: Set<Polyline>.of(parkingController.polyLines.values),
+            onTap: (LatLng latLng) {
+              print(latLng);
+            },
+          ),
         );
       },
     );

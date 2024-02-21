@@ -36,7 +36,7 @@ class AppConfigController extends GetxController {
       if (callback) {
         Get.offAll(() => const HomeScreen(), binding: HomeScreenBinding());
       } else {
-        if (!LocalProvider().get(LocalProviderKeys.intro)) {
+        if (LocalProvider().get(LocalProviderKeys.introScreen) == 0) {
           Get.offAll(() => const IntroScreen());
         } else {
           Get.offAll(() => const WelcomeScreen(), binding: AuthBinding());
@@ -56,8 +56,10 @@ class AppConfigController extends GetxController {
 
   Future<void> _watchNetworkState() async {
     /// this for app initialization only
-    ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+    ConnectivityResult connectivityResult =
+        await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
       // I am connected to a mobile network.
       Utils.hideGetXDialog();
     } else {
@@ -65,8 +67,11 @@ class AppConfigController extends GetxController {
     }
 
     /// this for listen in app
-    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if (result == ConnectivityResult.mobile || result == ConnectivityResult.wifi) {
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.wifi) {
         // I am connected to a mobile network.
         Utils.hideGetXDialog();
       } else {
@@ -88,7 +93,8 @@ class AppConfigController extends GetxController {
 
   void toggleAppTheme() async {
     int currentTheme = LocalProvider().get(LocalProviderKeys.appTheme) ?? 0;
-    await LocalProvider().save(LocalProviderKeys.appTheme, currentTheme == 1 ? 0 : 1);
+    await LocalProvider()
+        .save(LocalProviderKeys.appTheme, currentTheme == 1 ? 0 : 1);
     if (theme.value == AppTheme.darkTheme) {
       theme.value = AppTheme.lightTheme;
       isDarkMode.value = false;

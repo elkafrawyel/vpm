@@ -58,6 +58,8 @@ class Res {
   static const String iconEmptyServices = 'assets/icons/empty_services.svg';
 
   //========================== Images Assets  ===============================
+  static const String locationPinImage = 'assets/images/my_pin.png';
+  static const String garagePinImage = 'assets/images/garage_pin.png';
 
   static const facebookImage = "assets/images/social/facebook.png";
   static const instagramImage = "assets/images/social/instagram.png";
