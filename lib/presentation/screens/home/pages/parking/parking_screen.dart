@@ -34,13 +34,12 @@ class _ParkingScreenState extends State<ParkingScreen>
                 compassEnabled: true,
                 scrollGesturesEnabled: true,
                 zoomGesturesEnabled: true,
+                zoomControlsEnabled: true,
                 myLocationButtonEnabled: false,
                 mapType: parkingController.mapType,
                 onMapCreated: parkingController.onMapCreated,
                 markers: Set<Marker>.of(parkingController.markers.values),
-                polylines: parkingController.polyLine == null
-                    ? {}
-                    : <Polyline>{parkingController.polyLine!},
+                polylines: Set<Polyline>.of(parkingController.polyLines),
                 onTap: (LatLng latLng) {
                   print(latLng);
                 },

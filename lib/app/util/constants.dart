@@ -13,7 +13,6 @@ class Constants {
   static String defaultUserType = 'client';
   static String defaultApiTokenType = 'Bearer';
 
-  static String googleMapKey = "AIzaSyDHgXWlxp6SaAFhPtgrxR-_yYraLQJka78";
 }
 
 double kRadius = 18;

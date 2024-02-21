@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/instance_manager.dart';
@@ -133,9 +134,12 @@ class GarageDetailsView extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Get.back();
-                Get.find<ParkingController>().getRouteToDestination(
+                Get.find<ParkingController>().getDirectionsToDestination(
                   lineId: element.id,
-                  destination: element.latLng,
+                  destination: PointLatLng(
+                    element.lat,
+                    element.lng,
+                  ),
                 );
               },
               child: Container(
