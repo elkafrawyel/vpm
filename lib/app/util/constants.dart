@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,9 +13,7 @@ class Constants {
   static String defaultUserType = 'client';
   static String defaultApiTokenType = 'Bearer';
 
-  static String googleMapKey = Platform.isAndroid
-      ? "AIzaSyB7eEtobQfFWQi98pidBqX_dz88w1v2CQs"
-      : "AIzaSyDHefDrUK9kOVHe2t3Gpcw6cGAoA8O-6e4";
+  static String googleMapKey = "AIzaSyDHgXWlxp6SaAFhPtgrxR-_yYraLQJka78";
 }
 
 double kRadius = 18;

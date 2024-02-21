@@ -118,7 +118,8 @@ Map<String, String> ar = {
   'enter_digits': 'أدخل الرمز المكون من 4 أرقام المرسل إلى:',
   'file_code_error': '* يرجى ملء كافة الخلايا بشكل صحيح',
   "don't_receive_code": 'لم تتلق الرسالة القصيرة؟',
-  'code_verify_message': 'لقد أرسلنا رمزًا مكونًا من 4 أرقام إلى رقم هاتفك. الرجاء إدخال رمز التحقق.',
+  'code_verify_message':
+      'لقد أرسلنا رمزًا مكونًا من 4 أرقام إلى رقم هاتفك. الرجاء إدخال رمز التحقق.',
   'new_code': 'طلب رمز جديد خلال',
   'reSend': 'إعادة إرسال',
   'forget_password': 'نسيت كلمة المرور',
@@ -149,7 +150,8 @@ Map<String, String> ar = {
   'monthly': 'شهري',
   'yearly': 'سنوي',
   'account_balance': 'رصيد الحساب',
-  'select_one_of_the_following_to_recharge': 'حدد أحد الخيارات التالية لإعادة شحن حسابك.',
+  'select_one_of_the_following_to_recharge':
+      'حدد أحد الخيارات التالية لإعادة شحن حسابك.',
   'charge_your_account': 'اشحن حسابك',
   'birthday': 'تاريخ ميلادك',
   'delete': 'الحذف',
@@ -168,9 +170,11 @@ Map<String, String> ar = {
   'getting_location': 'جارٍ العثور على موقعك...',
   'ok': 'موافق',
   'location_permission': 'خدمات الموقع',
-  'location_permission_message': 'لم يتم تمكين خدمات الموقع، ونحتاج منك تمكينه حتى نتمكن من الحصول على موقعك الدقيق.',
+  'location_permission_message':
+      'لم يتم تمكين خدمات الموقع، ونحتاج منك تمكينه حتى نتمكن من الحصول على موقعك الدقيق.',
   'pay': 'دفع',
   'empty_services': 'لا توجد خدمات متاحة حاليا.',
   'type_amount': 'اكتب المبلغ الذي تريد شحن محفظتك به.',
-  "amount": 'المبلغ'
+  "amount": 'المبلغ',
+  'navigate_to_car_parking': 'التوجه إلى موقف السيارات'
 };

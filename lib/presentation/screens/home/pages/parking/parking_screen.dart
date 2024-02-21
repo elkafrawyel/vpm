@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
+import 'package:vpm/presentation/screens/home/pages/parking/components/address_view.dart';
+import 'package:vpm/presentation/screens/home/pages/parking/components/build_map_icons.dart';
 
 class ParkingScreen extends StatefulWidget {
   const ParkingScreen({super.key});
@@ -20,32 +22,41 @@ class _ParkingScreenState extends State<ParkingScreen>
     return GetBuilder<ParkingController>(
       builder: (_) {
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              parkingController.getRouteToDestination(
-                destination:
-                    const LatLng(37.77704909733175, -122.40843415260316), //ios
-                // destination: const LatLng(37.77704909733175, -122.40843415260316), //android
-              );
-            },
-          ),
-          body: GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: parkingController.myLocation,
-              zoom: 15,
-            ),
-            myLocationEnabled: true,
-            tiltGesturesEnabled: true,
-            compassEnabled: true,
-            scrollGesturesEnabled: true,
-            zoomGesturesEnabled: true,
-            onMapCreated: parkingController.onMapCreated,
-            markers: Set<Marker>.of(parkingController.markers.values),
-            polylines: Set<Polyline>.of(parkingController.polyLines.values),
-            onTap: (LatLng latLng) {
-              print(latLng);
-            },
+          body: Stack(
+            children: [
+              GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: parkingController.myLocation,
+                  zoom: parkingController.cameraZoom,
+                ),
+                myLocationEnabled: true,
+                tiltGesturesEnabled: true,
+                compassEnabled: true,
+                scrollGesturesEnabled: true,
+                zoomGesturesEnabled: true,
+                myLocationButtonEnabled: false,
+                mapType: parkingController.mapType,
+                onMapCreated: parkingController.onMapCreated,
+                markers: Set<Marker>.of(parkingController.markers.values),
+                polylines: parkingController.polyLine == null
+                    ? {}
+                    : <Polyline>{parkingController.polyLine!},
+                onTap: (LatLng latLng) {
+                  print(latLng);
+                },
+              ),
+              PositionedDirectional(
+                top: MediaQuery.sizeOf(context).height * 0.2,
+                start: 20,
+                child: BuildMapIcons(),
+              ),
+              PositionedDirectional(
+                top: MediaQuery.of(context).padding.top,
+                start: 0,
+                end: 0,
+                child: const AddressView(),
+              ),
+            ],
           ),
         );
       },
