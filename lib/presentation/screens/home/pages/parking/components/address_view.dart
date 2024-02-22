@@ -22,7 +22,11 @@ class AddressView extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Row(
           children: [
-            const Icon(Icons.location_on_outlined),
+            Icon(
+              Icons.location_on_outlined,
+              color: Theme.of(context).primaryColor,
+              size: 35,
+            ),
             10.pw,
             Expanded(
               child: GetBuilder<ParkingController>(

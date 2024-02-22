@@ -19,66 +19,19 @@ import 'package:vpm/presentation/screens/home/pages/parking/components/garage_de
 import 'package:vpm/presentation/widgets/dialogs_view/app_dialog_view.dart';
 import 'package:vpm/presentation/widgets/modal_bottom_sheet.dart';
 
-class GarageModel {
-  String id;
-  String name;
-  double lat;
-  double lng;
-
-  GarageModel({
-    required this.id,
-    required this.name,
-    required this.lat,
-    required this.lng,
-  });
-}
+import '../../screens/home/pages/parking/components/garage_model.dart';
 
 class ParkingController extends GetxController with WidgetsBindingObserver {
   GoogleMapController? mapController;
   LatLng myLocation = const LatLng(0, 0);
   String? myAddressAr, myAddressEn;
-  Map<MarkerId, Marker> markers = {};
-  List<Polyline> polyLines = [];
+  Map<MarkerId, Marker> garagesMarkersMap = {};
+  List<Polyline> polyLinesList = [];
   Timer? debouncer;
-
-  // double distanceInMeters = Geolocator.distanceBetween(52.2165157, 6.9437819, 52.3546274, 4.8285838);
-
   double cameraZoom = 13;
+  MapType mapType = MapType.normal;
 
-  void debounce(VoidCallback callback,
-      {Duration duration = const Duration(seconds: 1)}) {
-    if (debouncer != null) {
-      debouncer!.cancel();
-    }
-    debouncer = Timer(duration, callback);
-  }
-
-  List<GarageModel> garageList = [
-    GarageModel(
-      id: '1',
-      name: 'Garage 1',
-      lat: 30.958723431397278,
-      lng: 31.168272905051708,
-    ),
-    GarageModel(
-      id: '2',
-      name: 'Garage 2',
-      lat: 30.959876347794545,
-      lng: 31.17682747542858,
-    ),
-    GarageModel(
-      id: '3',
-      name: 'Garage 3',
-      lat: 30.933517087159764,
-      lng: 31.159301251173023,
-    ),
-    GarageModel(
-      id: '4',
-      name: 'Garage 4',
-      lat: 30.921552106485493,
-      lng: 31.174164041876793,
-    ),
-  ];
+  List<GarageModel> garageList = [];
 
   //====================== Controllers Id================
   static const String addressControllerId = 'addressController';
@@ -87,7 +40,7 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addObserver(this);
-    _determinePosition();
+    _determineMyPosition();
   }
 
   @override
@@ -100,7 +53,7 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.resumed:
-        _determinePosition(loading: false);
+        _determineMyPosition(loading: false);
         Utils.logMessage('App is resumed');
         break;
       case AppLifecycleState.detached:
@@ -112,20 +65,55 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
     }
   }
 
+  void debounce(
+    VoidCallback callback, {
+    Duration duration = const Duration(seconds: 1),
+  }) {
+    if (debouncer != null) {
+      debouncer!.cancel();
+    }
+    debouncer = Timer(duration, callback);
+  }
+
   void onMapCreated(GoogleMapController controller) async {
     mapController = controller;
-    // todo get all garages and draw markers
+    await getGaragesListFromApi();
+  }
+
+  Future<void> getGaragesListFromApi() async {
+    garageList = [
+      GarageModel(
+        id: '1',
+        name: 'Garage 1',
+        lat: 30.958723431397278,
+        lng: 31.168272905051708,
+      ),
+      GarageModel(
+        id: '2',
+        name: 'Garage 2',
+        lat: 30.959876347794545,
+        lng: 31.17682747542858,
+      ),
+      GarageModel(
+        id: '3',
+        name: 'Garage 3',
+        lat: 30.933517087159764,
+        lng: 31.159301251173023,
+      ),
+      GarageModel(
+        id: '4',
+        name: 'Garage 4',
+        lat: 30.921552106485493,
+        lng: 31.174164041876793,
+      ),
+    ];
     for (var element in garageList) {
       await addGarageMarker(element);
     }
     update();
   }
 
-  /// Determine the current position of the device.
-  ///
-  /// When the location services are not enabled or permissions
-  /// are denied the `Future` will return an error.
-  Future _determinePosition({bool loading = true}) async {
+  Future _determineMyPosition({bool loading = true}) async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -147,7 +135,7 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        openSettingDialog();
+        _openSettingDialog();
 
         Future.error('Location permissions are denied');
         return;
@@ -156,7 +144,7 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      openSettingDialog();
+      _openSettingDialog();
 
       Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
@@ -175,7 +163,7 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
     myLocation = LatLng(position.latitude, position.longitude);
 
     //todo get my address from latLng
-    getMyAddress();
+    _getMyAddress();
 
     if (loading) {
       EasyLoading.dismiss();
@@ -183,12 +171,12 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
     animateToPosition(myLocation);
     //todo add my mark on map
 
-    await addMyMarker();
+    await _addMyMarker();
 
     update();
   }
 
-  openSettingDialog() {
+  _openSettingDialog() {
     Get.dialog(
       AppDialogView(
         title: 'location_permission'.tr,
@@ -219,8 +207,7 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
   Future addGarageMarker(GarageModel element) async {
     BitmapDescriptor icon = BitmapDescriptor.defaultMarkerWithHue(2);
 
-    /// image size 64x64
-    final Uint8List markerIcon = await getBytesFromAssetMarker(
+    final Uint8List markerIcon = await _getBytesFromAssetMarker(
       Res.garagePinImage,
       120,
     );
@@ -235,21 +222,20 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
         title: element.name,
         anchor: const Offset(0.5, 0.5),
         onTap: () {
-          openGarageInfoBottomSheet(element);
+          _openGarageInfoBottomSheet(element);
         },
       ),
       onTap: () {
-        openGarageInfoBottomSheet(element);
+        _openGarageInfoBottomSheet(element);
       },
     );
-    markers[markerId] = marker;
+    garagesMarkersMap[markerId] = marker;
   }
 
-  Future addMyMarker() async {
+  Future _addMyMarker() async {
     BitmapDescriptor icon = BitmapDescriptor.defaultMarker;
 
-    /// image size 64x64
-    final Uint8List markerIcon = await getBytesFromAssetMarker(
+    final Uint8List markerIcon = await _getBytesFromAssetMarker(
       Res.locationPinImage,
       150,
     );
@@ -262,15 +248,15 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
         markerId: markerId,
         icon: icon,
         position: myLocation,
-        anchor: const Offset(0.5, 0.5),
+        // anchor: const Offset(0.5, 0.5),
         infoWindow: InfoWindow(title: userModel.name),
         // onTap: () => InformationViewer.showSnackBar(userModel.name),
       );
-      markers[markerId] = marker;
+      garagesMarkersMap[markerId] = marker;
     }
   }
 
-  Future<Uint8List> getBytesFromAssetMarker(String path, int width) async {
+  Future<Uint8List> _getBytesFromAssetMarker(String path, int width) async {
     ByteData data = await rootBundle.load(path);
     Codec codec = await instantiateImageCodec(data.buffer.asUint8List(),
         targetHeight: width);
@@ -314,18 +300,21 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
       patterns: [PatternItem.dash(10), PatternItem.gap(10)],
     );
 
-    polyLines.clear();
-    polyLines.add(polyLine);
+    polyLinesList.clear();
+    polyLinesList.add(polyLine);
     update();
   }
 
-  void getMyAddress() async {
-    myAddressAr = await getAddress(myLocation, locale: 'ar_EG');
-    myAddressEn = await getAddress(myLocation, locale: 'en_US');
+  void _getMyAddress() async {
+    myAddressAr = await _getAddressFromLocation(myLocation, locale: 'ar_SA');
+    myAddressEn = await _getAddressFromLocation(myLocation, locale: 'en_US');
     update([addressControllerId]);
   }
 
-  Future<String> getAddress(LatLng latLng, {required String locale}) async {
+  Future<String> _getAddressFromLocation(
+    LatLng latLng, {
+    required String locale,
+  }) async {
     List<Placemark> placeMarks = await placemarkFromCoordinates(
       latLng.latitude,
       latLng.longitude,
@@ -333,7 +322,6 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
     );
 
     Placemark placeMark = placeMarks.first;
-
     String name = placeMark.name ?? '';
     String city = placeMark.subAdministrativeArea ?? '';
     String governorate = placeMark.administrativeArea ?? '';
@@ -345,7 +333,9 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
     return address;
   }
 
-  void openGarageInfoBottomSheet(GarageModel element) async {
+  void _openGarageInfoBottomSheet(
+    GarageModel element,
+  ) async {
     showAppModalBottomSheet(
       context: Get.context!,
       initialChildSize: 0.4,
@@ -354,18 +344,15 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
         return GarageDetailsView(
           scrollController: scrollController,
           element: element,
+          myLocation: myLocation,
         );
       },
     );
   }
 
-  MapType _mapType = MapType.normal;
-
-  MapType get mapType => _mapType;
-
   switchMapType() {
-    _mapType = MapType.values[(_mapType.index + 1) % MapType.values.length];
-    if (_mapType == MapType.none) _mapType = MapType.normal;
+    mapType = MapType.values[(mapType.index + 1) % MapType.values.length];
+    if (mapType == MapType.none) mapType = MapType.normal;
     update();
   }
 }

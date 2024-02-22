@@ -176,5 +176,7 @@ Map<String, String> ar = {
   'empty_services': 'لا توجد خدمات متاحة حاليا.',
   'type_amount': 'اكتب المبلغ الذي تريد شحن محفظتك به.',
   "amount": 'المبلغ',
-  'navigate_to_car_parking': 'التوجه إلى موقف السيارات'
+  'navigate_to_car_parking': 'التوجه إلى موقف السيارات',
+  'm': 'م',
+  'km': 'كم',
 };

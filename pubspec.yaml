@@ -59,7 +59,7 @@ dependencies:
   permission_handler: ^11.1.0
   qr_flutter: ^4.1.0
   geolocator: ^10.1.1
-  geocoding: ^2.2.0
+  geocoding: ^2.0.5
   #  check flutter_native_splash.yaml in root directory to change configurations
   #  dart run flutter_native_splash:create ==> to apply
   #  dart run flutter_native_splash:remove ==> to remove

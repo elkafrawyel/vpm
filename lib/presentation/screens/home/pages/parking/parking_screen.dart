@@ -38,8 +38,8 @@ class _ParkingScreenState extends State<ParkingScreen>
                 myLocationButtonEnabled: false,
                 mapType: parkingController.mapType,
                 onMapCreated: parkingController.onMapCreated,
-                markers: Set<Marker>.of(parkingController.markers.values),
-                polylines: Set<Polyline>.of(parkingController.polyLines),
+                markers: Set<Marker>.of(parkingController.garagesMarkersMap.values),
+                polylines: Set<Polyline>.of(parkingController.polyLinesList),
                 onTap: (LatLng latLng) {
                   print(latLng);
                 },

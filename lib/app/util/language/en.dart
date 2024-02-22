@@ -177,5 +177,7 @@ Map<String, String> en = {
   'empty_services': 'There are no services available right now.',
   'type_amount': 'Type the amount you want to charge your wallet with.',
   "amount":'Amount',
-  'navigate_to_car_parking':'Navigation To Car Park'
+  'navigate_to_car_parking':'Navigation To Car Park',
+  'm':'M',
+  'km':'km',
 };
