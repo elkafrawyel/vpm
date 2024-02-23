@@ -26,13 +26,13 @@ class Res {
   static const apiChargeBalance = 'customer/charge-balance';
 
   //========================== Animation Assets  ===============================
-  static const String animApiLoading = 'assets/anim/api_loading.json';
-  static const String animApiEmpty = 'assets/anim/api_empty.json';
-  static const String animApiError = 'assets/anim/api_error.json';
-  static const String animDelivery = 'assets/anim/delivery.json';
-  static const String animEmptyCart = 'assets/anim/empty_cart.json';
-  static const String animSuccess = 'assets/anim/success.json';
-  static const String animDisconnect = 'assets/anim/disconnect.json';
+  static const animApiLoading = 'assets/anim/api_loading.json';
+  static const animApiEmpty = 'assets/anim/api_empty.json';
+  static const animApiError = 'assets/anim/api_error.json';
+  static const animDelivery = 'assets/anim/delivery.json';
+  static const animEmptyCart = 'assets/anim/empty_cart.json';
+  static const animSuccess = 'assets/anim/success.json';
+  static const animDisconnect = 'assets/anim/disconnect.json';
 
   //========================== Icons Assets  ===============================
   static const String iconName = 'assets/icons/name.svg';
@@ -60,18 +60,18 @@ class Res {
   static const String iconStaff = 'assets/icons/staff.svg';
   static const String iconClock = 'assets/icons/clock.svg';
   static const String iconCamera = 'assets/icons/camera.svg';
+  static const String iconBlueBorder = 'assets/icons/blue_border.svg';
+  static const String iconRedBorder = 'assets/icons/red_border.svg';
 
   //========================== Images Assets  ===============================
-  static const String locationPinImage = 'assets/images/my_pin.png';
-  static const String garagePinImage = 'assets/images/garage_pin.png';
-
+  static const locationPinImage = 'assets/images/my_pin.png';
+  static const garagePinImage = 'assets/images/garage_pin.png';
+  static const redGaragePinImage = 'assets/images/red_garage_pin.png';
+  static const blueBorderImage = 'assets/images/blue_border.png';
   static const facebookImage = "assets/images/social/facebook.png";
   static const instagramImage = "assets/images/social/instagram.png";
   static const twitterImage = "assets/images/social/twitter.png";
-
   static const logoWhiteImage = "assets/images/launcher/logo_white.png";
   static const logoImage = "assets/images/launcher/logo.png";
-
-  static const notFoundImage = "assets/images/not_found.png";
   static const personImage = "assets/images/person.png";
 }

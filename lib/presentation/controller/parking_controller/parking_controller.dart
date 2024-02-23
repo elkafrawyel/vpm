@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -19,6 +20,7 @@ import 'package:vpm/presentation/screens/home/pages/parking/components/garage_de
 import 'package:vpm/presentation/widgets/dialogs_view/app_dialog_view.dart';
 import 'package:vpm/presentation/widgets/modal_bottom_sheet.dart';
 
+import '../../screens/home/pages/parking/components/garage_info_view.dart';
 import '../../screens/home/pages/parking/components/garage_model.dart';
 
 class ParkingController extends GetxController with WidgetsBindingObserver {
@@ -30,6 +32,8 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
   Timer? debouncer;
   double cameraZoom = 13;
   MapType mapType = MapType.normal;
+  CustomInfoWindowController customInfoWindowController =
+      CustomInfoWindowController();
 
   List<GarageModel> garageList = [];
 
@@ -47,6 +51,7 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
   void dispose() {
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    customInfoWindowController.dispose();
   }
 
   @override
@@ -77,6 +82,7 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
 
   void onMapCreated(GoogleMapController controller) async {
     mapController = controller;
+    customInfoWindowController.googleMapController = controller;
     await getGaragesListFromApi();
   }
 
@@ -87,24 +93,28 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
         name: 'Garage 1',
         lat: 30.958723431397278,
         lng: 31.168272905051708,
+        isCompleted: false,
       ),
       GarageModel(
         id: '2',
         name: 'Garage 2',
         lat: 30.959876347794545,
         lng: 31.17682747542858,
+        isCompleted: false,
       ),
       GarageModel(
         id: '3',
         name: 'Garage 3',
         lat: 30.933517087159764,
         lng: 31.159301251173023,
+        isCompleted: true,
       ),
       GarageModel(
         id: '4',
         name: 'Garage 4',
         lat: 30.921552106485493,
         lng: 31.174164041876793,
+        isCompleted: true,
       ),
     ];
     for (var element in garageList) {
@@ -195,7 +205,8 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
     if (mapController != null) {
       mapController!.animateCamera(
         CameraUpdate.newLatLngZoom(
-          latLng,
+          // latLng,
+          const LatLng(30.959876347794545, 31.17682747542858),
           cameraZoom,
         ),
       );
@@ -208,8 +219,8 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
     BitmapDescriptor icon = BitmapDescriptor.defaultMarkerWithHue(2);
 
     final Uint8List markerIcon = await _getBytesFromAssetMarker(
-      Res.garagePinImage,
-      120,
+      element.isCompleted ? Res.redGaragePinImage : Res.garagePinImage,
+      80,
     );
     icon = BitmapDescriptor.fromBytes(markerIcon);
 
@@ -218,15 +229,18 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
       markerId: markerId,
       icon: icon,
       position: LatLng(element.lat, element.lng),
-      infoWindow: InfoWindow(
-        title: element.name,
-        anchor: const Offset(0.5, 0.5),
-        onTap: () {
-          _openGarageInfoBottomSheet(element);
-        },
-      ),
-      onTap: () {
-        _openGarageInfoBottomSheet(element);
+      onTap: () async {
+        await Future.delayed(const Duration(milliseconds: 100));
+        customInfoWindowController.addInfoWindow!(
+          GarageInfoView(
+            onTap: () {
+              customInfoWindowController.hideInfoWindow!();
+              _openGarageInfoBottomSheet(element);
+            },
+            garageModel: element,
+          ),
+          LatLng(element.lat, element.lng),
+        );
       },
     );
     garagesMarkersMap[markerId] = marker;
@@ -276,7 +290,6 @@ class ParkingController extends GetxController with WidgetsBindingObserver {
     PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
       googleMapKey,
       origin,
-      // const PointLatLng(30.921552106485493, 31.174164041876793),
       destination,
       travelMode: TravelMode.driving,
     );
