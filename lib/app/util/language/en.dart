@@ -180,4 +180,5 @@ Map<String, String> en = {
   'navigate_to_car_parking':'Navigation To Car Park',
   'm':'M',
   'km':'km',
+  'garage_completed':'Completed',
 };

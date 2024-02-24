@@ -6,6 +6,8 @@ import 'package:vpm/presentation/controller/parking_controller/parking_controlle
 import 'package:vpm/presentation/screens/home/pages/parking/components/address_view.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/components/build_map_icons.dart';
 
+import '../../../../../app/util/util.dart';
+
 class ParkingScreen extends StatefulWidget {
   const ParkingScreen({super.key});
 
@@ -14,8 +16,42 @@ class ParkingScreen extends StatefulWidget {
 }
 
 class _ParkingScreenState extends State<ParkingScreen>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, WidgetsBindingObserver {
   final ParkingController parkingController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        // parkingController.getMyPosition(loading: false);
+        Utils.logMessage('App is resumed');
+        break;
+      case AppLifecycleState.detached:
+        Utils.logMessage('App is detached');
+        break;
+      case AppLifecycleState.inactive:
+        Utils.logMessage('App is inactive');
+        break;
+      case AppLifecycleState.hidden:
+        Utils.logMessage('App is hidden');
+        break;
+      case AppLifecycleState.paused:
+        Utils.logMessage('App is paused');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +89,8 @@ class _ParkingScreenState extends State<ParkingScreen>
               ),
               CustomInfoWindow(
                 controller: parkingController.customInfoWindowController,
-                offset: 27,
-                width: 300,
+                offset: 30,
+                width: 200,
                 height: 50,
               ),
               PositionedDirectional(

@@ -179,4 +179,5 @@ Map<String, String> ar = {
   'navigate_to_car_parking': 'التوجه إلى موقف السيارات',
   'm': 'م',
   'km': 'كم',
+  'garage_completed': 'مكتمل',
 };

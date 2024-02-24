@@ -24,6 +24,7 @@ class Res {
   static const apiGetBalance = 'customer/current-balance';
   static const apiGetPaymentOptions = 'constants/charge-price-list';
   static const apiChargeBalance = 'customer/charge-balance';
+  static const apiSearchGarages = 'customer/garages/search';
 
   //========================== Animation Assets  ===============================
   static const animApiLoading = 'assets/anim/api_loading.json';

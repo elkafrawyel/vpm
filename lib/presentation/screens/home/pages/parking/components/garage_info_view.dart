@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:vpm/presentation/screens/home/pages/parking/components/garage_model.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:vpm/data/providers/storage/local_provider.dart';
 
 import '../../../../../../app/res/res.dart';
+import '../../../../../../domain/entities/models/garage_model.dart';
 import '../../../../../widgets/app_widgets/app_text.dart';
 
 class GarageInfoView extends StatelessWidget {
@@ -18,23 +20,33 @@ class GarageInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(start: 80.0),
+      padding: const EdgeInsetsDirectional.only(start: 70.0),
       child: GestureDetector(
         onTap: onTap,
         child: Stack(
           fit: StackFit.expand,
           alignment: AlignmentDirectional.center,
           children: [
-            SvgPicture.asset(
-              garageModel.isCompleted ? Res.iconRedBorder : Res.iconBlueBorder,
+            Transform.flip(
+              flipX: !LocalProvider().isAr(),
+              child: SvgPicture.asset(
+                garageModel.isAvailable
+                    ? Res.iconBlueBorder
+                    : Res.iconRedBorder,
+                // width: 100,
+                // height: 80,
+                // fit: BoxFit.fitHeight,
+              ),
             ),
             Center(
               child: AppText(
-                garageModel.isCompleted ? 'Booked' : '109/1000',
+                garageModel.isAvailable
+                    ? '${garageModel.reservedCarCount?.toString() ?? '0'} / ${garageModel.maxCarCount?.toString() ?? '0'}'
+                    : 'garage_completed'.tr,
                 fontWeight: FontWeight.bold,
-                color: garageModel.isCompleted ? Colors.white : Colors.black,
+                color: garageModel.isAvailable ? Colors.black : Colors.white,
               ),
-            )
+            ),
           ],
         ),
       ),

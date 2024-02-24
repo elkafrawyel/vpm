@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:vpm/data/repositories/advertisement_repository.dart';
+import 'package:vpm/data/repositories/garages_repository.dart';
 import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
 import 'package:vpm/presentation/controller/profile_controller/profile_controller.dart';
 
@@ -15,15 +16,20 @@ class HomeScreenBinding extends Bindings {
     Get.lazyPut(() => HomeScreenController());
     //todo add repo
     //parking controller
-    Get.lazyPut(() => ParkingController());
+    Get.lazyPut(() => GaragesRepositoryImpl());
+    Get.lazyPut(() => ParkingController(Get.find<GaragesRepositoryImpl>()));
     //services controller
 
     Get.lazyPut(() => AdvertisementRepositoryImpl());
-    Get.lazyPut(() => AdvertisementsController(Get.find<AdvertisementRepositoryImpl>()));
+    Get.lazyPut(() =>
+        AdvertisementsController(Get.find<AdvertisementRepositoryImpl>()));
 
     // profile controller
     Get.lazyPut(() => AuthRepositoryIml());
     Get.lazyPut(() => LookUpsRepositoryIml());
-    Get.lazyPut(() => ProfileController(Get.find<AuthRepositoryIml>(), Get.find<LookUpsRepositoryIml>()));
+    Get.lazyPut(() => ProfileController(
+          Get.find<AuthRepositoryIml>(),
+          Get.find<LookUpsRepositoryIml>(),
+        ));
   }
 }

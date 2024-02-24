@@ -12,8 +12,8 @@ import 'package:vpm/app/util/util.dart';
 import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
 
 import '../../../../../../app/util/constants.dart';
+import '../../../../../../domain/entities/models/garage_model.dart';
 import '../../../../../widgets/app_widgets/app_text.dart';
-import 'garage_model.dart';
 
 class GarageDetailsView extends StatelessWidget {
   final ScrollController scrollController;
@@ -33,8 +33,8 @@ class GarageDetailsView extends StatelessWidget {
     double distance = Geolocator.distanceBetween(
       myLocation.latitude,
       myLocation.longitude,
-      element.lat,
-      element.lng,
+      double.parse(element.latitude!),
+      double.parse(element.longitude!),
     );
 
     String howFar = distance > 1000
@@ -73,7 +73,7 @@ class GarageDetailsView extends StatelessWidget {
               ),
             ),
             AppText(
-              element.name,
+              element.name ?? '',
               fontSize: 18,
               fontWeight: FontWeight.w700,
               color: Colors.white,
@@ -172,10 +172,10 @@ class GarageDetailsView extends StatelessWidget {
               onTap: () {
                 Get.back();
                 Get.find<ParkingController>().getDirectionsToDestination(
-                  lineId: element.id,
+                  lineId: element.id!,
                   destination: PointLatLng(
-                    element.lat,
-                    element.lng,
+                    double.parse(element.latitude!),
+                    double.parse(element.longitude!),
                   ),
                 );
               },
