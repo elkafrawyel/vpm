@@ -38,7 +38,8 @@ class _AppState extends State<App> {
           child: GetMaterialApp(
             home: Container(color: Theme.of(context).scaffoldBackgroundColor),
             debugShowCheckedModeBanner:
-                Environment.appMode == AppMode.staging || Environment.appMode == AppMode.testing,
+                Environment.appMode == AppMode.staging ||
+                    Environment.appMode == AppMode.testing,
             defaultTransition: Transition.cupertino,
             transitionDuration: const Duration(milliseconds: 300),
             title: 'VPM',

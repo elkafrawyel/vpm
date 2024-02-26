@@ -2,8 +2,8 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 enum BookingTabsType {
   active,
-  completed,
-  cancelled;
+  completed;
+  // cancelled;
 
   @override
   String toString() => title;
@@ -16,8 +16,8 @@ extension BookingTabItem on BookingTabsType {
         return 'active'.tr;
       case BookingTabsType.completed:
         return 'completed'.tr;
-      case BookingTabsType.cancelled:
-        return 'cancelled'.tr;
+      // case BookingTabsType.cancelled:
+      //   return 'cancelled'.tr;
       default:
         return 'active'.tr;
     }

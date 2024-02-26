@@ -25,4 +25,19 @@ extension TabItem on BookingFilterType {
         return 'all'.tr;
     }
   }
+
+  String get value {
+    switch (this) {
+      case BookingFilterType.all:
+        return 'all';
+      case BookingFilterType.daily:
+        return 'day';
+      case BookingFilterType.monthly:
+        return 'month';
+      case BookingFilterType.yearly:
+        return 'year';
+      default:
+        return 'all';
+    }
+  }
 }

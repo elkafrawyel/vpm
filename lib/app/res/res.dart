@@ -25,6 +25,7 @@ class Res {
   static const apiGetPaymentOptions = 'constants/charge-price-list';
   static const apiChargeBalance = 'customer/charge-balance';
   static const apiSearchGarages = 'customer/garages/search';
+  static const apiBookingList = 'customer/parked-cars/search';
 
   //========================== Animation Assets  ===============================
   static const animApiLoading = 'assets/anim/api_loading.json';
@@ -34,6 +35,7 @@ class Res {
   static const animEmptyCart = 'assets/anim/empty_cart.json';
   static const animSuccess = 'assets/anim/success.json';
   static const animDisconnect = 'assets/anim/disconnect.json';
+  static const animClock = 'assets/anim/clock.json';
 
   //========================== Icons Assets  ===============================
   static const String iconName = 'assets/icons/name.svg';

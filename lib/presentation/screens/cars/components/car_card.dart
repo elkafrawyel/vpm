@@ -88,8 +88,8 @@ class CarCard extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Get.dialog(
-                          const QrCodeView(
-                            qrValue: 'K5PVjMio16zgxcKtk',
+                          QrCodeView(
+                            qrValue: car.randomCode ?? '',
                           ),
                         );
                       },

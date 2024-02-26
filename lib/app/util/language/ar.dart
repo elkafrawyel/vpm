@@ -180,4 +180,12 @@ Map<String, String> ar = {
   'm': 'م',
   'km': 'كم',
   'garage_completed': 'مكتمل',
+  'per_hour': '/ الساعة',
+  'starts_at': 'بدأت من',
+  'date': 'التاريخ',
+  'garage': 'الجراج',
+  'ends_at':'أنتهت في',
+  'total_cost':'المجموع الكلي',
+  'day':'يوم'
+
 };

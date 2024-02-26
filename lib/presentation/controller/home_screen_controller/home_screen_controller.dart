@@ -21,8 +21,6 @@ class HomeScreenController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-
-    initializeNotifications();
     selectedTabIndex = 0;
     pages = [
       const ParkingScreen(),
@@ -31,6 +29,7 @@ class HomeScreenController extends GetxController {
       const BookingScreen(),
       const MenuScreen(),
     ];
+    initializeNotifications();
   }
 
   @override
@@ -39,7 +38,7 @@ class HomeScreenController extends GetxController {
     super.dispose();
   }
 
-  initializeNotifications() async {
+  Future initializeNotifications() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );

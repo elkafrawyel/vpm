@@ -58,7 +58,6 @@ class ParkingController extends GetxController {
   void onInit() async {
     super.onInit();
     await getMyPosition();
-    animateToPosition(myLocation);
     setupTimer();
   }
 
@@ -177,6 +176,9 @@ class ParkingController extends GetxController {
       EasyLoading.dismiss();
     }
     update();
+    if (loading) {
+      animateToPosition(myLocation);
+    }
   }
 
   _openSettingDialog() {
@@ -228,6 +230,7 @@ class ParkingController extends GetxController {
       icon: icon,
       position: latLng,
       onTap: () async {
+        Utils.logMessage('Clicked Garage id ==> ${element.id}');
         await Future.delayed(const Duration(milliseconds: 100));
         customInfoWindowController.addInfoWindow!(
           GarageInfoView(

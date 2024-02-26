@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/components/address_view.dart';
-import 'package:vpm/presentation/screens/home/pages/parking/components/build_map_icons.dart';
 
 import '../../../../../app/util/util.dart';
+import 'components/build_map_icons.dart';
 
 class ParkingScreen extends StatefulWidget {
   const ParkingScreen({super.key});
@@ -67,13 +67,16 @@ class _ParkingScreenState extends State<ParkingScreen>
                   zoom: parkingController.cameraZoom,
                 ),
                 myLocationEnabled: true,
-                tiltGesturesEnabled: true,
-                compassEnabled: true,
+                // tiltGesturesEnabled: true,
+                // compassEnabled: true,
                 scrollGesturesEnabled: true,
-                zoomGesturesEnabled: true,
-                zoomControlsEnabled: true,
-                myLocationButtonEnabled: false,
+                // zoomGesturesEnabled: true,
+                zoomControlsEnabled: false,
+                myLocationButtonEnabled: true,
                 mapType: parkingController.mapType,
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.02,
+                ),
                 onTap: (position) {
                   print(position);
                   parkingController

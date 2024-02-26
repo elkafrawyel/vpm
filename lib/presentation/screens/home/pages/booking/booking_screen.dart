@@ -16,69 +16,95 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
+  final BookingController bookingController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BookingController>(
-      init: BookingController(),
-      builder: (bookingController) => Scaffold(
-        appBar: AppBar(
-          title: Text('booking'.tr),
-          actions: [
-            TextButton(
-              onPressed: () {
-                showAppSelectorDialog<BookingFilterType>(
-                  context: context,
-                  items: BookingFilterType.values,
-                  onItemSelected: (BookingFilterType bookingFilterType) {
-                    bookingController.bookingFilterType = bookingFilterType;
+      builder: (_) => DefaultTabController(
+        length: bookingController.pages.length,
+        initialIndex: bookingController.selectedIndex,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('booking'.tr),
+            actions: [
+              GetBuilder<BookingController>(builder: (_) {
+                return TextButton(
+                  onPressed: () {
+                    showAppSelectorDialog<BookingFilterType>(
+                      context: context,
+                      items: BookingFilterType.values,
+                      onItemSelected: (BookingFilterType bookingFilterType) {
+                        bookingController.bookingFilterType = bookingFilterType;
+                      },
+                    );
                   },
+                  child: AppText(
+                    bookingController.bookingFilterType.title,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 );
-              },
-              child: AppText(
-                bookingController.bookingFilterType.title,
+              }),
+            ],
+            bottom: TabBar(
+              tabAlignment: TabAlignment.center,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight: 1,
+              indicatorColor: Colors.transparent,
+              labelStyle: const TextStyle(
+                fontSize: 16,
                 fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+              unselectedLabelStyle: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
                 color: Theme.of(context).primaryColor,
               ),
+              onTap: (int index) {
+                bookingController.selectedIndex = index;
+              },
+              tabs: BookingTabsType.values
+                  .map(
+                    (e) => Container(
+                      decoration: BoxDecoration(
+                        color: bookingController.selectedIndex ==
+                                BookingTabsType.values.indexOf(e)
+                            ? Theme.of(context).primaryColor
+                            : Colors.white,
+                        border: Border.all(
+                            color: bookingController.selectedIndex ==
+                                    BookingTabsType.values.indexOf(e)
+                                ? Colors.transparent
+                                : Theme.of(context).primaryColor,
+                            width: 3),
+                        borderRadius: BorderRadius.circular(kRadius),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Tab(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 18.0),
+                            child: Text(
+                              e.title,
+                              style: TextStyle(
+                                color: bookingController.selectedIndex ==
+                                        BookingTabsType.values.indexOf(e)
+                                    ? Colors.white
+                                    : Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
-          ],
-        ),
-        body: Row(
-          children: BookingTabsType.values.map(
-            (e) {
-              bool selected = bookingController.selectedIndex ==
-                  BookingTabsType.values.indexOf(e);
-              return GestureDetector(
-                onTap: () {
-                  bookingController.selectedIndex =
-                      BookingTabsType.values.indexOf(e);
-                },
-                child: Container(
-                  width: 100,
-                  height: 40,
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    color: selected
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(kRadius),
-                    border: Border.all(
-                      color: Theme.of(context).primaryColor,
-                      width: 2.0,
-                    ),
-                  ),
-                  child: Center(
-                    child: AppText(
-                      e.title,
-                      color: selected
-                          ? Theme.of(context).scaffoldBackgroundColor
-                          : Theme.of(context).primaryColor,
-                      fontWeight: selected ? FontWeight.w700 : FontWeight.w300,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ).toList(),
+          ),
+          body: bookingController.pages[bookingController.selectedIndex],
         ),
       ),
     );

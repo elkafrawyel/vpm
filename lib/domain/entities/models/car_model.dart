@@ -5,6 +5,7 @@ class CarModel {
     this.id,
     this.name,
     this.number,
+    this.randomCode,
     this.createdAt,
     this.color,
     this.type,
@@ -15,6 +16,7 @@ class CarModel {
     id = json['id'];
     name = json['name'];
     number = json['number'];
+    randomCode = json['random_code'];
     createdAt = json['created_at'];
     color = json['color'] != null ? ColorModel.fromJson(json['color']) : null;
     type = json['type'] != null ? Type.fromJson(json['type']) : null;
@@ -24,47 +26,11 @@ class CarModel {
   String? id;
   String? name;
   String? number;
+  String? randomCode;
   String? createdAt;
   ColorModel? color;
   Type? type;
   ImageModel? image;
-
-  CarModel copyWith({
-    String? id,
-    String? name,
-    String? number,
-    String? createdAt,
-    ColorModel? color,
-    Type? type,
-    ImageModel? image,
-  }) =>
-      CarModel(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        number: number ?? this.number,
-        createdAt: createdAt ?? this.createdAt,
-        color: color ?? this.color,
-        type: type ?? this.type,
-        image: image ?? this.image,
-      );
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['number'] = number;
-    map['created_at'] = createdAt;
-    if (color != null) {
-      map['color'] = color?.toJson();
-    }
-    if (type != null) {
-      map['type'] = type?.toJson();
-    }
-    if (image != null) {
-      map['image'] = image?.toJson();
-    }
-    return map;
-  }
 }
 
 class Type {

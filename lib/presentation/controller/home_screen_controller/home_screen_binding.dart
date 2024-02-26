@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:vpm/data/repositories/advertisement_repository.dart';
+import 'package:vpm/data/repositories/booking_repository.dart';
 import 'package:vpm/data/repositories/garages_repository.dart';
+import 'package:vpm/presentation/controller/booking_controller/booking_controller.dart';
 import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
 import 'package:vpm/presentation/controller/profile_controller/profile_controller.dart';
 
@@ -24,6 +26,10 @@ class HomeScreenBinding extends Bindings {
     Get.lazyPut(() =>
         AdvertisementsController(Get.find<AdvertisementRepositoryImpl>()));
 
+    //booking controller
+
+    Get.lazyPut(() => BookingRepositoryImpl());
+    Get.lazyPut(() => BookingController(Get.find<BookingRepositoryImpl>()));
     // profile controller
     Get.lazyPut(() => AuthRepositoryIml());
     Get.lazyPut(() => LookUpsRepositoryIml());
