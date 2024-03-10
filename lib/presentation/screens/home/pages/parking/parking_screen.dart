@@ -96,11 +96,11 @@ class _ParkingScreenState extends State<ParkingScreen>
                 width: 200,
                 height: 50,
               ),
-              PositionedDirectional(
-                top: MediaQuery.sizeOf(context).height * 0.2,
-                start: 20,
-                child: BuildMapIcons(),
-              ),
+              // PositionedDirectional(
+              //   bottom: MediaQuery.sizeOf(context).height * 0.12,
+              //   start: 20,
+              //   child: BuildMapIcons(),
+              // ),
               PositionedDirectional(
                 top: MediaQuery.of(context).padding.top,
                 start: 0,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/types/booking_tabs_type.dart';
-import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../../app/types/booking_filter_type.dart';
@@ -48,57 +48,26 @@ class _BookingScreenState extends State<BookingScreen> {
               }),
             ],
             bottom: TabBar(
-              tabAlignment: TabAlignment.center,
+              tabAlignment: TabAlignment.fill,
               indicatorSize: TabBarIndicatorSize.tab,
-              indicatorWeight: 1,
-              indicatorColor: Colors.transparent,
-              labelStyle: const TextStyle(
+              indicatorWeight: 2,
+              labelStyle: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
               ),
-              unselectedLabelStyle: TextStyle(
+              unselectedLabelStyle: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Theme.of(context).primaryColor,
+                color: hintColor,
               ),
               onTap: (int index) {
                 bookingController.selectedIndex = index;
               },
               tabs: BookingTabsType.values
                   .map(
-                    (e) => Container(
-                      decoration: BoxDecoration(
-                        color: bookingController.selectedIndex ==
-                                BookingTabsType.values.indexOf(e)
-                            ? Theme.of(context).primaryColor
-                            : Colors.white,
-                        border: Border.all(
-                            color: bookingController.selectedIndex ==
-                                    BookingTabsType.values.indexOf(e)
-                                ? Colors.transparent
-                                : Theme.of(context).primaryColor,
-                            width: 3),
-                        borderRadius: BorderRadius.circular(kRadius),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                        child: Tab(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 18.0),
-                            child: Text(
-                              e.title,
-                              style: TextStyle(
-                                color: bookingController.selectedIndex ==
-                                        BookingTabsType.values.indexOf(e)
-                                    ? Colors.white
-                                    : Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                    (e) => Tab(
+                      text: e.title,
                     ),
                   )
                   .toList(),

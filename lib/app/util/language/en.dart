@@ -196,5 +196,6 @@ Map<String, String> en = {
   'end_date': 'End date',
   'time': 'Time',
   'total_hours':'Total hours',
-  'hours': 'Hours'
+  'hours': 'Hours',
+  'hour_cost':'Hour cost',
 };

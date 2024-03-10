@@ -76,14 +76,14 @@ class ParkingController extends GetxController {
     if (targetGarage != null) {
       //todo check if the customer arrive to garage
       double distance = Geolocator.distanceBetween(
-        myLocation.latitude!,
-        myLocation.longitude!,
+        myLocation.latitude,
+        myLocation.longitude,
         targetGarage!.latitude,
         targetGarage!.longitude,
       );
 
       //if distance lower than 10 meters
-      if (distance > 10) {
+      if (distance < 10) {
         targetGarage = null;
         polyLinesList.clear();
         update();

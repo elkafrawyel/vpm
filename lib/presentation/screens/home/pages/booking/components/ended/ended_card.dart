@@ -17,8 +17,11 @@ class EndedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Duration difference = DateTime.parse(bookingModel.endsAt!)
-        .difference(DateTime.parse(bookingModel.startsAt!));
+    Duration difference =
+        DateTime.tryParse(bookingModel.endsAt ?? '')?.difference(
+              DateTime.tryParse(bookingModel.startsAt ?? '') ?? DateTime.now(),
+            ) ??
+            const Duration(milliseconds: 100);
 
     int hours = ((difference.inMinutes / 60) - bookingModel.freeHours!).ceil();
 
@@ -39,35 +42,12 @@ class EndedCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: AppText(
-                    bookingModel.car?.name ?? '',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
+                    'garage'.tr,
+                    color: hintColor,
                   ),
                 ),
-                if (bookingModel.hourCost != null)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      children: [
-                        AppText(
-                          Utils().formatNumbers(
-                            bookingModel.hourCost.toString(),
-                          ),
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                        ),
-                        AppText('per_hour'.tr),
-                      ],
-                    ),
-                  )
-              ],
-            ),
-            5.ph,
-            Row(
-              children: [
-                Expanded(child: AppText('garage'.tr)),
                 Expanded(
+                  flex: 2,
                   child: AppText(
                     bookingModel.garage?.name ?? '',
                     fontWeight: FontWeight.w600,
@@ -76,7 +56,7 @@ class EndedCard extends StatelessWidget {
                 ),
               ],
             ),
-            5.ph,
+            10.ph,
             Row(
               children: [
                 Expanded(
@@ -86,6 +66,7 @@ class EndedCard extends StatelessWidget {
                   ),
                 ),
                 Expanded(
+                  flex: 2,
                   child: AppText(
                     DateFormat(
                       DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY,
@@ -99,7 +80,7 @@ class EndedCard extends StatelessWidget {
                 ),
               ],
             ),
-            5.ph,
+            10.ph,
             if (bookingModel.startsAt != null)
               Row(
                 children: [
@@ -110,6 +91,7 @@ class EndedCard extends StatelessWidget {
                     ),
                   ),
                   Expanded(
+                    flex: 2,
                     child: AppText(
                       DateFormat(
                         DateFormat.HOUR_MINUTE_SECOND,
@@ -123,7 +105,7 @@ class EndedCard extends StatelessWidget {
                   ),
                 ],
               ),
-            5.ph,
+            10.ph,
             Row(
               children: [
                 Expanded(
@@ -133,20 +115,22 @@ class EndedCard extends StatelessWidget {
                   ),
                 ),
                 Expanded(
+                  flex: 2,
                   child: AppText(
                     DateFormat(
                       DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY,
                       Get.locale?.languageCode,
                     ).format(
-                      DateTime.parse(
-                        bookingModel.endsAt!,
-                      ),
+                      DateTime.tryParse(
+                            bookingModel.endsAt ?? '',
+                          ) ??
+                          DateTime.now(),
                     ),
                   ),
                 ),
               ],
             ),
-            5.ph,
+            10.ph,
             if (bookingModel.endsAt != null)
               Row(
                 children: [
@@ -157,6 +141,7 @@ class EndedCard extends StatelessWidget {
                     ),
                   ),
                   Expanded(
+                    flex: 2,
                     child: AppText(
                       DateFormat(
                         DateFormat.HOUR_MINUTE_SECOND,
@@ -170,7 +155,60 @@ class EndedCard extends StatelessWidget {
                   ),
                 ],
               ),
-            5.ph,
+            10.ph,
+            if (bookingModel.hourCost != null)
+              Row(
+                children: [
+                  Expanded(
+                    child: AppText(
+                      'hour_cost'.tr,
+                      color: hintColor,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Row(
+                      children: [
+                        AppText(
+                          Utils().formatNumbers(
+                            bookingModel.hourCost.toString(),
+                          ),
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                        ),
+                        AppText(
+                          'per_hour'.tr,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            10.ph,
+            Row(
+              children: [
+                Expanded(
+                  child: AppText(
+                    'total_hours'.tr,
+                    color: hintColor,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: AppText(
+                    hours <= 0 ? "1" : hours.toString(),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ],
+            ),
+            10.ph,
             if (bookingModel.totalCost != null)
               Row(
                 children: [
@@ -181,6 +219,7 @@ class EndedCard extends StatelessWidget {
                     ),
                   ),
                   Expanded(
+                    flex: 2,
                     child: AppText(
                       bookingModel.totalCost == 0
                           ? 'free'.tr
@@ -195,24 +234,6 @@ class EndedCard extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-            if (hours > 0)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(child: AppText('total_hours'.tr)),
-                    Expanded(
-                      flex: 2,
-                      child: AppText(
-                        hours.toString(),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  ],
-                ),
               ),
           ],
         ),

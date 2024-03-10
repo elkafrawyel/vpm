@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/app/res/res.dart';
 import 'package:vpm/app/util/util.dart';
 import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/presentation/controller/booking_controller/booking_controller.dart';
@@ -12,6 +11,7 @@ import 'package:vpm/presentation/controller/home_screen_controller/home_screen_c
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../../../../app/config/app_color.dart';
+import '../../../../../../../app/res/res.dart';
 
 class TimerView extends StatefulWidget {
   final String startTime;
@@ -32,65 +32,6 @@ class TimerView extends StatefulWidget {
 class _TimerViewState extends State<TimerView> {
   Timer? _timer;
   double totalCost = 0.0;
-
-  Widget getTimerView() {
-    Color? textColor;
-
-    DateTime a = DateTime.parse(widget.startTime);
-    DateTime b = DateTime.now();
-
-    Duration difference = b.difference(a);
-
-    String days = difference.inDays == 0
-        ? ''
-        : difference.inDays.toString().padLeft(2, '0');
-    String hours = (difference.inHours % 24).toString().padLeft(2, '0');
-    String minutes = (difference.inMinutes % 60).toString().padLeft(2, '0');
-    String seconds = (difference.inSeconds % 60).toString().padLeft(2, '0');
-
-    if (widget.freeHours > 0 && difference.inMinutes < widget.freeHours * 60) {
-      textColor = Colors.green;
-      totalCost = 0.0;
-    } else {
-      textColor = Theme.of(context).primaryColor;
-      totalCost = (((difference.inMinutes / 60) - widget.freeHours).ceil() *
-              widget.perHour)
-          .toDouble();
-    }
-
-    int totalHours = ((difference.inMinutes / 60) - widget.freeHours).ceil();
-    return Row(
-      children: [
-        AppText(
-          LocalProvider().isAr()
-              ? "${days.isEmpty ? '' : '${replaceFarsiNumber(days)} ${'day'.tr} ,'} ${replaceFarsiNumber(hours)} : ${replaceFarsiNumber(minutes)} : ${replaceFarsiNumber(seconds)}"
-              : "${days.isEmpty ? '' : '${(days)} ${'day'.tr} ,'} $hours : $minutes : $seconds",
-          fontSize: 18,
-          color: textColor,
-          maxLines: 2,
-        ),
-        5.pw,
-        AppText(
-          '=',
-          fontSize: 30,
-          color: textColor,
-        ),
-        5.pw,
-        AppText(
-          LocalProvider().isAr()
-              ? replaceFarsiNumber(totalHours.toString())
-              : totalHours.toString(),
-          color: textColor,
-          fontSize: 20,
-        ),
-        5.pw,
-        AppText(
-          'hours'.tr,
-          color: textColor,
-        )
-      ],
-    );
-  }
 
   String replaceFarsiNumber(String input) {
     const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -127,48 +68,105 @@ class _TimerViewState extends State<TimerView> {
 
   @override
   Widget build(BuildContext context) {
+    Color? textColor;
+
+    DateTime a = DateTime.parse(widget.startTime);
+    DateTime b = DateTime.now();
+
+    Duration difference = b.difference(a);
+
+    String days = difference.inDays == 0
+        ? ''
+        : difference.inDays.toString().padLeft(2, '0');
+    String hours = (difference.inHours % 24).toString().padLeft(2, '0');
+    String minutes = (difference.inMinutes % 60).toString().padLeft(2, '0');
+    String seconds = (difference.inSeconds % 60).toString().padLeft(2, '0');
+
+    if (widget.freeHours > 0 && difference.inMinutes < widget.freeHours * 60) {
+      textColor = Colors.green;
+      totalCost = 0.0;
+    } else {
+      textColor = Theme.of(context).primaryColor;
+      totalCost = (((difference.inMinutes / 60) - widget.freeHours).ceil() *
+              widget.perHour)
+          .toDouble();
+    }
+
+    int totalHours = ((difference.inMinutes / 60) - widget.freeHours).ceil();
+
+    String time = LocalProvider().isAr()
+        ? "${days.isEmpty ? '' : '${replaceFarsiNumber(days)} ${'day'.tr} ,'} ${replaceFarsiNumber(hours)} : ${replaceFarsiNumber(minutes)} : ${replaceFarsiNumber(seconds)}"
+        : "${days.isEmpty ? '' : '${(days)} ${'day'.tr} ,'} $hours : $minutes : $seconds";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Lottie.asset(
-              Res.animClock,
-              width: 70,
-              height: 70,
+            Expanded(
+              child: AppText(
+                'total_cost'.tr,
+                color: hintColor,
+              ),
             ),
             Expanded(
               flex: 2,
-              child: getTimerView(),
+              child: AppText(
+                totalCost == 0
+                    ? 'free'.tr
+                    : Utils().formatNumbers(
+                  totalCost.toString(),
+                ),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: totalCost == 0
+                    ? Colors.green
+                    : Theme.of(context).primaryColor,
+              ),
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: AppText(
-                  'total_cost'.tr,
-                  color: hintColor,
-                ),
+
+        Row(
+          children: [
+            Lottie.asset(
+              Res.animClock,
+              width: 30,
+              height: 30,
+            ),
+            10.pw,
+            Expanded(
+              flex: 2,
+              child: Row(
+                children: [
+                  AppText(
+                    time,
+                    fontSize: 18,
+                    color: textColor,
+                    maxLines: 2,
+                  ),
+                  5.pw,
+                  AppText(
+                    '=',
+                    fontSize: 30,
+                    color: textColor,
+                  ),
+                  5.pw,
+                  AppText(
+                    LocalProvider().isAr()
+                        ? replaceFarsiNumber(totalHours.toString())
+                        : totalHours.toString(),
+                    color: textColor,
+                    fontSize: 20,
+                  ),
+                  5.pw,
+                  AppText(
+                    'hours'.tr,
+                    color: textColor,
+                  )
+                ],
               ),
-              Expanded(
-                child: AppText(
-                  totalCost == 0
-                      ? 'free'.tr
-                      : Utils().formatNumbers(
-                          totalCost.toString(),
-                        ),
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: totalCost == 0
-                      ? Colors.green
-                      : Theme.of(context).primaryColor,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

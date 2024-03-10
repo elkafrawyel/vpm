@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/controller/booking_controller/booking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/current/current_card.dart';
+import 'package:vpm/presentation/screens/home/pages/booking/components/current/current_shimmer_card.dart';
 import 'package:vpm/presentation/widgets/api_state_views/handel_api_state.dart';
 
 class CurrentBooking extends StatelessWidget {
@@ -14,6 +15,14 @@ class CurrentBooking extends StatelessWidget {
       builder: (bookingController) {
         return HandleApiState.controller(
           generalController: bookingController,
+          shimmerLoader: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 18.0),
+            child: ListView.separated(
+              itemBuilder: (context, index) => const CurrentShimmerCard(),
+              separatorBuilder: (context, index) => 5.ph,
+              itemCount: 10,
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18.0),
             child: RefreshIndicator(

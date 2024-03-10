@@ -4,12 +4,12 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:intl/intl.dart';
 import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/app/util/util.dart';
 import 'package:vpm/domain/entities/models/booking_model.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/current/timer_view.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../../../../app/util/constants.dart';
+import '../../../../../../../app/util/util.dart';
 
 class CurrentCard extends StatelessWidget {
   final BookingModel bookingModel;
@@ -35,35 +35,6 @@ class CurrentCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: AppText(
-                    bookingModel.car?.name ?? '',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                  ),
-                ),
-                if (bookingModel.hourCost != null)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      children: [
-                        AppText(
-                          Utils().formatNumbers(
-                            bookingModel.hourCost.toString(),
-                          ),
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                        ),
-                        AppText('per_hour'.tr),
-                      ],
-                    ),
-                  )
-              ],
-            ),
-            5.ph,
-            Row(
-              children: [
-                Expanded(
-                  child: AppText(
                     'garage'.tr,
                     color: hintColor,
                   ),
@@ -78,7 +49,7 @@ class CurrentCard extends StatelessWidget {
                 ),
               ],
             ),
-            5.ph,
+            10.ph,
             Row(
               children: [
                 Expanded(
@@ -102,7 +73,7 @@ class CurrentCard extends StatelessWidget {
                 ),
               ],
             ),
-            5.ph,
+            10.ph,
             if (bookingModel.startsAt != null)
               Row(
                 children: [
@@ -127,9 +98,42 @@ class CurrentCard extends StatelessWidget {
                   ),
                 ],
               ),
+            10.ph,
+            if (bookingModel.hourCost != null)
+              Row(
+                children: [
+                  Expanded(
+                    child: AppText(
+                      'hour_cost'.tr,
+                      color: hintColor,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Row(
+                      children: [
+                        AppText(
+                          Utils().formatNumbers(
+                            bookingModel.hourCost.toString(),
+                          ),
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                        ),
+                        AppText(
+                          'per_hour'.tr,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            10.ph,
             if (bookingModel.startsAt != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              Center(
                 child: TimerView(
                   startTime: bookingModel.startsAt!,
                   freeHours: bookingModel.freeHours ?? 0,

@@ -192,5 +192,6 @@ Map<String, String> ar = {
   'end_date': 'تاريخ الانتهاء',
   'time': 'الوقت',
   'total_hours': 'مجموع الساعات',
-  'hours': 'ساعة'
+  'hours': 'ساعة',
+  'hour_cost': 'سعر الساعة',
 };

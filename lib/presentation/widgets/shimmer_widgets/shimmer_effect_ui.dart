@@ -34,8 +34,8 @@ class MyShimmerEffectUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(
-        baseColor: baseColor ?? Colors.grey.shade200,
-        highlightColor: highlightColor ?? Colors.white70,
+        baseColor: baseColor ?? Colors.grey.shade300,
+        highlightColor: highlightColor ?? Colors.white54,
         period: Duration(seconds: seconds ?? 2),
         child: Container(
           padding: EdgeInsets.zero,
