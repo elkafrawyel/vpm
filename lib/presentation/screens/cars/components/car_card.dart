@@ -11,7 +11,6 @@ import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../widgets/app_widgets/app_dialog.dart';
-import 'qr_code_view.dart';
 
 class CarCard extends StatelessWidget {
   final CarModel car;
@@ -30,6 +29,7 @@ class CarCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(kRadius),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppCachedImage(
             imageUrl: car.image?.filePath,
@@ -41,13 +41,69 @@ class CarCard extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                AppText(
-                  car.name ?? '',
-                  fontSize: 16,
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.w700,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: AppText(
+                        car.name ?? '',
+                        fontSize: 16,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w700,
+                        maxLines: 2,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            await PersistentNavBarNavigator.pushNewScreen(
+                              context,
+                              screen: AddCarScreen(car: car),
+                              withNavBar: true,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.cupertino,
+                            );
+                            Get.find<MyCarsController>()
+                                .getMyCars(loading: false);
+                          },
+                          child: Icon(
+                            Icons.edit,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        10.pw,
+                        GestureDetector(
+                          onTap: () {
+                            scaleAlertDialog(
+                              context: context,
+                              title: 'delete'.tr,
+                              body: 'delete_message'.tr,
+                              cancelText: 'cancel'.tr,
+                              confirmText: 'submit'.tr,
+                              barrierDismissible: true,
+                              onCancelClick: () {
+                                Get.back();
+                              },
+                              onConfirmClick: () async {
+                                Get.back();
+                                Get.find<MyCarsController>().deleteCar(car);
+                              },
+                            );
+                          },
+                          child: const Icon(
+                            Icons.delete_forever_outlined,
+                            color: errorColor,
+                          ),
+                        ),
+                        // InkWell(
+                        //   child: SvgPicture.asset(Res.iconScan),
+                        // ),
+                      ],
+                    ),
+                  ],
                 ),
                 5.ph,
                 AppText(
@@ -62,74 +118,6 @@ class CarCard extends StatelessWidget {
                   color: hintColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 12,
-                ),
-                5.ph,
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        await PersistentNavBarNavigator.pushNewScreen(
-                          context,
-                          screen: AddCarScreen(car: car),
-                          withNavBar: true,
-                          pageTransitionAnimation:
-                              PageTransitionAnimation.cupertino,
-                        );
-                        Get.find<MyCarsController>().getMyCars(loading: false);
-                      },
-                      child: AppText(
-                        'Edit',
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w700,
-                        underLine: true,
-                      ),
-                    ),
-                    10.pw,
-                    GestureDetector(
-                      onTap: () {
-                        Get.dialog(
-                          QrCodeView(
-                            qrValue: car.randomCode ?? '',
-                          ),
-                        );
-                      },
-                      child: AppText(
-                        'Scan',
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w700,
-                        underLine: true,
-                      ),
-                    ),
-                    10.pw,
-                    GestureDetector(
-                      onTap: () {
-                        scaleAlertDialog(
-                          context: context,
-                          title: 'delete'.tr,
-                          body: 'delete_message'.tr,
-                          cancelText: 'cancel'.tr,
-                          confirmText: 'submit'.tr,
-                          barrierDismissible: true,
-                          onCancelClick: () {
-                            Get.back();
-                          },
-                          onConfirmClick: () async {
-                            Get.back();
-                            Get.find<MyCarsController>().deleteCar(car);
-                          },
-                        );
-                      },
-                      child: AppText(
-                        'Delete',
-                        color: Theme.of(context).colorScheme.error,
-                        fontWeight: FontWeight.w700,
-                        underLine: true,
-                      ),
-                    ),
-                    // InkWell(
-                    //   child: SvgPicture.asset(Res.iconScan),
-                    // ),
-                  ],
                 ),
               ],
             ),

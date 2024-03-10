@@ -191,4 +191,10 @@ Map<String, String> en = {
   'ends_at': 'Ends at',
   'total_cost': 'Total cost',
   'day': 'day',
+  'free': 'Free',
+  'start_date': 'Start date',
+  'end_date': 'End date',
+  'time': 'Time',
+  'total_hours':'Total hours',
+  'hours': 'Hours'
 };

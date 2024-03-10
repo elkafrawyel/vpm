@@ -5,9 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/util.dart';
-import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/domain/entities/models/booking_model.dart';
-import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../../../../app/util/constants.dart';
@@ -19,6 +17,11 @@ class EndedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Duration difference = DateTime.parse(bookingModel.endsAt!)
+        .difference(DateTime.parse(bookingModel.startsAt!));
+
+    int hours = ((difference.inMinutes / 60) - bookingModel.freeHours!).ceil();
+
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 8,
@@ -29,164 +32,189 @@ class EndedCard extends StatelessWidget {
         border: Border.all(width: .5, color: hintColor),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AppCachedImage(
-                imageUrl: bookingModel.car?.image?.filePath ?? '',
-                width: 140,
-                height: 110,
+        padding: const EdgeInsets.all(18.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: AppText(
+                    bookingModel.car?.name ?? '',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                ),
+                if (bookingModel.hourCost != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      children: [
+                        AppText(
+                          Utils().formatNumbers(
+                            bookingModel.hourCost.toString(),
+                          ),
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                        ),
+                        AppText('per_hour'.tr),
+                      ],
+                    ),
+                  )
+              ],
+            ),
+            5.ph,
+            Row(
+              children: [
+                Expanded(child: AppText('garage'.tr)),
+                Expanded(
+                  child: AppText(
+                    bookingModel.garage?.name ?? '',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+            5.ph,
+            Row(
+              children: [
+                Expanded(
+                  child: AppText(
+                    'start_date'.tr,
+                    color: hintColor,
+                  ),
+                ),
+                Expanded(
+                  child: AppText(
+                    DateFormat(
+                      DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY,
+                      Get.locale?.languageCode,
+                    ).format(
+                      DateTime.parse(
+                        bookingModel.startsAt!,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            5.ph,
+            if (bookingModel.startsAt != null)
+              Row(
+                children: [
+                  Expanded(
+                    child: AppText(
+                      'time'.tr,
+                      color: hintColor,
+                    ),
+                  ),
+                  Expanded(
+                    child: AppText(
+                      DateFormat(
+                        DateFormat.HOUR_MINUTE_SECOND,
+                        Get.locale?.languageCode,
+                      ).format(
+                        DateTime.parse(
+                          bookingModel.startsAt!,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              10.pw,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            5.ph,
+            Row(
+              children: [
+                Expanded(
+                  child: AppText(
+                    'end_date'.tr,
+                    color: hintColor,
+                  ),
+                ),
+                Expanded(
+                  child: AppText(
+                    DateFormat(
+                      DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY,
+                      Get.locale?.languageCode,
+                    ).format(
+                      DateTime.parse(
+                        bookingModel.endsAt!,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            5.ph,
+            if (bookingModel.endsAt != null)
+              Row(
+                children: [
+                  Expanded(
+                    child: AppText(
+                      'time'.tr,
+                      color: hintColor,
+                    ),
+                  ),
+                  Expanded(
+                    child: AppText(
+                      DateFormat(
+                        DateFormat.HOUR_MINUTE_SECOND,
+                        Get.locale?.languageCode,
+                      ).format(
+                        DateTime.parse(
+                          bookingModel.endsAt!,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            5.ph,
+            if (bookingModel.totalCost != null)
+              Row(
+                children: [
+                  Expanded(
+                    child: AppText(
+                      'total_cost'.tr,
+                      color: hintColor,
+                    ),
+                  ),
+                  Expanded(
+                    child: AppText(
+                      bookingModel.totalCost == 0
+                          ? 'free'.tr
+                          : Utils().formatNumbers(
+                              bookingModel.totalCost.toString(),
+                            ),
+                      fontSize: 18,
+                      color: bookingModel.totalCost == 0
+                          ? Colors.green
+                          : Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            if (hours > 0)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: AppText(
-                            bookingModel.car?.name ?? '',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                          ),
-                        ),
-                        if (bookingModel.hourCost != null)
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Row(
-                              children: [
-                                AppText(
-                                  Utils().formatNumbers(
-                                    bookingModel.hourCost.toString(),
-                                  ),
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16,
-                                ),
-                                AppText('per_hour'.tr),
-                              ],
-                            ),
-                          )
-                      ],
-                    ),
-                    5.ph,
-                    Row(
-                      children: [
-                        Expanded(child: AppText('garage'.tr)),
-                        Expanded(
-                          flex: 2,
-                          child: AppText(
-                            bookingModel.garage?.name ?? '',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: hintColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    5.ph,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: AppText(
-                            'date'.tr,
-                            color: hintColor,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: AppText(
-                            DateFormat(
-                              DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY,
-                              Get.locale?.languageCode,
-                            ).format(
-                              DateTime.parse(
-                                bookingModel.startsAt!,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    5.ph,
-                    if (bookingModel.startsAt != null)
-                      Row(
-                        children: [
-                          Expanded(
-                            child: AppText(
-                              'starts_at'.tr,
-                              color: hintColor,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: AppText(
-                              DateFormat(
-                                DateFormat.HOUR_MINUTE_SECOND,
-                                Get.locale?.languageCode,
-                              ).format(
-                                DateTime.parse(
-                                  bookingModel.startsAt!,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    Expanded(child: AppText('total_hours'.tr)),
+                    Expanded(
+                      flex: 2,
+                      child: AppText(
+                        hours.toString(),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        color: Theme.of(context).primaryColor,
                       ),
-                    5.ph,
-                    if (bookingModel.endsAt != null)
-                      Row(
-                        children: [
-                          Expanded(
-                            child: AppText(
-                              'ends_at'.tr,
-                              color: hintColor,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: AppText(
-                              DateFormat(
-                                DateFormat.HOUR_MINUTE_SECOND,
-                                Get.locale?.languageCode,
-                              ).format(
-                                DateTime.parse(
-                                  bookingModel.endsAt!,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    5.ph,
-                    if (bookingModel.totalCost != null)
-                      Row(
-                        children: [
-                          Expanded(
-                            child: AppText(
-                              'total_cost'.tr,
-                              color: hintColor,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: AppText(
-                              Utils().formatNumbers(
-                                bookingModel.totalCost.toString(),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    ),
                   ],
                 ),
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:vpm/app/config/app_color.dart';
+import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
@@ -17,32 +17,34 @@ class QrCodeView extends StatelessWidget {
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(kRadius),
       ),
-      margin: const EdgeInsets.symmetric(
-        vertical: 150,
-        horizontal: 18,
+      margin: EdgeInsets.symmetric(
+        vertical: MediaQuery.sizeOf(context).height * 0.2,
+        horizontal: 8,
       ),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: QrImageView(
-              data: qrValue,
-              version: QrVersions.auto,
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: QrImageView(
+                data: qrValue,
+                version: QrVersions.auto,
+              ),
             ),
           ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width * 0.8,
+            child: ElevatedButton(
               onPressed: Get.back,
               child: AppText(
                 'close'.tr,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: errorColor,
+                color: Colors.white,
               ),
             ),
-          )
+          ),
+          10.ph,
         ],
       ),
     );

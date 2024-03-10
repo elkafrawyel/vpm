@@ -15,6 +15,7 @@ class CarShimmerCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(kRadius),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const MyShimmerEffectUI.rectangular(
             width: 130,
@@ -25,7 +26,6 @@ class CarShimmerCard extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const MyShimmerEffectUI.rectangular(
                   height: 13,
@@ -40,28 +40,6 @@ class CarShimmerCard extends StatelessWidget {
                 const MyShimmerEffectUI.rectangular(
                   height: 13,
                   width: 130,
-                ),
-                10.ph,
-                Row(
-                  children: [
-                    const MyShimmerEffectUI.rectangular(
-                      height: 13,
-                      width: 40,
-                    ),
-                    10.pw,
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: MyShimmerEffectUI.rectangular(
-                        height: 13,
-                        width: 40,
-                      ),
-                    ),
-                    10.pw,
-                    const MyShimmerEffectUI.rectangular(
-                      height: 13,
-                      width: 40,
-                    ),
-                  ],
                 ),
               ],
             ),

@@ -184,8 +184,13 @@ Map<String, String> ar = {
   'starts_at': 'بدأت من',
   'date': 'التاريخ',
   'garage': 'الجراج',
-  'ends_at':'أنتهت في',
-  'total_cost':'المجموع الكلي',
-  'day':'يوم'
-
+  'ends_at': 'أنتهت في',
+  'total_cost': 'المجموع الكلي',
+  'day': 'يوم',
+  'free': 'مجاني',
+  'start_date': 'تاريخ البدء',
+  'end_date': 'تاريخ الانتهاء',
+  'time': 'الوقت',
+  'total_hours': 'مجموع الساعات',
+  'hours': 'ساعة'
 };
