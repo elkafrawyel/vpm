@@ -25,7 +25,7 @@ class AddressView extends StatelessWidget {
             Icon(
               Icons.location_on_outlined,
               color: Theme.of(context).primaryColor,
-              size: 35,
+              size: 30,
             ),
             10.pw,
             Expanded(

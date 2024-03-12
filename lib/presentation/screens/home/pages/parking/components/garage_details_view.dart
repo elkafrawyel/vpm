@@ -55,8 +55,9 @@ class GarageDetailsView extends StatelessWidget {
       assetPath =
           element.isAvailable ? Res.garagePinImage : Res.redGaragePinImage;
     } else {
-      assetPath =
-          element.isAvailable ? Res.valetPinImage : Res.redValetPinImage;
+      assetPath = Res.valetPinImage;
+      // assetPath =
+      //     element.isAvailable ? Res.valetPinImage : Res.redValetPinImage;
     }
     return Container(
       decoration: BoxDecoration(
