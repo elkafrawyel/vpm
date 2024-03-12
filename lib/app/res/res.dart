@@ -48,6 +48,7 @@ class Res {
   static const String iconPhoneVerified = 'assets/icons/phone_verified.svg';
   static const String iconForgetPassword = 'assets/icons/forget_password.svg';
   static const String iconParking = 'assets/icons/parking.svg';
+  static const String iconCar = 'assets/icons/car.svg';
   static const String iconValet = 'assets/icons/valet.svg';
   static const String iconServices = 'assets/icons/services.svg';
   static const String iconBooking = 'assets/icons/booking.svg';
@@ -69,7 +70,9 @@ class Res {
   //========================== Images Assets  ===============================
   static const locationPinImage = 'assets/images/my_pin.png';
   static const garagePinImage = 'assets/images/garage_pin.png';
+  static const valetPinImage = 'assets/images/valet_pin.png';
   static const redGaragePinImage = 'assets/images/red_garage_pin.png';
+  static const redValetPinImage = 'assets/images/red_valet_pin.png';
   static const blueBorderImage = 'assets/images/blue_border.png';
   static const facebookImage = "assets/images/social/facebook.png";
   static const instagramImage = "assets/images/social/instagram.png";

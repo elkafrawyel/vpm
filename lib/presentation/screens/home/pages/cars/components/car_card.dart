@@ -8,9 +8,8 @@ import 'package:vpm/domain/entities/models/car_model.dart';
 import 'package:vpm/presentation/controller/my_cars_controller/my_cars_controller.dart';
 import 'package:vpm/presentation/screens/add_car/add_car_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
+import 'package:vpm/presentation/widgets/app_widgets/app_dialog.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
-
-import '../../../widgets/app_widgets/app_dialog.dart';
 
 class CarCard extends StatelessWidget {
   final CarModel car;

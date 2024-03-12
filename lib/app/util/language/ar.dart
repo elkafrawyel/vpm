@@ -194,4 +194,7 @@ Map<String, String> ar = {
   'total_hours': 'مجموع الساعات',
   'hours': 'ساعة',
   'hour_cost': 'سعر الساعة',
+  'available_spaces': 'الاماكن المتاحة',
+  'cancel_trip': 'إلغاء الرحلة',
+  'navigate_to_valet': 'التوجه الي خادم'
 };

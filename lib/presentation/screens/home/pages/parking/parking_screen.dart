@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/components/address_view.dart';
+import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../../app/util/util.dart';
-import 'components/build_map_icons.dart';
 
 class ParkingScreen extends StatefulWidget {
   const ParkingScreen({super.key});
@@ -107,6 +107,32 @@ class _ParkingScreenState extends State<ParkingScreen>
                 end: 0,
                 child: const AddressView(),
               ),
+              if (parkingController.polyLinesList.isNotEmpty)
+                PositionedDirectional(
+                  start: 0,
+                  bottom: 30,
+                  end: 0,
+                  child: Center(
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.polyline),
+                      onPressed: () {
+                        parkingController.clearPolyline();
+                      },
+                      label: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 18.0,
+                          vertical: 12,
+                        ),
+                        child: AppText(
+                          'cancel_trip'.tr,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
         );

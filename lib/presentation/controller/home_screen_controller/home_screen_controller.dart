@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
+import 'package:vpm/presentation/screens/home/pages/cars/cars_screen.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/parking_screen.dart';
 import 'package:vpm/presentation/screens/home/pages/services/services_screen.dart';
-import 'package:vpm/presentation/screens/home/pages/valet/valet_screen.dart';
 
 import '../../../app/util/util.dart';
 import '../../../firebase_options.dart';
@@ -24,7 +24,7 @@ class HomeScreenController extends GetxController {
     selectedTabIndex = 0;
     pages = [
       const ParkingScreen(),
-      const ValetScreen(),
+      const CarsScreen(),
       const AdvertisementsScreen(),
       const BookingScreen(),
       const MenuScreen(),

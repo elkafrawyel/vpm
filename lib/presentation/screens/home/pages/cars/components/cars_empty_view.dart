@@ -4,11 +4,11 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/instance_manager.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
+import 'package:vpm/app/res/res.dart';
 import 'package:vpm/presentation/controller/my_cars_controller/my_cars_controller.dart';
 import 'package:vpm/presentation/screens/add_car/add_car_screen.dart';
+import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
-import '../../../../app/res/res.dart';
-import '../../../widgets/app_widgets/app_text.dart';
 
 class CarsEmptyView extends StatelessWidget {
   const CarsEmptyView({super.key});

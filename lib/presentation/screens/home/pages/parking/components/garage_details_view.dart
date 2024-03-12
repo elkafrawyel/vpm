@@ -6,6 +6,7 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/res/res.dart';
 import 'package:vpm/app/util/util.dart';
@@ -48,124 +49,192 @@ class GarageDetailsView extends StatelessWidget {
             symbol: 'm'.tr,
             digits: 2,
           );
+    String assetPath = "";
 
+    if (element.type?.code == 1) {
+      assetPath =
+          element.isAvailable ? Res.garagePinImage : Res.redGaragePinImage;
+    } else {
+      assetPath =
+          element.isAvailable ? Res.valetPinImage : Res.redValetPinImage;
+    }
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor.withOpacity(0.8),
-        borderRadius: BorderRadius.circular(kRadius),
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.circular(kRadius * 2),
       ),
       child: SingleChildScrollView(
         controller: scrollController,
         child: Column(
           children: [
-            GestureDetector(
-              onTap: Get.back,
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width / 3,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-              ),
-            ),
-            AppText(
-              element.name ?? '',
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
-            20.ph,
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadiusDirectional.vertical(
+                  top: Radius.circular(kRadius * 2),
+                ),
                 color: Colors.white,
               ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 28.0,
-                  vertical: 8.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 18, vertical: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AppText(
-                          '5.75',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              assetPath,
+                              width: 50,
+                              height: 50,
+                            ),
+                            10.pw,
+                            AppText(
+                              element.name ?? '',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ],
                         ),
-                        AppText(
-                          'SAR/Hour',
+                        const Spacer(),
+                        GestureDetector(
+                          onTap: Get.back,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.clear,
+                              size: 30,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    Column(
-                      children: [
-                        AppText(
-                          '30',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        AppText(
-                          'Available Spaces',
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             20.ph,
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(Res.iconClock),
-                    5.ph,
                     AppText(
-                      '08:00 - 23:30',
+                      Utils().formatNumbers(
+                        element.hourCost.toString(),
+                      ),
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                    )
+                      fontSize: 24,
+                    ),
+                    AppText(
+                      'per_hour'.tr,
+                      color: Colors.white,
+                    ),
                   ],
                 ),
-                Column(
-                  children: [
-                    SvgPicture.asset(Res.iconCamera),
-                    5.ph,
-                    AppText(
-                      'CCTV',
-                      color: Colors.white,
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    SvgPicture.asset(Res.iconStaff),
-                    5.ph,
-                    AppText(
-                      'Staff',
-                      color: Colors.white,
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    SvgPicture.asset(Res.iconGarageLocation),
-                    5.ph,
-                    AppText(
-                      howFar,
-                      color: Colors.white,
-                    )
-                  ],
-                ),
+                if (element.type?.code == 1) 40.pw,
+                if (element.type?.code == 1)
+                  Column(
+                    children: [
+                      AppText(
+                        element.availableCarCount == 0
+                            ? 'garage_completed'.tr
+                            : element.availableCarCount?.toString() ?? '0',
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                      if (element.availableCarCount != 0)
+                        AppText(
+                          'available_spaces'.tr,
+                          color: Colors.white,
+                        ),
+                    ],
+                  ),
               ],
+            ),
+            30.ph,
+            IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(Res.iconClock),
+                      5.ph,
+                      AppText(
+                        DateFormat(
+                          DateFormat.HOUR24_MINUTE,
+                          Get.locale?.languageCode,
+                        ).format(
+                          DateTime.parse(
+                            element.openAt!,
+                          ),
+                        ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                      AppText(
+                        DateFormat(
+                          DateFormat.HOUR24_MINUTE,
+                          Get.locale?.languageCode,
+                        ).format(
+                          DateTime.parse(
+                            element.closeAt!,
+                          ),
+                        ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SvgPicture.asset(Res.iconCamera),
+                      5.ph,
+                      const AppText(
+                        'CCTV',
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SvgPicture.asset(Res.iconStaff),
+                      5.ph,
+                      const AppText(
+                        'Staff',
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SvgPicture.asset(Res.iconGarageLocation),
+                      5.ph,
+                      AppText(
+                        howFar,
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
             50.ph,
             GestureDetector(
@@ -191,12 +260,15 @@ class GarageDetailsView extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 12.0,
-                    horizontal: 18.0,
+                    horizontal: 48.0,
                   ),
                   child: AppText(
-                    'navigate_to_car_parking'.tr,
+                    element.type?.code == 1
+                        ? 'navigate_to_car_parking'.tr
+                        : 'Navigate to valet'.tr,
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
                   ),
                 ),
               ),

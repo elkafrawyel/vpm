@@ -10,7 +10,6 @@ import 'package:vpm/presentation/screens/profile/profile_screen.dart';
 import 'package:vpm/presentation/screens/users/users_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/language_views/app_language_switch.dart';
 
-import '../../../cars/cars_screen.dart';
 import 'components/wallet_view.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -58,24 +57,24 @@ class _MenuScreenState extends State<MenuScreen> {
                 },
               ),
               const WalletView(),
-              ListTile(
-                splashColor: Colors.transparent,
-                leading: const Icon(Icons.directions_car),
-                title: Text('your_cars'.tr),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).dividerColor,
-                  size: 20,
-                ),
-                onTap: () {
-                  PersistentNavBarNavigator.pushNewScreen(
-                    context,
-                    screen: const CarsScreen(),
-                    withNavBar: true,
-                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
-                  );
-                },
-              ),
+              // ListTile(
+              //   splashColor: Colors.transparent,
+              //   leading: const Icon(Icons.directions_car),
+              //   title: Text('your_cars'.tr),
+              //   trailing: Icon(
+              //     Icons.arrow_forward_ios,
+              //     color: Theme.of(context).dividerColor,
+              //     size: 20,
+              //   ),
+              //   onTap: () {
+              //     PersistentNavBarNavigator.pushNewScreen(
+              //       context,
+              //       screen: const CarsScreen(),
+              //       withNavBar: true,
+              //       pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              //     );
+              //   },
+              // ),
               ListTile(
                 splashColor: Colors.transparent,
                 leading: const Icon(Icons.group),

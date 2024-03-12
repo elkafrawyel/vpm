@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             bottomNavigationItem(
               context: context,
               selected: homeScreenController.selectedTabIndex == 1,
-              title: 'valet'.tr,
+              title: 'your_cars'.tr,
               svgName: Res.iconValet,
             ),
             bottomNavigationItem(

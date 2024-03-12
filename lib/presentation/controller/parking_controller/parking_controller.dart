@@ -213,8 +213,18 @@ class ParkingController extends GetxController {
   Future addGarageMarker(GarageModel element) async {
     BitmapDescriptor icon = BitmapDescriptor.defaultMarkerWithHue(2);
 
+    String assetPath = "";
+
+    if (element.type?.code == 1) {
+      assetPath =
+          element.isAvailable ? Res.garagePinImage : Res.redGaragePinImage;
+    } else {
+      assetPath =
+          element.isAvailable ? Res.valetPinImage : Res.redValetPinImage;
+    }
+
     final Uint8List? markerIcon = await _getBytesFromAssetMarker(
-      element.isAvailable ? Res.garagePinImage : Res.redGaragePinImage,
+      assetPath,
       garageImageSize,
     );
     icon = markerIcon == null ? icon : BitmapDescriptor.fromBytes(markerIcon);
@@ -230,18 +240,22 @@ class ParkingController extends GetxController {
       icon: icon,
       position: latLng,
       onTap: () async {
-        Utils.logMessage('Clicked Garage id ==> ${element.id}');
-        await Future.delayed(const Duration(milliseconds: 100));
-        customInfoWindowController.addInfoWindow!(
-          GarageInfoView(
-            onTap: () {
-              customInfoWindowController.hideInfoWindow!();
-              _openGarageInfoBottomSheet(element);
-            },
-            garageModel: element,
-          ),
-          latLng,
-        );
+        if (element.type?.code == 1) {
+          Utils.logMessage('Clicked Garage id ==> ${element.id}');
+          await Future.delayed(const Duration(milliseconds: 100));
+          customInfoWindowController.addInfoWindow!(
+            GarageInfoView(
+              onTap: () {
+                customInfoWindowController.hideInfoWindow!();
+                _openGarageInfoBottomSheet(element);
+              },
+              garageModel: element,
+            ),
+            latLng,
+          );
+        } else {
+          _openGarageInfoBottomSheet(element);
+        }
       },
     );
     garagesMarkersMap[markerId] = marker;
@@ -358,8 +372,8 @@ class ParkingController extends GetxController {
   ) async {
     showAppModalBottomSheet(
       context: Get.context!,
-      initialChildSize: 0.4,
-      minChildSize: 0.3,
+      initialChildSize: 0.5,
+      minChildSize: 0.4,
       builder: (context, scrollController) {
         return GarageDetailsView(
           scrollController: scrollController,
@@ -374,5 +388,12 @@ class ParkingController extends GetxController {
     mapType = MapType.values[(mapType.index + 1) % MapType.values.length];
     if (mapType == MapType.none) mapType = MapType.normal;
     update();
+  }
+
+  void clearPolyline() async {
+    polyLinesList.clear();
+    targetGarage = null;
+    update();
+    animateToPosition(myLocation);
   }
 }

@@ -198,4 +198,7 @@ Map<String, String> en = {
   'total_hours':'Total hours',
   'hours': 'Hours',
   'hour_cost':'Hour cost',
+  'available_spaces':'Available Spaces',
+  'cancel_trip':'Cancel Trip',
+  'navigate_to_valet':'Navigate To Valet'
 };

@@ -7,8 +7,8 @@ import '../../../../../controller/profile_controller/profile_controller.dart';
 import '../../../../../widgets/app_widgets/app_cached_image.dart';
 import '../../../../../widgets/app_widgets/app_text.dart';
 import '../../../../../widgets/shimmer_widgets/shimmer_effect_ui.dart';
-import '../../../../cars/components/qr_code_view.dart';
 import '../../../../profile/profile_screen.dart';
+import 'qr_code_view.dart';
 
 class UserInfoView extends StatelessWidget {
   const UserInfoView({super.key});

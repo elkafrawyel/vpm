@@ -16,4 +16,3 @@ class GaragesResponse {
 
   List<GarageModel>? garages;
 }
-
