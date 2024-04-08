@@ -53,9 +53,10 @@ class LogOutView extends StatelessWidget {
     EasyLoading.show();
 
     OperationReply operationReply = await AuthRepositoryIml().logOut();
+    EasyLoading.dismiss();
+
     if (operationReply.isSuccess()) {
       GeneralResponse generalResponse = operationReply.result;
-      EasyLoading.dismiss();
       InformationViewer.showSnackBar(generalResponse.message);
       await Future.delayed(const Duration(milliseconds: 500));
       await LocalProvider().signOut();

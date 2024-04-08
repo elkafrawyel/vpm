@@ -6,6 +6,8 @@ import 'package:vpm/presentation/screens/home/pages/booking/components/current/c
 import 'package:vpm/presentation/screens/home/pages/booking/components/current/current_shimmer_card.dart';
 import 'package:vpm/presentation/widgets/api_state_views/handel_api_state.dart';
 
+import '../../../../../../widgets/app_widgets/app_text.dart';
+
 class CurrentBooking extends StatelessWidget {
   const CurrentBooking({super.key});
 
@@ -21,6 +23,40 @@ class CurrentBooking extends StatelessWidget {
               itemBuilder: (context, index) => const CurrentShimmerCard(),
               separatorBuilder: (context, index) => 5.ph,
               itemCount: 10,
+            ),
+          ),
+          emptyView: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.calendar_month,
+                  size: 200,
+                  color: Colors.black54,
+                ),
+                20.ph,
+                AppText(
+                  'empty_requests'.tr,
+                  fontSize: 16,
+                ),
+                40.ph,
+                ElevatedButton(
+                  onPressed: () {
+                    bookingController.refreshApiCall();
+                  },
+                  style:
+                  ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 38.0),
+                    child: AppText(
+                      'refresh'.tr,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
+              ],
             ),
           ),
           child: Padding(

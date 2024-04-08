@@ -76,12 +76,13 @@ class WalletController extends GetxController {
   }
 
   void requestRechargeBalance(BuildContext context, AnimationController animationController) async {
-    animationController.forward();
 
     if (amountController.text.isEmpty) {
       InformationViewer.showSnackBar('select_one_of_the_following_to_recharge'.tr);
       return;
     }
+    animationController.forward();
+
     OperationReply operationReply = await _walletRepository.chargeBalance(amount: amountController.text);
 
     if (operationReply.isSuccess()) {

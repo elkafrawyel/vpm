@@ -94,6 +94,7 @@ class _TimerViewState extends State<TimerView> {
 
     int totalHours = ((difference.inMinutes / 60) - widget.freeHours).ceil();
 
+    totalHours = totalHours < 0 ? 0 : totalHours;
     String time = LocalProvider().isAr()
         ? "${days.isEmpty ? '' : '${replaceFarsiNumber(days)} ${'day'.tr} ,'} ${replaceFarsiNumber(hours)} : ${replaceFarsiNumber(minutes)} : ${replaceFarsiNumber(seconds)}"
         : "${days.isEmpty ? '' : '${(days)} ${'day'.tr} ,'} $hours : $minutes : $seconds";
@@ -114,8 +115,8 @@ class _TimerViewState extends State<TimerView> {
                 totalCost == 0
                     ? 'free'.tr
                     : Utils().formatNumbers(
-                  totalCost.toString(),
-                ),
+                        totalCost.toString(),
+                      ),
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: totalCost == 0
@@ -125,7 +126,6 @@ class _TimerViewState extends State<TimerView> {
             ),
           ],
         ),
-
         Row(
           children: [
             Lottie.asset(

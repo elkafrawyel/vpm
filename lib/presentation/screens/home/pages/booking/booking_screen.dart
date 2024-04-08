@@ -51,16 +51,17 @@ class _BookingScreenState extends State<BookingScreen> {
               tabAlignment: TabAlignment.fill,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 2,
-              labelStyle: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: Theme.of(context).primaryColor,
-              ),
-              unselectedLabelStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: hintColor,
-              ),
+              labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).primaryColor,
+                  ),
+              unselectedLabelStyle:
+                  Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: hintColor,
+                      ),
               onTap: (int index) {
                 bookingController.selectedIndex = index;
               },

@@ -196,5 +196,20 @@ Map<String, String> ar = {
   'hour_cost': 'سعر الساعة',
   'available_spaces': 'الاماكن المتاحة',
   'cancel_trip': 'إلغاء الرحلة',
-  'navigate_to_valet': 'التوجه الي خادم'
+  'navigate_to_valet': 'التوجه الي خدمة الفاليه',
+  'request_valet': 'طلب سائق',
+  'empty_requests': 'ليس لديك أي طلبات حجز.',
+  'refresh': 'تحديث',
+  'end_parking': 'إنهاء الركنة',
+  'try_again': 'حاول مرة أخري',
+  'cctv': 'الدوائر التلفزيونية المغلقة',
+  'staff': 'طاقم العمل',
+  'resend_end_parking': 'إعادة ارسال',
+  'you_already_sent':
+      'لقد قمت بالفعل بإرسال طلب إنهاء، هل تريد الإرسال مرة أخرى؟',
+  'park_car': 'ركن السيارة',
+  'car_parked': 'تم ركن السيارة',
+  'show_on_map':'عرض علي الخريطة',
+  'your_request_accepted':'تمت الموافقة علي طلبكم لانهاء الفالية'
+
 };

@@ -26,6 +26,8 @@ class Res {
   static const apiChargeBalance = 'customer/charge-balance';
   static const apiSearchGarages = 'customer/garages/search';
   static const apiBookingList = 'customer/parked-cars/search';
+  static const apiRequestDriver = 'customer/request-driver-start-parking';
+  static const apiRequestEndParking = 'customer/request-driver-end-parking';
 
   //========================== Animation Assets  ===============================
   static const animApiLoading = 'assets/anim/api_loading.json';
