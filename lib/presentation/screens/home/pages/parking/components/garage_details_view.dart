@@ -261,86 +261,78 @@ class GarageDetailsView extends StatelessWidget {
                 ],
               ),
             ),
-            10.ph,
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    flex: 2,
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.back();
-                        Get.find<ParkingController>()
-                            .getDirectionsToDestination(
-                          lineId: element.id!,
-                          destination: PointLatLng(
-                            double.parse(element.latitude!),
-                            double.parse(element.longitude!),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffE6AF1D),
-                          borderRadius: BorderRadius.circular(kRadius),
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 2,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 12.0,
-                            horizontal: 28.0,
-                          ),
-                          child: AppText(
-                            element.type?.code == 1
-                                ? 'navigate_to_car_parking'.tr
-                                : 'navigate_to_valet'.tr,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white,
-                          ),
-                        ),
+            20.ph,
+            GestureDetector(
+              onTap: () {
+                Get.back();
+                Get.find<ParkingController>().getDirectionsToDestination(
+                  lineId: element.id!,
+                  destination: PointLatLng(
+                    double.parse(element.latitude!),
+                    double.parse(element.longitude!),
+                  ),
+                );
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width / 1.5,
+                decoration: BoxDecoration(
+                  color: const Color(0xffE6AF1D),
+                  borderRadius: BorderRadius.circular(kRadius),
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2,
+                  ),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 12.0,
+                      horizontal: 18.0,
+                    ),
+                    child: AppText(
+                      element.type?.code == 1
+                          ? 'navigate_to_car_parking'.tr
+                          : 'navigate_to_valet'.tr,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            20.ph,
+            if (element.type?.code == 2)
+              GestureDetector(
+                onTap: () {
+                  _requestValet();
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffE6AF1D),
+                    borderRadius: BorderRadius.circular(kRadius),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 2,
+                    ),
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12.0,
+                        horizontal: 18.0,
+                      ),
+                      child: AppText(
+                        'request_valet'.tr,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                  if (element.type?.code == 2) 10.pw,
-                  if (element.type?.code == 2)
-                    Flexible(
-                      child: GestureDetector(
-                        onTap: () {
-                          _requestValet();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color(0xffE6AF1D),
-                            borderRadius: BorderRadius.circular(kRadius),
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 2,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 12.0,
-                              horizontal: 28.0,
-                            ),
-                            child: AppText(
-                              'request_valet'.tr,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
+                ),
               ),
-            ),
             20.ph,
           ],
         ),

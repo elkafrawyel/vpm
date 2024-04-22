@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -25,7 +24,6 @@ import 'package:vpm/presentation/widgets/dialogs_view/app_dialog_view.dart';
 import 'package:vpm/presentation/widgets/modal_bottom_sheet.dart';
 
 import '../../../domain/entities/models/garage_model.dart';
-import '../../screens/home/pages/parking/components/garage_info_view.dart';
 
 class ParkingController extends GetxController {
   final GaragesRepositoryImpl _garagesRepositoryImpl;
@@ -45,9 +43,6 @@ class ParkingController extends GetxController {
   double cameraZoom = 13;
   MapType mapType = MapType.normal;
   LatLng? targetGarage;
-  CustomInfoWindowController customInfoWindowController =
-      CustomInfoWindowController();
-
   List<GarageModel> garageList = [];
   Timer? timer;
 
@@ -106,13 +101,11 @@ class ParkingController extends GetxController {
   @override
   void dispose() {
     super.dispose();
-    customInfoWindowController.dispose();
     timer?.cancel();
   }
 
   void onMapCreated(GoogleMapController controller) async {
     mapController = controller;
-    customInfoWindowController.googleMapController = controller;
   }
 
   Future<void> getGaragesListFromApi() async {
@@ -198,7 +191,6 @@ class ParkingController extends GetxController {
 
   animateToPosition(LatLng latLng, {double? zoom}) {
     if (mapController != null) {
-      customInfoWindowController.hideInfoWindow!();
       mapController!.animateCamera(
         CameraUpdate.newLatLngZoom(
           latLng,
@@ -240,22 +232,24 @@ class ParkingController extends GetxController {
       icon: icon,
       position: latLng,
       onTap: () async {
-        if (element.type?.code == 1) {
-          Utils.logMessage('Clicked Garage id ==> ${element.id}');
-          await Future.delayed(const Duration(milliseconds: 100));
-          customInfoWindowController.addInfoWindow!(
-            GarageInfoView(
-              onTap: () {
-                customInfoWindowController.hideInfoWindow!();
-                _openGarageInfoBottomSheet(element);
-              },
-              garageModel: element,
-            ),
-            latLng,
-          );
-        } else {
-          _openGarageInfoBottomSheet(element);
-        }
+        _openGarageInfoBottomSheet(element);
+
+        // if (element.type?.code == 1) {
+        //   Utils.logMessage('Clicked Garage id ==> ${element.id}');
+        //   await Future.delayed(const Duration(milliseconds: 100));
+        //   customInfoWindowController.addInfoWindow!(
+        //     GarageInfoView(
+        //       onTap: () {
+        //         customInfoWindowController.hideInfoWindow!();
+        //         _openGarageInfoBottomSheet(element);
+        //       },
+        //       garageModel: element,
+        //     ),
+        //     latLng,
+        //   );
+        // } else {
+        //   _openGarageInfoBottomSheet(element);
+        // }
       },
     );
     garagesMarkersMap[markerId] = marker;

@@ -1,4 +1,3 @@
-import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -79,22 +78,13 @@ class _ParkingScreenState extends State<ParkingScreen>
                 ),
                 onTap: (position) {
                   print(position);
-                  parkingController
-                      .customInfoWindowController.hideInfoWindow!();
                 },
                 onCameraMove: (position) {
-                  parkingController.customInfoWindowController.onCameraMove!();
                 },
                 onMapCreated: parkingController.onMapCreated,
                 markers:
                     Set<Marker>.of(parkingController.garagesMarkersMap.values),
                 polylines: Set<Polyline>.of(parkingController.polyLinesList),
-              ),
-              CustomInfoWindow(
-                controller: parkingController.customInfoWindowController,
-                offset: 30,
-                width: 200,
-                height: 50,
               ),
               // PositionedDirectional(
               //   bottom: MediaQuery.sizeOf(context).height * 0.12,
