@@ -9,9 +9,11 @@ class BookingRepositoryImpl implements BookingRepository {
   Future<OperationReply<BookingResponse>> getBookingList({
     required String status,
     required String period,
+    int? page,
   }) async {
     return APIProvider.instance.get(
-      endPoint: '${Res.apiBookingList}?period=$period&status=$status',
+      endPoint:
+          '${Res.apiBookingList}?period=$period&status=$status&paginate=1&page=$page',
       fromJson: BookingResponse.fromJson,
     );
   }

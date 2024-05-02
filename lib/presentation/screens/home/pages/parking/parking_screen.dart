@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/components/address_view.dart';
+import 'package:vpm/presentation/widgets/app_widgets/app_dialog.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../../app/util/util.dart';
+import '../menu/components/qr_code_view.dart';
 
 class ParkingScreen extends StatefulWidget {
   const ParkingScreen({super.key});
@@ -58,6 +61,25 @@ class _ParkingScreenState extends State<ParkingScreen>
     return GetBuilder<ParkingController>(
       builder: (_) {
         return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.white,
+            tooltip: 'QR CODE',
+            shape: const CircleBorder(),
+            child: Icon(
+              Icons.qr_code,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: () {
+              scaleDialog(
+                context: context,
+                barrierDismissible: true,
+                backgroundColor: Colors.transparent,
+                content: QrCodeView(
+                  qrValue: LocalProvider().getUser()?.id ?? '',
+                ),
+              );
+            },
+          ),
           body: Stack(
             children: [
               GoogleMap(
@@ -71,16 +93,12 @@ class _ParkingScreenState extends State<ParkingScreen>
                 scrollGesturesEnabled: true,
                 // zoomGesturesEnabled: true,
                 zoomControlsEnabled: false,
-                myLocationButtonEnabled: true,
+                myLocationButtonEnabled: false,
                 mapType: parkingController.mapType,
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.02,
-                ),
                 onTap: (position) {
                   print(position);
                 },
-                onCameraMove: (position) {
-                },
+                onCameraMove: (position) {},
                 onMapCreated: parkingController.onMapCreated,
                 markers:
                     Set<Marker>.of(parkingController.garagesMarkersMap.values),

@@ -6,5 +6,6 @@ abstract class BookingRepository {
   Future<OperationReply<BookingResponse>> getBookingList({
     required String status,
     required String period,
+    int? page,
   });
 }

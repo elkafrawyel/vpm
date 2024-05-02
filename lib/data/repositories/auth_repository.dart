@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:fcm_config/fcm_config.dart';
 import 'package:vpm/data/models/general_response.dart';
 
 import '../../app/res/res.dart';
@@ -16,14 +17,17 @@ import '../providers/network/api_provider.dart';
 
 class AuthRepositoryIml extends AuthRepository {
   @override
-  Future<OperationReply<UserResponse>> login(
-      {required LoginRequest loginRequest}) async {
+  Future<OperationReply<UserResponse>> login({
+    required LoginRequest loginRequest,
+  }) async {
+    String? firebaseToken = await FCMConfig.instance.messaging.getToken();
     return await APIProvider.instance.post<UserResponse>(
       endPoint: Res.apiLogin,
       fromJson: UserResponse.fromJson,
       requestBody: {
         'user': loginRequest.phoneOrEmail,
         'password': loginRequest.password,
+        'notification_token': firebaseToken,
       },
     );
   }
@@ -32,6 +36,7 @@ class AuthRepositoryIml extends AuthRepository {
   Future<OperationReply<UserResponse>> register({
     required RegisterRequest registerRequest,
   }) async {
+
     return await APIProvider.instance.post<UserResponse>(
       endPoint: Res.apiRegister,
       fromJson: UserResponse.fromJson,

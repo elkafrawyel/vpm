@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 
+import '../../../../../../data/providers/storage/local_provider.dart';
 import '../../../../../controller/profile_controller/profile_controller.dart';
 import '../../../../../widgets/app_widgets/app_cached_image.dart';
+import '../../../../../widgets/app_widgets/app_dialog.dart';
 import '../../../../../widgets/app_widgets/app_text.dart';
 import '../../../../../widgets/shimmer_widgets/shimmer_effect_ui.dart';
 import '../../../../profile/profile_screen.dart';
@@ -72,9 +74,12 @@ class UserInfoView extends StatelessWidget {
                       20.pw,
                       GestureDetector(
                         onTap: () {
-                          Get.dialog(
-                            QrCodeView(
-                              qrValue: profileController.userModel?.id ?? '',
+                          scaleDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            backgroundColor: Colors.transparent,
+                            content: QrCodeView(
+                              qrValue: LocalProvider().getUser()?.id ?? '',
                             ),
                           );
                         },

@@ -4,6 +4,7 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/ended/ended_card.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/ended/ended_shimmer_card.dart';
+import 'package:vpm/presentation/widgets/api_state_views/pagination_view.dart';
 
 import '../../../../../../controller/booking_controller/booking_controller.dart';
 import '../../../../../../widgets/api_state_views/handel_api_state.dart';
@@ -49,7 +50,7 @@ class EndedBooking extends StatelessWidget {
                     bookingController.refreshApiCall();
                   },
                   style:
-                  ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                      ElevatedButton.styleFrom(backgroundColor: Colors.black),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 38.0),
                     child: AppText(
@@ -59,22 +60,27 @@ class EndedBooking extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
-          child: RefreshIndicator(
-            onRefresh: bookingController.refreshApiCall,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 18.0,
-                horizontal: 12,
-              ),
-              child: ListView.separated(
-                itemBuilder: (context, index) => EndedCard(
-                    bookingModel: bookingController.endedBookingsList[index]),
-                separatorBuilder: (context, index) => 5.ph,
-                itemCount: bookingController.endedBookingsList.length,
+          child: PaginationView(
+            showLoadMoreWidget: bookingController.endedLoadingMore,
+            showLoadMoreEndWidget: bookingController.endedLoadingMoreEnd,
+            loadMoreData: bookingController.loadMoreEndBookings,
+            child: RefreshIndicator(
+              onRefresh: bookingController.refreshApiCall,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 18.0,
+                  horizontal: 12,
+                ),
+                child: ListView.separated(
+                  itemBuilder: (context, index) => EndedCard(
+                    bookingModel: bookingController.endedBookingsList[index],
+                  ),
+                  separatorBuilder: (context, index) => 5.ph,
+                  itemCount: bookingController.endedBookingsList.length,
+                ),
               ),
             ),
           ),

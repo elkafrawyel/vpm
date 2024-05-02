@@ -13,6 +13,18 @@ class BookingController extends GeneralController {
 
   BookingController(this._bookingRepositoryImpl);
 
+  int endedPage = 1;
+
+  int endedTotalPages = 1;
+
+  bool endedLoadingMore = false, endedLoadingMoreEnd = false;
+
+  int currentPage = 1;
+
+  int currentTotalPages = 1;
+
+  bool currentLoadingMore = false, currentLoadingMoreEnd = false;
+
   List<Widget> pages = [
     const CurrentBooking(),
     const EndedBooking(),
@@ -35,6 +47,9 @@ class BookingController extends GeneralController {
   int get selectedIndex => _selectedIndex;
 
   set selectedIndex(int value) {
+    if (_selectedIndex == value) {
+      return;
+    }
     _selectedIndex = value;
     update();
     getBookingList();
@@ -52,6 +67,7 @@ class BookingController extends GeneralController {
     operationReply = await _bookingRepositoryImpl.getBookingList(
       status: _selectedIndex == 0 ? 'current' : 'ends',
       period: _bookingFilterType.name,
+      page: 1,
     );
 
     if (operationReply.isSuccess()) {
@@ -59,6 +75,7 @@ class BookingController extends GeneralController {
       switch (_selectedIndex) {
         case 0:
           currentBookingsList = bookingResponse.data ?? [];
+          currentTotalPages = bookingResponse.meta?.total ?? 1;
           if (currentBookingsList.isEmpty) {
             operationReply = OperationReply.empty();
           } else {
@@ -67,6 +84,7 @@ class BookingController extends GeneralController {
           break;
         case 1:
           endedBookingsList = bookingResponse.data ?? [];
+          endedTotalPages = bookingResponse.meta?.total ?? 1;
           if (endedBookingsList.isEmpty) {
             operationReply = OperationReply.empty();
           } else {
@@ -77,8 +95,88 @@ class BookingController extends GeneralController {
     }
   }
 
+  void loadMoreEndBookings() async {
+    if (endedLoadingMoreEnd) {
+      return;
+    }
+    endedPage++;
+    if (endedPage > endedTotalPages) {
+      endedLoadingMoreEnd = true;
+      update();
+      return;
+    }
+
+    print('Page========>$endedPage');
+    endedLoadingMore = true;
+    update();
+    operationReply = await _bookingRepositoryImpl.getBookingList(
+      status: 'ends',
+      period: _bookingFilterType.name,
+      page: endedPage,
+    );
+
+    if (operationReply.isSuccess()) {
+      BookingResponse bookingResponse = operationReply.result;
+
+      endedBookingsList.addAll(bookingResponse.data ?? []);
+      if (endedBookingsList.isEmpty) {
+        operationReply = OperationReply.empty();
+      } else {
+        operationReply = OperationReply.success();
+      }
+    }
+
+    endedLoadingMore = false;
+    update();
+  }
+
+  void loadMoreCurrentBookings() async {
+    if (currentLoadingMoreEnd) {
+      return;
+    }
+    currentPage++;
+    if (currentPage > currentTotalPages) {
+      currentLoadingMoreEnd = true;
+      update();
+      return;
+    }
+
+    print('Page========>$currentPage');
+    currentLoadingMore = true;
+    update();
+    operationReply = await _bookingRepositoryImpl.getBookingList(
+      status: 'current',
+      period: _bookingFilterType.name,
+      page: currentPage,
+    );
+
+    if (operationReply.isSuccess()) {
+      BookingResponse bookingResponse = operationReply.result;
+
+      currentBookingsList.addAll(bookingResponse.data ?? []);
+      if (currentBookingsList.isEmpty) {
+        operationReply = OperationReply.empty();
+      } else {
+        operationReply = OperationReply.success();
+      }
+    }
+
+    currentLoadingMore = false;
+    update();
+  }
+
   @override
   Future<void> refreshApiCall() async {
+    if (selectedIndex == 0) {
+      currentTotalPages = 1;
+      currentLoadingMoreEnd = false;
+      currentLoadingMore = false;
+    } else {
+      endedTotalPages = 1;
+      endedLoadingMore = false;
+      endedLoadingMore = false;
+    }
+    update();
     getBookingList();
   }
 }

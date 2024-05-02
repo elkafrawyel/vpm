@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
               validateEmptyText: 'password_required'.tr,
               hintText: 'password'.tr,
               horizontalPadding: 28,
-              autoFillHints: const [AutofillHints.email],
+              autoFillHints: const [AutofillHints.password],
               radius: kRadius,
               appFieldType: AppFieldType.password,
               prefixIcon: Res.iconPassword,

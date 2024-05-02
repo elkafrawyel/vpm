@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -32,6 +33,7 @@ void main() async {
   );
 
   await LocalProvider().init();
+  await Firebase.initializeApp();
 
   runApp(const App());
 }

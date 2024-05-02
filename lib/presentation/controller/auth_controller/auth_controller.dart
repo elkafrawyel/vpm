@@ -1,3 +1,4 @@
+import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/util/information_viewer.dart';
@@ -105,6 +106,8 @@ class AuthController extends GetxController {
     //     return;
     //   }
     animationController.forward();
+    String? firebaseToken = await FCMConfig.instance.messaging.getToken();
+
     OperationReply<UserResponse> operationReply =
         await _authRepositoryIml.register(
       registerRequest: RegisterRequest(
@@ -112,7 +115,7 @@ class AuthController extends GetxController {
         email: email,
         phone: phone,
         password: password,
-        // fileId: uploadFileResponse?.data?.id,
+        firebaseToken: firebaseToken,
       ),
     );
     if (operationReply.isSuccess()) {

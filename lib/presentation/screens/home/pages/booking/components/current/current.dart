@@ -5,6 +5,7 @@ import 'package:vpm/presentation/controller/booking_controller/booking_controlle
 import 'package:vpm/presentation/screens/home/pages/booking/components/current/current_card.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/current/current_shimmer_card.dart';
 import 'package:vpm/presentation/widgets/api_state_views/handel_api_state.dart';
+import 'package:vpm/presentation/widgets/api_state_views/pagination_view.dart';
 
 import '../../../../../../widgets/app_widgets/app_text.dart';
 
@@ -45,7 +46,7 @@ class CurrentBooking extends StatelessWidget {
                     bookingController.refreshApiCall();
                   },
                   style:
-                  ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                      ElevatedButton.styleFrom(backgroundColor: Colors.black),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 38.0),
                     child: AppText(
@@ -55,7 +56,6 @@ class CurrentBooking extends StatelessWidget {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -63,11 +63,17 @@ class CurrentBooking extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 18.0),
             child: RefreshIndicator(
               onRefresh: bookingController.refreshApiCall,
-              child: ListView.separated(
-                itemBuilder: (context, index) => CurrentCard(
-                    bookingModel: bookingController.currentBookingsList[index]),
-                separatorBuilder: (context, index) => 10.ph,
-                itemCount: bookingController.currentBookingsList.length,
+              child: PaginationView(
+                showLoadMoreWidget: bookingController.currentLoadingMore,
+                showLoadMoreEndWidget: bookingController.currentLoadingMoreEnd,
+                loadMoreData: bookingController.loadMoreCurrentBookings,
+                child: ListView.separated(
+                  itemBuilder: (context, index) => CurrentCard(
+                    bookingModel: bookingController.currentBookingsList[index],
+                  ),
+                  separatorBuilder: (context, index) => 10.ph,
+                  itemCount: bookingController.currentBookingsList.length,
+                ),
               ),
             ),
           ),
