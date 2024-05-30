@@ -5,7 +5,7 @@ import 'package:vpm/app/types/booking_tabs_type.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../../app/types/booking_filter_type.dart';
-import '../../../../controller/booking_controller/booking_controller.dart';
+import '../../../../controller/booking_controller.dart';
 import '../../../../widgets/app_selector.dart';
 
 class BookingScreen extends StatefulWidget {

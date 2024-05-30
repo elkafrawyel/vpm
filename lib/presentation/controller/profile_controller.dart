@@ -12,9 +12,9 @@ import 'package:vpm/domain/entities/models/user_model.dart';
 import 'package:vpm/domain/entities/requests/update_profile_request.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_gender_picker.dart';
 
-import '../../../app/util/operation_reply.dart';
-import '../../../data/models/upload_file_response.dart';
-import '../../../data/repositories/lookups_repository.dart';
+import '../../app/util/operation_reply.dart';
+import '../../data/models/upload_file_response.dart';
+import '../../data/repositories/lookups_repository.dart';
 
 class ProfileController extends GetxController {
   UserModel? _userModel;
@@ -74,7 +74,8 @@ class ProfileController extends GetxController {
 
     String? fileId = userModel?.avatar?.id;
     if (image != null) {
-      OperationReply<UploadFileResponse> uploadOperationReply = await _lookUpsRepositoryIml.uploadFile(
+      OperationReply<UploadFileResponse> uploadOperationReply =
+          await _lookUpsRepositoryIml.uploadFile(
         file: image,
         onUploadProgress: (double percent) {
           EasyLoading.showProgress(
@@ -97,12 +98,15 @@ class ProfileController extends GetxController {
     }
 
     animationController.forward();
-    OperationReply operationReply = await _authRepositoryIml.updateProfileInformation(
+    OperationReply operationReply =
+        await _authRepositoryIml.updateProfileInformation(
       updateProfileRequest: UpdateProfileRequest(
         name: name,
         email: email,
         phone: phone,
-        birthday: birthday == null ? userModel?.birthday : DateFormat('yyyy-MM-dd').format(birthday),
+        birthday: birthday == null
+            ? userModel?.birthday
+            : DateFormat('yyyy-MM-dd').format(birthday),
         gender: gender == null ? userModel?.gender : gender.name,
         fileId: fileId,
       ),

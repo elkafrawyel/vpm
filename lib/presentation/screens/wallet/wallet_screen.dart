@@ -4,7 +4,7 @@ import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/app/util/util.dart';
 import 'package:vpm/data/models/payment_options_response.dart';
-import 'package:vpm/presentation/controller/wallet_controller/wallet_controller.dart';
+import 'package:vpm/presentation/controller/wallet_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text_field/app_text_field.dart';
@@ -101,7 +101,8 @@ class _WalletScreenState extends State<WalletScreen> {
                           children: [
                             Radio(
                               value: e,
-                              groupValue: walletController.selectedPaymentOption,
+                              groupValue:
+                                  walletController.selectedPaymentOption,
                               onChanged: (PaymentOptionModel? value) {
                                 if (value == null) {
                                   return;

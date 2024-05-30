@@ -6,7 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/util.dart';
 import 'package:vpm/data/providers/storage/local_provider.dart';
-import 'package:vpm/presentation/controller/booking_controller/booking_controller.dart';
+import 'package:vpm/presentation/controller/booking_controller.dart';
 import 'package:vpm/presentation/controller/home_screen_controller/home_screen_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 

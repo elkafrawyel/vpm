@@ -93,7 +93,7 @@ class OperationReply<ReturnType> {
   }
 
   factory OperationReply.empty({
-    String message = "Some thing went wrong",
+    String message = "Empty List",
     result,
   }) {
     return OperationReply(

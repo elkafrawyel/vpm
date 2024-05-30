@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../app/util/operation_reply.dart';
+import '../../../app/util/operation_reply.dart';
 
 abstract class GeneralController extends GetxController {
   OperationReply _operationReply = OperationReply.init();

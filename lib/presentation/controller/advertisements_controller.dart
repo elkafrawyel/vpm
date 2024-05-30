@@ -2,8 +2,8 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:vpm/app/util/operation_reply.dart';
 import 'package:vpm/data/models/advertisements_response.dart';
 import 'package:vpm/data/repositories/advertisement_repository.dart';
-import 'package:vpm/domain/entities/models/AdvertisementModel.dart';
-import 'package:vpm/presentation/controller/general_controller.dart';
+import 'package:vpm/domain/entities/models/advertisementModel.dart';
+import 'package:vpm/presentation/controller/my_controllers/general_controller.dart';
 
 class AdvertisementsController extends GeneralController {
   List<AdvertisementModel> services = [];
@@ -21,7 +21,8 @@ class AdvertisementsController extends GeneralController {
   loadAllAdvertisements() async {
     operationReply = OperationReply.loading();
 
-    operationReply = await _advertisementRepositoryImpl.getAdvertisements();
+    operationReply =
+        await _advertisementRepositoryImpl.getAdvertisements(page: 1);
 
     if (operationReply.isSuccess()) {
       AdvertisementsResponse advertisementsResponse = operationReply.result;
@@ -32,8 +33,6 @@ class AdvertisementsController extends GeneralController {
       } else {
         operationReply = OperationReply.success(result: services);
       }
-    } else {
-      operationReply = OperationReply.failed(result: operationReply.message);
     }
   }
 

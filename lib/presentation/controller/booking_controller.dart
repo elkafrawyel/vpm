@@ -4,7 +4,7 @@ import 'package:vpm/app/util/operation_reply.dart';
 import 'package:vpm/data/models/booking_response.dart';
 import 'package:vpm/data/repositories/booking_repository.dart';
 import 'package:vpm/domain/entities/models/booking_model.dart';
-import 'package:vpm/presentation/controller/general_controller.dart';
+import 'package:vpm/presentation/controller/my_controllers/general_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/current/current.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/ended/ended.dart';
 

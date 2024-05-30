@@ -6,7 +6,7 @@ import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/operation_reply.dart';
 import 'package:vpm/data/models/contacts_response.dart';
 import 'package:vpm/data/models/general_response.dart';
-import 'package:vpm/presentation/controller/users_controller/users_controller.dart';
+import 'package:vpm/presentation/controller/users_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text_field/app_text_field.dart';

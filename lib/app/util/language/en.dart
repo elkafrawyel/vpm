@@ -208,10 +208,13 @@ Map<String, String> en = {
   'try_again': 'Try Again',
   'cctv': 'CCTV',
   'staff': 'Staff',
-  'resend_end_parking':'Resend End Parking',
-  'you_already_sent':'You already have sent an end request,send again?',
-  'park_car':'Park Car',
-  'car_parked':'Car Parked',
-  'show_on_map':'Show on Map',
-  'your_request_accepted':'Your request to end valet has been accepted'
+  'resend_end_parking': 'Resend End Parking',
+  'you_already_sent': 'You already have sent an end request,send again?',
+  'park_car': 'Park Car',
+  'car_parked': 'Car Parked',
+  'show_on_map': 'Show on Map',
+  'your_request_accepted': 'Your request to end valet has been accepted',
+  'empty_notifications': 'Empty Notifications',
+  'today': 'Today',
+  'yesterday': 'Yesterday'
 };

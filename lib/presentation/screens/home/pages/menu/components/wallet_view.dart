@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/util.dart';
-import 'package:vpm/presentation/controller/wallet_controller/wallet_controller.dart';
+import 'package:vpm/presentation/controller/wallet_controller.dart';
 
 import '../../../../../widgets/app_widgets/app_text.dart';
 import '../../../../../widgets/shimmer_widgets/shimmer_effect_ui.dart';

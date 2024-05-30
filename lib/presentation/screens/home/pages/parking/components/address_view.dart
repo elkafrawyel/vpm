@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/data/providers/storage/local_provider.dart';
-import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
+import 'package:vpm/presentation/controller/parking_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 class AddressView extends StatelessWidget {

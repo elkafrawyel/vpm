@@ -5,7 +5,7 @@ import 'package:get/route_manager.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/data/models/contacts_response.dart';
-import 'package:vpm/presentation/controller/users_controller/users_controller.dart';
+import 'package:vpm/presentation/controller/users_controller.dart';
 
 import '../../../../app/config/app_color.dart';
 import '../../../widgets/app_widgets/app_cached_image.dart';

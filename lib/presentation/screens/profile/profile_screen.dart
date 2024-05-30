@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/domain/entities/models/user_model.dart';
-import 'package:vpm/presentation/controller/profile_controller/profile_controller.dart';
+import 'package:vpm/presentation/controller/profile_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_date_selector.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_gender_picker.dart';
 
@@ -48,7 +48,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     emailController = TextEditingController(text: userModel?.email);
     phoneController = TextEditingController(text: userModel?.phone);
     profilePicture = userModel?.avatar?.filePath;
-    birthday = userModel?.birthday == null ? null : DateTime.tryParse(userModel?.birthday);
+    birthday = userModel?.birthday == null
+        ? null
+        : DateTime.tryParse(userModel?.birthday);
     appGender = userModel?.gender == null
         ? null
         : userModel!.gender == 'male'
@@ -204,13 +206,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void updateProfile(AnimationController animationController) async {
-    if (nameController.text.isEmpty || (_nameState.currentState?.hasError ?? false)) {
+    if (nameController.text.isEmpty ||
+        (_nameState.currentState?.hasError ?? false)) {
       _nameState.currentState?.shake();
       return;
-    } else if (emailController.text.isEmpty || (_emailState.currentState?.hasError ?? false)) {
+    } else if (emailController.text.isEmpty ||
+        (_emailState.currentState?.hasError ?? false)) {
       _emailState.currentState?.shake();
       return;
-    } else if (phoneController.text.isEmpty || (_phoneState.currentState?.hasError ?? false)) {
+    } else if (phoneController.text.isEmpty ||
+        (_phoneState.currentState?.hasError ?? false)) {
       _phoneState.currentState?.shake();
       return;
     }

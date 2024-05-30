@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:vpm/presentation/screens/home/pages/cars/cars_screen.dart';
+import 'package:vpm/presentation/screens/home/pages/notifications/notifications_screen.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/parking_screen.dart';
 import 'package:vpm/presentation/screens/home/pages/services/services_screen.dart';
 
@@ -23,9 +23,9 @@ class HomeScreenController extends GetxController {
     selectedTabIndex = 0;
     pages = [
       const ParkingScreen(),
-      const CarsScreen(),
-      const AdvertisementsScreen(),
       const BookingScreen(),
+      const AdvertisementsScreen(),
+      const NotificationsScreen(),
       const MenuScreen(),
     ];
     initializeNotifications();

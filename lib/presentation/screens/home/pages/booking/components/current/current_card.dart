@@ -7,8 +7,8 @@ import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/domain/entities/models/booking_model.dart';
-import 'package:vpm/presentation/controller/booking_controller/booking_controller.dart';
-import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
+import 'package:vpm/presentation/controller/booking_controller.dart';
+import 'package:vpm/presentation/controller/parking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/current/timer_view.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/google_map_bottom_sheet.dart';
@@ -21,6 +21,7 @@ import '../../../../../../../app/util/operation_reply.dart';
 import '../../../../../../../app/util/util.dart';
 import '../../../../../../../data/models/general_response.dart';
 import '../../../../../../../data/providers/network/api_provider.dart';
+import '../../../../../../widgets/app_widgets/app_dialog.dart';
 import '../../../menu/components/qr_code_view.dart';
 
 class CurrentCard extends StatelessWidget {
@@ -212,7 +213,7 @@ class CurrentCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       if (bookingModel.endDriver == null)
                         Row(
@@ -260,8 +261,11 @@ class CurrentCard extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 28.0),
                           child: GestureDetector(
                             onTap: () {
-                              Get.dialog(
-                                QrCodeView(
+                              scaleDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                backgroundColor: Colors.transparent,
+                                content: QrCodeView(
                                   qrValue: LocalProvider().getUser()?.id ?? '',
                                 ),
                               );

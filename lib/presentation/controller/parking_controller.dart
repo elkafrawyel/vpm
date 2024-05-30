@@ -23,7 +23,7 @@ import 'package:vpm/presentation/screens/home/pages/parking/components/garage_de
 import 'package:vpm/presentation/widgets/dialogs_view/app_dialog_view.dart';
 import 'package:vpm/presentation/widgets/modal_bottom_sheet.dart';
 
-import '../../../domain/entities/models/garage_model.dart';
+import '../../domain/entities/models/garage_model.dart';
 
 class ParkingController extends GetxController {
   final GaragesRepositoryImpl _garagesRepositoryImpl;

@@ -5,7 +5,7 @@ import 'package:get/instance_manager.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/res/res.dart';
-import 'package:vpm/presentation/controller/users_controller/users_controller.dart';
+import 'package:vpm/presentation/controller/users_controller.dart';
 
 import '../../../widgets/app_widgets/app_text.dart';
 import '../../add_user/add_user_screen.dart';

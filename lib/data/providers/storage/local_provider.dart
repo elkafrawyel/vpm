@@ -52,7 +52,7 @@ class LocalProvider {
     debugPrint('LocalProvider initialization.');
   }
 
-  String getAppLanguage() => get(LocalProviderKeys.language);
+  String getAppLanguage() => get(LocalProviderKeys.language) ?? 'en';
 
   bool isLogged() => get(LocalProviderKeys.userModel) != null;
 

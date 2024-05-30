@@ -4,7 +4,7 @@ import 'package:vpm/presentation/screens/home/pages/services/components/service_
 import 'package:vpm/presentation/screens/home/pages/services/components/services_empty_view.dart';
 import 'package:vpm/presentation/widgets/api_state_views/handel_api_state.dart';
 
-import '../../../../controller/advertisements_controller/advertisements_controller.dart';
+import '../../../../controller/advertisements_controller.dart';
 import 'components/service_shimmer_card.dart';
 
 class AdvertisementsScreen extends StatefulWidget {
@@ -46,7 +46,8 @@ class _AdvertisementsScreenState extends State<AdvertisementsScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: ListView.separated(
-                  itemBuilder: (context, index) => ServiceCard(service: servicesController.services[index]),
+                  itemBuilder: (context, index) =>
+                      ServiceCard(service: servicesController.services[index]),
                   separatorBuilder: (context, index) => Divider(
                     thickness: .5,
                     indent: 18,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vpm/data/providers/storage/local_provider.dart';
-import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
+import 'package:vpm/presentation/controller/parking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/components/address_view.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_dialog.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';

@@ -6,7 +6,7 @@ import 'package:vpm/data/models/contacts_response.dart';
 import 'package:vpm/data/models/general_response.dart';
 import 'package:vpm/data/repositories/users_repository.dart';
 
-import '../general_controller.dart';
+import 'my_controllers/general_controller.dart';
 
 class UsersController extends GeneralController {
   final UserRepositoryImpl _userRepositoryImpl;

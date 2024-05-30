@@ -31,21 +31,29 @@ class HomeScreen extends StatelessWidget {
             bottomNavigationItem(
               context: context,
               selected: homeScreenController.selectedTabIndex == 1,
-              title: 'your_cars'.tr,
-              svgName: Res.iconValet,
+              title: 'booking'.tr,
+              svgName: Res.iconBooking,
             ),
+
             bottomNavigationItem(
               context: context,
               selected: homeScreenController.selectedTabIndex == 2,
               title: 'services'.tr,
               svgName: Res.iconServices,
             ),
+
             bottomNavigationItem(
               context: context,
               selected: homeScreenController.selectedTabIndex == 3,
-              title: 'booking'.tr,
-              svgName: Res.iconBooking,
+              title: 'notifications'.tr,
+              svgName: Res.iconNotifications,
             ),
+            // bottomNavigationItem(
+            //   context: context,
+            //   selected: homeScreenController.selectedTabIndex == 3,
+            //   title: 'your_cars'.tr,
+            //   svgName: Res.iconValet,
+            // ),
             bottomNavigationItem(
               context: context,
               selected: homeScreenController.selectedTabIndex == 4,

@@ -4,7 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 
 import '../../../../../../data/providers/storage/local_provider.dart';
-import '../../../../../controller/profile_controller/profile_controller.dart';
+import '../../../../../controller/profile_controller.dart';
 import '../../../../../widgets/app_widgets/app_cached_image.dart';
 import '../../../../../widgets/app_widgets/app_dialog.dart';
 import '../../../../../widgets/app_widgets/app_text.dart';
@@ -52,7 +52,7 @@ class UserInfoView extends StatelessWidget {
                     width: 150,
                   )
                 : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
                         onTap: () {

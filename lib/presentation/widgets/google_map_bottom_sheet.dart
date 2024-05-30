@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/instance_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
+import 'package:vpm/presentation/controller/parking_controller.dart';
 
 import '../../app/res/res.dart';
 import '../../app/util/keys.dart';

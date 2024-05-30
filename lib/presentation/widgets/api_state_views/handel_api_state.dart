@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vpm/presentation/widgets/api_state_views/api_empty_view.dart';
 
 import '../../../app/util/operation_reply.dart';
-import '../../controller/general_controller.dart';
+import '../../controller/my_controllers/general_controller.dart';
 import 'api_connection_error_view.dart';
 import 'api_error_view.dart';
 import 'api_loading_view.dart';

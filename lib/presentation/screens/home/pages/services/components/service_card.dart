@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/util.dart';
-import 'package:vpm/domain/entities/models/AdvertisementModel.dart';
+import 'package:vpm/domain/entities/models/advertisementModel.dart';
 import 'package:vpm/presentation/screens/webview_screen/webview_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
@@ -22,7 +22,8 @@ class ServiceCard extends StatelessWidget {
         if (service.link != null && service.title != null) {
           PersistentNavBarNavigator.pushNewScreen(
             context,
-            screen: WebviewScreen(paymentUrl: service.link!, screenTitle: service.title!),
+            screen: WebviewScreen(
+                paymentUrl: service.link!, screenTitle: service.title!),
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
@@ -58,7 +59,9 @@ class ServiceCard extends StatelessWidget {
                   ),
                   5.ph,
                   AppText(
-                    service.amount == null ? '' : Utils().formatNumbers(service.amount!),
+                    service.amount == null
+                        ? ''
+                        : Utils().formatNumbers(service.amount!),
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Theme.of(context).primaryColor,

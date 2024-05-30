@@ -8,14 +8,14 @@ import 'package:vpm/data/repositories/cars_repository.dart';
 import 'package:vpm/data/repositories/lookups_repository.dart';
 import 'package:vpm/domain/entities/models/car_model.dart';
 import 'package:vpm/domain/entities/requests/add_car_request.dart';
-import 'package:vpm/presentation/controller/general_controller.dart';
+import 'package:vpm/presentation/controller/my_controllers/general_controller.dart';
 
-import '../../../app/util/information_viewer.dart';
-import '../../../app/util/operation_reply.dart';
-import '../../../data/models/car_colors_response.dart';
-import '../../../data/models/cars_response.dart';
-import '../../../data/models/general_response.dart';
-import '../../../data/models/upload_file_response.dart';
+import '../../app/util/information_viewer.dart';
+import '../../app/util/operation_reply.dart';
+import '../../data/models/car_colors_response.dart';
+import '../../data/models/cars_response.dart';
+import '../../data/models/general_response.dart';
+import '../../data/models/upload_file_response.dart';
 
 class MyCarsController extends GeneralController {
   final CarsRepositoryIml _carsRepositoryIml = CarsRepositoryIml();
@@ -77,8 +77,6 @@ class MyCarsController extends GeneralController {
       } else {
         operationReply = OperationReply.success();
       }
-    } else {
-      InformationViewer.showSnackBar(operationReply.message);
     }
   }
 

@@ -7,10 +7,10 @@ import 'package:vpm/data/models/charge_balance_response.dart';
 import 'package:vpm/data/models/payment_options_response.dart';
 import 'package:vpm/data/repositories/wallet_repository.dart';
 
-import '../../../app/res/res.dart';
-import '../../../app/util/information_viewer.dart';
-import '../../screens/payment/payment_screen.dart';
-import '../../widgets/dialogs_view/app_dialog_view.dart';
+import '../../app/res/res.dart';
+import '../../app/util/information_viewer.dart';
+import '../screens/payment/payment_screen.dart';
+import '../widgets/dialogs_view/app_dialog_view.dart';
 
 class WalletController extends GetxController {
   final WalletRepositoryImpl _walletRepository = WalletRepositoryImpl();
@@ -29,7 +29,7 @@ class WalletController extends GetxController {
     amountController.dispose();
   }
 
-  String balance = '';
+  String balance = '0';
 
   List<PaymentOptionModel> paymentOptions = [];
 
@@ -57,7 +57,8 @@ class WalletController extends GetxController {
   }
 
   Future getPaymentOptions() async {
-    OperationReply<PaymentOptionsResponse> operationReply = await _walletRepository.getPaymentOptions();
+    OperationReply<PaymentOptionsResponse> operationReply =
+        await _walletRepository.getPaymentOptions();
 
     if (operationReply.isSuccess()) {
       PaymentOptionsResponse? paymentOptionsResponse = operationReply.result;
@@ -75,20 +76,23 @@ class WalletController extends GetxController {
     update();
   }
 
-  void requestRechargeBalance(BuildContext context, AnimationController animationController) async {
-
+  void requestRechargeBalance(
+      BuildContext context, AnimationController animationController) async {
     if (amountController.text.isEmpty) {
-      InformationViewer.showSnackBar('select_one_of_the_following_to_recharge'.tr);
+      InformationViewer.showSnackBar(
+          'select_one_of_the_following_to_recharge'.tr);
       return;
     }
     animationController.forward();
 
-    OperationReply operationReply = await _walletRepository.chargeBalance(amount: amountController.text);
+    OperationReply operationReply =
+        await _walletRepository.chargeBalance(amount: amountController.text);
 
     if (operationReply.isSuccess()) {
       ChargeBalanceResponse chargeBalanceResponse = operationReply.result;
 
-      String paymentLink = chargeBalanceResponse.data?.paymentLink ?? 'Payment Link null';
+      String paymentLink =
+          chargeBalanceResponse.data?.paymentLink ?? 'Payment Link null';
 
       if (!context.mounted) return;
 

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:vpm/presentation/controller/app_config_controller.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../presentation/widgets/api_state_views/no_connection_view.dart';
 
@@ -41,5 +41,13 @@ class Utils {
     ).format(
       num.parse(number),
     )} ${symbol ?? (Get.locale?.languageCode == 'ar' ? 'ريال' : 'SAR')}';
+  }
+
+  static callPhoneNumber({required String phoneNumber}) {
+    try {
+      launchUrlString("tel://$phoneNumber");
+    } catch (exception) {
+      logMessage(exception.toString());
+    }
   }
 }

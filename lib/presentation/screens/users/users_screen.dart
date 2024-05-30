@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/data/repositories/users_repository.dart';
-import 'package:vpm/presentation/controller/users_controller/users_controller.dart';
+import 'package:vpm/presentation/controller/users_controller.dart';
 import 'package:vpm/presentation/screens/add_user/add_user_screen.dart';
 import 'package:vpm/presentation/screens/users/components/user_card.dart';
 import 'package:vpm/presentation/screens/users/components/user_shimmer_card.dart';

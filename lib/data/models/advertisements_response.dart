@@ -1,4 +1,4 @@
-import '../../domain/entities/models/AdvertisementModel.dart';
+import '../../domain/entities/models/advertisementModel.dart';
 
 class AdvertisementsResponse {
   AdvertisementsResponse({

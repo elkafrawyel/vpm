@@ -15,7 +15,7 @@ import 'package:vpm/app/util/operation_reply.dart';
 import 'package:vpm/app/util/util.dart';
 import 'package:vpm/data/models/general_response.dart';
 import 'package:vpm/data/providers/network/api_provider.dart';
-import 'package:vpm/presentation/controller/parking_controller/parking_controller.dart';
+import 'package:vpm/presentation/controller/parking_controller.dart';
 
 import '../../../../../../app/util/constants.dart';
 import '../../../../../../domain/entities/models/garage_model.dart';
