@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/util.dart';
-import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/presentation/controller/booking_controller.dart';
 import 'package:vpm/presentation/controller/home_screen_controller/home_screen_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
@@ -37,6 +36,9 @@ class _TimerViewState extends State<TimerView> {
     const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const farsi = ['۰', '۱', '۲', '۳', '٤', '٥', '٦', '٧', '۸', '۹'];
 
+    if (Get.locale?.languageCode == "en") {
+      return input;
+    }
     for (int i = 0; i < english.length; i++) {
       input = input.replaceAll(english[i], farsi[i]);
     }
@@ -95,9 +97,8 @@ class _TimerViewState extends State<TimerView> {
     int totalHours = ((difference.inMinutes / 60) - widget.freeHours).ceil();
 
     totalHours = totalHours < 0 ? 0 : totalHours;
-    String time = LocalProvider().isAr()
-        ? "${days.isEmpty ? '' : '${replaceFarsiNumber(days)} ${'day'.tr} ,'} ${replaceFarsiNumber(hours)} : ${replaceFarsiNumber(minutes)} : ${replaceFarsiNumber(seconds)}"
-        : "${days.isEmpty ? '' : '${(days)} ${'day'.tr} ,'} $hours : $minutes : $seconds";
+    String time =
+        "${days.isEmpty ? '' : '${replaceFarsiNumber(days)} ${'day'.tr} ,'} ${replaceFarsiNumber(hours)} : ${replaceFarsiNumber(minutes)} : ${replaceFarsiNumber(seconds)}";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -152,9 +153,7 @@ class _TimerViewState extends State<TimerView> {
                   ),
                   5.pw,
                   AppText(
-                    LocalProvider().isAr()
-                        ? replaceFarsiNumber(totalHours.toString())
-                        : totalHours.toString(),
+                    replaceFarsiNumber(totalHours.toString()),
                     color: textColor,
                     fontSize: 20,
                   ),

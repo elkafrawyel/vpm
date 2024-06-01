@@ -213,5 +213,6 @@ Map<String, String> ar = {
   'your_request_accepted': 'تمت الموافقة علي طلبكم لانهاء الفالية',
   'empty_notifications': 'لا توجد لديك اشعارات',
   'today': 'اليوم',
-  'yesterday': 'أمس'
+  'yesterday': 'أمس',
+  'LoadingMore': 'جارٍ تحميل المزيد من البيانات...',
 };

@@ -9,7 +9,8 @@ class PaginationController<T> extends GetxController {
   PaginationController(this.configData);
 
   num page = 1;
-  num totalPages = 1;
+  num perPage = 10;
+  bool isLastPage = false;
   bool _loadingMore = false, _loadingMoreEnd = false;
 
   PaginationResponse<T>? paginationResponse;
@@ -43,7 +44,8 @@ class PaginationController<T> extends GetxController {
   callApi() async {
     operationReply = OperationReply.loading();
     operationReply = await APIProvider.instance.get(
-      endPoint: '${configData.apiEndPoint}?paginate=1&page=$page',
+      endPoint:
+          '${configData.apiEndPoint}?paginate=1&page=$page&per_page=$perPage',
       fromJson: (json) => PaginationResponse<T>.fromJson(
         json,
         fromJson: configData.fromJson,
@@ -53,7 +55,7 @@ class PaginationController<T> extends GetxController {
     if (operationReply.isSuccess()) {
       paginationResponse = operationReply.result;
       paginationList = paginationResponse?.data ?? [];
-      totalPages = paginationResponse?.meta?.lastPage ?? 1;
+      isLastPage = paginationList.length < perPage;
 
       if (paginationList.isEmpty) {
         operationReply = OperationReply.empty(
@@ -70,13 +72,14 @@ class PaginationController<T> extends GetxController {
       return;
     }
     page++;
-    if (page > totalPages) {
+    if (isLastPage) {
       loadingMoreEnd = true;
       return;
     }
     loadingMore = true;
     operationReply = await APIProvider.instance.get(
-      endPoint: '${configData.apiEndPoint}?paginate=1&page=$page',
+      endPoint:
+          '${configData.apiEndPoint}?paginate=1&page=$page&per_page=$perPage',
       fromJson: (json) => PaginationResponse<T>.fromJson(
         json,
         fromJson: configData.fromJson,
@@ -86,7 +89,10 @@ class PaginationController<T> extends GetxController {
     if (operationReply.isSuccess()) {
       paginationResponse = operationReply.result;
 
+      isLastPage = (paginationResponse?.data ?? []).length < perPage;
+
       paginationList.addAll(paginationResponse?.data ?? []);
+
       if (paginationList.isEmpty) {
         operationReply = OperationReply.empty();
       } else {
@@ -98,7 +104,6 @@ class PaginationController<T> extends GetxController {
 
   Future<void> refreshApiCall() async {
     page = 1;
-    totalPages = 1;
     loadingMoreEnd = false;
     loadingMore = false;
     await callApi();

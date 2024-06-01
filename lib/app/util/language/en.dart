@@ -216,5 +216,6 @@ Map<String, String> en = {
   'your_request_accepted': 'Your request to end valet has been accepted',
   'empty_notifications': 'Empty Notifications',
   'today': 'Today',
-  'yesterday': 'Yesterday'
+  'yesterday': 'Yesterday',
+  'LoadingMore': 'Loading More Data...',
 };

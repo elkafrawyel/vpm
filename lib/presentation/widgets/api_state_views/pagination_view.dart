@@ -35,8 +35,8 @@ class PaginationView extends StatelessWidget {
             child: child,
           ),
         ),
-        Offstage(
-          offstage: !showLoadMoreWidget,
+        Visibility(
+          visible: showLoadMoreWidget,
           child: Padding(
             padding: const EdgeInsets.all(18.0),
             child: Row(
@@ -45,36 +45,36 @@ class PaginationView extends StatelessWidget {
               children: [
                 AppText(
                   "LoadingMore".tr,
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.normal,
                 ),
                 5.pw,
                 const SizedBox(
-                  height: 15,
-                  width: 15,
+                  height: 20,
+                  width: 20,
                   child: CircularProgressIndicator(),
                 ),
               ],
             ),
           ),
         ),
-        Offstage(
-          offstage: !showLoadMoreEndWidget,
-          child: Padding(
-            padding: loadMoreEndPadding ??
-                const EdgeInsetsDirectional.only(
-                  start: 12.0,
-                  end: 12.0,
-                  bottom: 28.0,
-                  top: 18.0,
-                ),
-            child: AppText(
-              "LoadingMoreEnd".tr,
-              fontSize: 12,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-        ),
+        // Visibility(
+        //   visible: showLoadMoreEndWidget,
+        //   child: Padding(
+        //     padding: loadMoreEndPadding ??
+        //         const EdgeInsetsDirectional.only(
+        //           start: 12.0,
+        //           end: 12.0,
+        //           bottom: 28.0,
+        //           top: 18.0,
+        //         ),
+        //     child: AppText(
+        //       "LoadingMoreEnd".tr,
+        //       fontSize: 12,
+        //       fontWeight: FontWeight.normal,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
