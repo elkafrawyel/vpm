@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:vpm/presentation/screens/home/pages/services/components/service_card.dart';
 import 'package:vpm/presentation/screens/home/pages/services/components/services_empty_view.dart';
 import 'package:vpm/presentation/widgets/api_state_views/handel_api_state.dart';
+import 'package:vpm/presentation/widgets/api_state_views/pagination_view.dart';
 
 import '../../../../controller/advertisements_controller.dart';
 import 'components/service_shimmer_card.dart';
@@ -25,8 +26,8 @@ class _AdvertisementsScreenState extends State<AdvertisementsScreen> {
       ),
       body: GetBuilder<AdvertisementsController>(
         builder: (context) {
-          return HandleApiState.controller(
-            generalController: servicesController,
+          return HandleApiState.operation(
+            operationReply: servicesController.operationReply,
             emptyView: const ServicesEmptyView(),
             shimmerLoader: Padding(
               padding: const EdgeInsets.all(18.0),
@@ -41,20 +42,26 @@ class _AdvertisementsScreenState extends State<AdvertisementsScreen> {
                 itemCount: 10,
               ),
             ),
-            child: RefreshIndicator(
-              onRefresh: servicesController.refreshApiCall,
-              child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: ListView.separated(
-                  itemBuilder: (context, index) =>
-                      ServiceCard(service: servicesController.services[index]),
-                  separatorBuilder: (context, index) => Divider(
-                    thickness: .5,
-                    indent: 18,
-                    endIndent: 18,
-                    color: Colors.grey.shade700,
+            child: PaginationView(
+              loadMoreData: servicesController.callMoreData,
+              showLoadMoreWidget: servicesController.loadingMore,
+              showLoadMoreEndWidget: servicesController.loadingMoreEnd,
+              child: RefreshIndicator(
+                onRefresh: servicesController.refreshApiCall,
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: ListView.separated(
+                    itemBuilder: (context, index) => ServiceCard(
+                      service: servicesController.paginationList[index],
+                    ),
+                    separatorBuilder: (context, index) => Divider(
+                      thickness: .5,
+                      indent: 18,
+                      endIndent: 18,
+                      color: Colors.grey.shade700,
+                    ),
+                    itemCount: servicesController.paginationList.length,
                   ),
-                  itemCount: servicesController.services.length,
                 ),
               ),
             ),

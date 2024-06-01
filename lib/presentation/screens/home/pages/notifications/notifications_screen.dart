@@ -75,7 +75,7 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                   physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics(),
                   ),
-                  reverse: true,
+                  reverse: false,
                   order: GroupedListOrder.DESC,
                   useStickyGroupSeparators: false,
                   floatingHeader: false,

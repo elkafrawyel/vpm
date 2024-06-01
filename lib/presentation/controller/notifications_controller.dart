@@ -6,19 +6,15 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:vpm/presentation/controller/my_controllers/pagination_controller/pagination_controller.dart';
 
-import '../../app/res/res.dart';
 import '../../app/util/operation_reply.dart';
 import '../../domain/entities/models/notifications_model.dart';
 
 class NotificationsController extends PaginationController<NotificationsModel> {
+  NotificationsController(super.configData);
+
   @override
   void onInit() {
     super.onInit();
-    build(
-      apiEndPoint: Res.apiNotifications,
-      emptyListMessage: 'Empty Notifications List',
-      fromJson: NotificationsModel.fromJson,
-    );
     callApi();
   }
 

@@ -35,8 +35,8 @@ class PaginationView extends StatelessWidget {
             child: child,
           ),
         ),
-        Visibility(
-          visible: showLoadMoreWidget,
+        Offstage(
+          offstage: !showLoadMoreWidget,
           child: Padding(
             padding: const EdgeInsets.all(18.0),
             child: Row(
@@ -58,8 +58,8 @@ class PaginationView extends StatelessWidget {
             ),
           ),
         ),
-        Visibility(
-          visible: showLoadMoreEndWidget,
+        Offstage(
+          offstage: !showLoadMoreEndWidget,
           child: Padding(
             padding: loadMoreEndPadding ??
                 const EdgeInsetsDirectional.only(

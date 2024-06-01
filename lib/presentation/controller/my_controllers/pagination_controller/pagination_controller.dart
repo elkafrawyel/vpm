@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
 import 'package:vpm/data/providers/network/api_provider.dart';
+import 'package:vpm/presentation/controller/my_controllers/pagination_controller/data/config_data.dart';
 import 'package:vpm/presentation/controller/my_controllers/pagination_controller/data/pagination_response.dart';
 
 import '../../../../app/util/operation_reply.dart';
 
 class PaginationController<T> extends GetxController {
+  PaginationController(this.configData);
+
   num page = 1;
   num totalPages = 1;
-  bool loadingMore = false, loadingMoreEnd = false;
+  bool _loadingMore = false, _loadingMoreEnd = false;
 
   PaginationResponse<T>? paginationResponse;
   List<T> paginationList = [];
@@ -21,37 +24,40 @@ class PaginationController<T> extends GetxController {
     update();
   }
 
-  String? apiEndPoint;
-  String? emptyListMessage;
-  T Function(dynamic)? fromJson;
+  ConfigData<T> configData;
 
-  void build({
-    required String apiEndPoint,
-    String emptyListMessage = 'Empty Data',
-    required T Function(dynamic) fromJson,
-  }) {
-    this.apiEndPoint = apiEndPoint;
-    this.emptyListMessage = emptyListMessage;
-    this.fromJson = fromJson;
+  bool get loadingMore => _loadingMore;
+
+  set loadingMore(bool value) {
+    _loadingMore = value;
+    update();
+  }
+
+  get loadingMoreEnd => _loadingMoreEnd;
+
+  set loadingMoreEnd(value) {
+    _loadingMoreEnd = value;
+    update();
   }
 
   callApi() async {
-    assert(this.apiEndPoint != null || this.fromJson != null);
     operationReply = OperationReply.loading();
     operationReply = await APIProvider.instance.get(
-      endPoint: '$apiEndPoint?page=$page',
+      endPoint: '${configData.apiEndPoint}?paginate=1&page=$page',
       fromJson: (json) => PaginationResponse<T>.fromJson(
         json,
-        fromJson: fromJson!,
+        fromJson: configData.fromJson,
       ),
     );
 
     if (operationReply.isSuccess()) {
       paginationResponse = operationReply.result;
       paginationList = paginationResponse?.data ?? [];
+      totalPages = paginationResponse?.meta?.lastPage ?? 1;
+
       if (paginationList.isEmpty) {
         operationReply = OperationReply.empty(
-          message: emptyListMessage!,
+          message: configData.emptyListMessage,
         );
       } else {
         operationReply = OperationReply.success();
@@ -66,14 +72,15 @@ class PaginationController<T> extends GetxController {
     page++;
     if (page > totalPages) {
       loadingMoreEnd = true;
-      update();
       return;
     }
     loadingMore = true;
-    update();
     operationReply = await APIProvider.instance.get(
-      endPoint: '$apiEndPoint?page=$page',
-      fromJson: fromJson!,
+      endPoint: '${configData.apiEndPoint}?paginate=1&page=$page',
+      fromJson: (json) => PaginationResponse<T>.fromJson(
+        json,
+        fromJson: configData.fromJson,
+      ),
     );
 
     if (operationReply.isSuccess()) {
@@ -83,12 +90,10 @@ class PaginationController<T> extends GetxController {
       if (paginationList.isEmpty) {
         operationReply = OperationReply.empty();
       } else {
-        totalPages = paginationResponse?.meta?.lastPage ?? 1;
         operationReply = OperationReply.success();
       }
     }
     loadingMore = false;
-    update();
   }
 
   Future<void> refreshApiCall() async {
