@@ -2,23 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:vpm/app/extensions/space.dart';
+import 'package:vpm/presentation/controller/booking_controller/ended_booking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/ended/ended_card.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/ended/ended_shimmer_card.dart';
 import 'package:vpm/presentation/widgets/api_state_views/pagination_view.dart';
 
-import '../../../../../../controller/booking_controller.dart';
 import '../../../../../../widgets/api_state_views/handel_api_state.dart';
 import '../../../../../../widgets/app_widgets/app_text.dart';
 
-class EndedBooking extends StatelessWidget {
+class EndedBooking extends StatefulWidget {
   const EndedBooking({super.key});
 
   @override
+  State<EndedBooking> createState() => _EndedBookingState();
+}
+
+class _EndedBookingState extends State<EndedBooking>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
-    return GetBuilder<BookingController>(
-      builder: (bookingController) {
-        return HandleApiState.controller(
-          generalController: bookingController,
+    super.build(context);
+    return GetBuilder<EndedBookingController>(
+      builder: (endedBookingController) {
+        return HandleApiState.operation(
+          operationReply: endedBookingController.operationReply,
           shimmerLoader: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 18.0,
@@ -47,7 +54,7 @@ class EndedBooking extends StatelessWidget {
                 40.ph,
                 ElevatedButton(
                   onPressed: () {
-                    bookingController.refreshApiCall();
+                    endedBookingController.refreshApiCall();
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.black),
@@ -64,11 +71,11 @@ class EndedBooking extends StatelessWidget {
             ),
           ),
           child: PaginationView(
-            showLoadMoreWidget: bookingController.endedLoadingMore,
-            showLoadMoreEndWidget: bookingController.endedLoadingMoreEnd,
-            loadMoreData: bookingController.loadMoreEndBookings,
+            showLoadMoreWidget: endedBookingController.loadingMore,
+            showLoadMoreEndWidget: endedBookingController.loadingMoreEnd,
+            loadMoreData: endedBookingController.callMoreData,
             child: RefreshIndicator(
-              onRefresh: bookingController.refreshApiCall,
+              onRefresh: endedBookingController.refreshApiCall,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 18.0,
@@ -76,10 +83,10 @@ class EndedBooking extends StatelessWidget {
                 ),
                 child: ListView.separated(
                   itemBuilder: (context, index) => EndedCard(
-                    bookingModel: bookingController.endedBookingsList[index],
+                    bookingModel: endedBookingController.paginationList[index],
                   ),
                   separatorBuilder: (context, index) => 5.ph,
-                  itemCount: bookingController.endedBookingsList.length,
+                  itemCount: endedBookingController.paginationList.length,
                 ),
               ),
             ),
@@ -88,4 +95,7 @@ class EndedBooking extends StatelessWidget {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

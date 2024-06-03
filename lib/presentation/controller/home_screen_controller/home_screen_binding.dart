@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
-import 'package:vpm/data/repositories/booking_repository.dart';
 import 'package:vpm/data/repositories/garages_repository.dart';
+import 'package:vpm/domain/entities/models/booking_model.dart';
 import 'package:vpm/presentation/controller/booking_controller.dart';
+import 'package:vpm/presentation/controller/booking_controller/current_booking_controller.dart';
+import 'package:vpm/presentation/controller/booking_controller/ended_booking_controller.dart';
 import 'package:vpm/presentation/controller/notifications_controller.dart';
 import 'package:vpm/presentation/controller/parking_controller.dart';
 import 'package:vpm/presentation/controller/profile_controller.dart';
@@ -37,9 +39,29 @@ class HomeScreenBinding extends Bindings {
     );
 
     //booking controller
-    Get.lazyPut(() => BookingRepositoryImpl());
-    Get.lazyPut(() => BookingController(Get.find<BookingRepositoryImpl>()));
-
+    Get.lazyPut(() => BookingController());
+    Get.lazyPut(
+      () => CurrentBookingController(
+        ConfigData(
+          apiEndPoint: Res.apiBookingList,
+          fromJson: BookingModel.fromJson,
+          parameters: {
+            'status': 'current',
+          },
+        ),
+      ),
+    );
+    Get.lazyPut(
+      () => EndedBookingController(
+        ConfigData(
+          apiEndPoint: Res.apiBookingList,
+          fromJson: BookingModel.fromJson,
+          parameters: {
+            'status': 'ended',
+          },
+        ),
+      ),
+    );
     // profile controller
     Get.lazyPut(() => AuthRepositoryIml());
     Get.lazyPut(() => LookUpsRepositoryIml());
@@ -53,7 +75,7 @@ class HomeScreenBinding extends Bindings {
       () => NotificationsController(
         ConfigData(
           apiEndPoint: Res.apiNotifications,
-          emptyListMessage: 'Empty Notifications List',
+          emptyListMessage: 'empty_notifications'.tr,
           fromJson: NotificationsModel.fromJson,
         ),
       ),

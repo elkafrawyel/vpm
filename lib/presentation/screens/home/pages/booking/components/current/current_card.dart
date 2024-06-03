@@ -7,7 +7,7 @@ import 'package:vpm/app/config/app_color.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/domain/entities/models/booking_model.dart';
-import 'package:vpm/presentation/controller/booking_controller.dart';
+import 'package:vpm/presentation/controller/booking_controller/current_booking_controller.dart';
 import 'package:vpm/presentation/controller/parking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/components/current/timer_view.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
@@ -305,7 +305,7 @@ class CurrentCard extends StatelessWidget {
     if (operationReply.isSuccess()) {
       GeneralResponse generalResponse = operationReply.result;
       InformationViewer.showSuccessToast(msg: generalResponse.message);
-      Get.find<BookingController>().refreshApiCall();
+      Get.find<CurrentBookingController>().refreshApiCall();
     } else {
       InformationViewer.showErrorToast(msg: operationReply.message);
     }

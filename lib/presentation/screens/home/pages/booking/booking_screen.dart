@@ -15,15 +15,17 @@ class BookingScreen extends StatefulWidget {
   State<BookingScreen> createState() => _BookingScreenState();
 }
 
-class _BookingScreenState extends State<BookingScreen> {
+class _BookingScreenState extends State<BookingScreen>
+    with AutomaticKeepAliveClientMixin {
   final BookingController bookingController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BookingController>(
-      builder: (_) => DefaultTabController(
+    super.build(context);
+    return Obx(
+      () => DefaultTabController(
         length: bookingController.pages.length,
-        initialIndex: bookingController.selectedIndex,
+        initialIndex: bookingController.selectedIndex.value,
         child: Scaffold(
           appBar: AppBar(
             title: Text('booking'.tr),
@@ -35,12 +37,13 @@ class _BookingScreenState extends State<BookingScreen> {
                       context: context,
                       items: BookingFilterType.values,
                       onItemSelected: (BookingFilterType bookingFilterType) {
-                        bookingController.bookingFilterType = bookingFilterType;
+                        bookingController.bookingFilterType.value =
+                            bookingFilterType;
                       },
                     );
                   },
                   child: AppText(
-                    bookingController.bookingFilterType.title,
+                    bookingController.bookingFilterType.value.title,
                     fontWeight: FontWeight.w700,
                     color: Theme.of(context).primaryColor,
                   ),
@@ -63,7 +66,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         color: hintColor,
                       ),
               onTap: (int index) {
-                bookingController.selectedIndex = index;
+                bookingController.selectedIndex.value = index;
               },
               tabs: BookingTabsType.values
                   .map(
@@ -74,9 +77,12 @@ class _BookingScreenState extends State<BookingScreen> {
                   .toList(),
             ),
           ),
-          body: bookingController.pages[bookingController.selectedIndex],
+          body: bookingController.pages[bookingController.selectedIndex.value],
         ),
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

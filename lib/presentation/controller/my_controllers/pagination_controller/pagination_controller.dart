@@ -12,6 +12,7 @@ class PaginationController<T> extends GetxController {
   num perPage = 10;
   bool isLastPage = false;
   bool _loadingMore = false, _loadingMoreEnd = false;
+  bool paginate = true;
 
   PaginationResponse<T>? paginationResponse;
   List<T> paginationList = [];
@@ -41,11 +42,23 @@ class PaginationController<T> extends GetxController {
     update();
   }
 
+  @override
+  onInit() {
+    super.onInit();
+    callApi();
+  }
+
   callApi() async {
     operationReply = OperationReply.loading();
+    String path =
+        '${configData.apiEndPoint}?paginate=$paginate&page=$page&per_page=$perPage';
+    if ({configData.parameters ?? {}}.isNotEmpty) {
+      configData.parameters!.forEach((key, value) {
+        path += '&$key=$value';
+      });
+    }
     operationReply = await APIProvider.instance.get(
-      endPoint:
-          '${configData.apiEndPoint}?paginate=1&page=$page&per_page=$perPage',
+      endPoint: path,
       fromJson: (json) => PaginationResponse<T>.fromJson(
         json,
         fromJson: configData.fromJson,
@@ -77,9 +90,16 @@ class PaginationController<T> extends GetxController {
       return;
     }
     loadingMore = true;
+    String path =
+        '${configData.apiEndPoint}?paginate=$paginate&page=$page&per_page=$perPage';
+    if ({configData.parameters ?? {}}.isNotEmpty) {
+      configData.parameters!.forEach((key, value) {
+        path += '&$key=$value';
+      });
+    }
+
     operationReply = await APIProvider.instance.get(
-      endPoint:
-          '${configData.apiEndPoint}?paginate=1&page=$page&per_page=$perPage',
+      endPoint: path,
       fromJson: (json) => PaginationResponse<T>.fromJson(
         json,
         fromJson: configData.fromJson,

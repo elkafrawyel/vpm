@@ -1,11 +1,13 @@
 class ConfigData<T> {
   String apiEndPoint;
-  String emptyListMessage = 'Empty Data';
+  String emptyListMessage;
   T Function(dynamic) fromJson;
+  Map<String, dynamic>? parameters;
 
   ConfigData({
     required this.apiEndPoint,
-    required this.emptyListMessage,
+    this.emptyListMessage = 'Empty Data',
     required this.fromJson,
+    this.parameters,
   });
 }
