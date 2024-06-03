@@ -12,12 +12,6 @@ import '../../domain/entities/models/notifications_model.dart';
 class NotificationsController extends PaginationController<NotificationsModel> {
   NotificationsController(super.configData);
 
-  @override
-  void onInit() {
-    super.onInit();
-    callApi();
-  }
-
   convertDate(String? dateString) => dateString == null
       ? ''
       : DateFormat('EE, dd MMMM', Get.locale.toString()).format(

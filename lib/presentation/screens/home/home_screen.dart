@@ -1,3 +1,5 @@
+import 'package:fcm_config/fcm_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -6,10 +8,18 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vpm/presentation/controller/home_screen_controller/home_screen_controller.dart';
 
 import '../../../app/res/res.dart';
+import '../../controller/notifications_controller.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with FCMNotificationMixin, FCMNotificationClickMixin {
+  final HomeScreenController homeScreenController = Get.find();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeScreenController>(
@@ -117,4 +127,23 @@ class HomeScreen extends StatelessWidget {
               fontSize: selected ? 12 : 10,
             ),
       );
+
+  @override
+  void onNotify(RemoteMessage notification) {
+    if (kDebugMode) {
+      print(
+          'Notification Model====>\n${notification.data['notification_model']}');
+    }
+
+    Get.find<NotificationsController>().addNewNotification(notification);
+    homeScreenController.handleNotificationClick(
+      notification,
+      withNavigation: false,
+    );
+  }
+
+  @override
+  void onClick(RemoteMessage notification) {
+    homeScreenController.handleNotificationClick(notification);
+  }
 }

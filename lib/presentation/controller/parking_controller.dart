@@ -59,7 +59,8 @@ class ParkingController extends GetxController {
   setupTimer() {
     timer = Timer.periodic(const Duration(seconds: 30), (timer) async {
       Utils.logMessage('<<=============Timer===============>>');
-      if (Get.find<HomeScreenController>().selectedTabIndex == 0) {
+      if (LocalProvider().isLogged() &&
+          Get.find<HomeScreenController>().selectedTabIndex == 0) {
         await getMyPosition(loading: false);
         await getGaragesListFromApi();
       }

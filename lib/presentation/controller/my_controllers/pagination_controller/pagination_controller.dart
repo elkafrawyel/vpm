@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:vpm/data/providers/network/api_provider.dart';
-import 'package:vpm/presentation/controller/my_controllers/pagination_controller/data/config_data.dart';
-import 'package:vpm/presentation/controller/my_controllers/pagination_controller/data/pagination_response.dart';
 
 import '../../../../app/util/operation_reply.dart';
+import '../../../../data/providers/network/api_provider.dart';
+import 'data/config_data.dart';
+import 'data/pagination_response.dart';
 
 class PaginationController<T> extends GetxController {
   PaginationController(this.configData);
@@ -53,7 +53,7 @@ class PaginationController<T> extends GetxController {
     String path =
         '${configData.apiEndPoint}?paginate=$paginate&page=$page&per_page=$perPage';
     if ({configData.parameters ?? {}}.isNotEmpty) {
-      configData.parameters!.forEach((key, value) {
+      configData.parameters?.forEach((key, value) {
         path += '&$key=$value';
       });
     }
@@ -93,7 +93,7 @@ class PaginationController<T> extends GetxController {
     String path =
         '${configData.apiEndPoint}?paginate=$paginate&page=$page&per_page=$perPage';
     if ({configData.parameters ?? {}}.isNotEmpty) {
-      configData.parameters!.forEach((key, value) {
+      configData.parameters?.forEach((key, value) {
         path += '&$key=$value';
       });
     }

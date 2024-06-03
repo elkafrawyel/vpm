@@ -85,8 +85,10 @@ class NotificationsCard extends StatelessWidget {
                 vertical: 8.0,
               ),
               child: AppText(
-                DateFormat(DateFormat.HOUR_MINUTE, Get.locale?.languageCode)
-                    .format(
+                DateFormat(
+                  "hh:mm a",
+                  Get.locale?.languageCode,
+                ).format(
                   DateTime.parse(notificationsModel.createdAt!),
                 ),
                 fontSize: 12,

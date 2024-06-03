@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fcm_config/fcm_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:vpm/presentation/screens/home/pages/parking/parking_screen.dart'
 import 'package:vpm/presentation/screens/home/pages/services/services_screen.dart';
 
 import '../../../app/util/util.dart';
+import '../../../domain/entities/models/notifications_model.dart';
 import '../../../firebase_options.dart';
 import '../../screens/home/pages/booking/booking_screen.dart';
 import '../../screens/home/pages/menu/menu_screen.dart';
@@ -59,6 +62,30 @@ class HomeScreenController extends GetxController {
     selectedTabIndex = index;
     controller.jumpToTab(index);
     update();
+  }
+
+  void handleNotificationClick(
+    RemoteMessage notification, {
+    bool withNavigation = true,
+  }) {
+    NotificationsModel notificationsModel = NotificationsModel.fromJson(
+      jsonDecode(
+        notification.data['notification_model'].toString(),
+      ),
+    );
+    switch (notificationsModel.moduleCode) {
+      case 1:
+        // Get.find<RequestsController>().loadRequests(loading: false);
+        // if (withNavigation) {
+        //   Get.find<HomeScreenController>().handleIndexChanged(0);
+        // }
+        break;
+
+      // Get.find<CurrentParkingController>().callApi();
+      // if (withNavigation) {
+      //   Get.find<HomeScreenController>().handleIndexChanged(1);
+      // }
+    }
   }
 }
 

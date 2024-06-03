@@ -1,4 +1,3 @@
-import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
@@ -19,7 +18,7 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen>
-    with FCMNotificationMixin, AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin {
   final NotificationsController notificationsController = Get.find();
 
   @override
@@ -80,7 +79,8 @@ class _NotificationsScreenState extends State<NotificationsScreen>
                   useStickyGroupSeparators: false,
                   floatingHeader: false,
                   padding: const EdgeInsets.all(8),
-                  elements: notificationsController.paginationList.toList(),
+                  elements:
+                      notificationsController.paginationList.reversed.toList(),
                   groupBy: (NotificationsModel notification) {
                     DateTime date = DateTime.parse(notification.createdAt!);
                     return DateTime(
@@ -142,12 +142,6 @@ class _NotificationsScreenState extends State<NotificationsScreen>
         },
       ),
     );
-  }
-
-  @override
-  void onNotify(RemoteMessage notification) {
-    print('Notification Model====>${notification.data['notification_model']}');
-    notificationsController.addNewNotification(notification);
   }
 
   @override
