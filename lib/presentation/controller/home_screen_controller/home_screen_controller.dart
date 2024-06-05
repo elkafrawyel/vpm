@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:vpm/presentation/controller/booking_controller/current_booking_controller.dart';
+import 'package:vpm/presentation/controller/booking_controller/ended_booking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/notifications/notifications_screen.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/parking_screen.dart';
 import 'package:vpm/presentation/screens/home/pages/services/services_screen.dart';
@@ -73,6 +75,10 @@ class HomeScreenController extends GetxController {
         notification.data['notification_model'].toString(),
       ),
     );
+    Get.find<CurrentBookingController>().refreshApiCall();
+    if (withNavigation) {
+      Get.find<HomeScreenController>().handleIndexChanged(1);
+    }
     switch (notificationsModel.moduleCode) {
       case 1:
         // Get.find<RequestsController>().loadRequests(loading: false);
@@ -80,11 +86,23 @@ class HomeScreenController extends GetxController {
         //   Get.find<HomeScreenController>().handleIndexChanged(0);
         // }
         break;
+      case 2:
+        switch (notificationsModel.eventCode) {
+          case 1:
+            Get.find<CurrentBookingController>().refreshApiCall();
+            if (withNavigation) {
+              Get.find<HomeScreenController>().handleIndexChanged(1);
+            }
+            break;
+          case 2:
+            Get.find<EndedBookingController>().refreshApiCall();
+            if (withNavigation) {
+              Get.find<HomeScreenController>().handleIndexChanged(1);
+            }
+            break;
+        }
 
-      // Get.find<CurrentParkingController>().callApi();
-      // if (withNavigation) {
-      //   Get.find<HomeScreenController>().handleIndexChanged(1);
-      // }
+        break;
     }
   }
 }
