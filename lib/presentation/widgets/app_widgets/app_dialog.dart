@@ -71,7 +71,7 @@ void scaleDialog({
         scale: curve,
         child: AlertDialog(
           backgroundColor:
-              backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor ?? Theme.of(ctx).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(radius)),
           insetPadding: EdgeInsets.symmetric(
@@ -80,7 +80,7 @@ void scaleDialog({
           actions: <Widget>[
             if (onConfirmClick != null)
               TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => onConfirmClick,
                 child: Text(
                   confirmText ?? "Confirm",
                   style: const TextStyle(
@@ -89,23 +89,24 @@ void scaleDialog({
               ),
             if (onCancelClick != null)
               TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: Get.back,
                 child: Text(
                   cancelText ?? "Cancel",
                   style: const TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.w700),
+                    color: Colors.red,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               )
           ],
           content: SingleChildScrollView(
             child: Container(
               decoration: BoxDecoration(
-                color: backgroundColor ??
-                    Theme.of(context).scaffoldBackgroundColor,
+                color: backgroundColor ?? Theme.of(ctx).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(radius),
               ),
               height: height,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery.of(ctx).size.width,
               child: content,
             ),
           ),
@@ -157,7 +158,9 @@ void scaleAlertDialog({
                       onPressed: onConfirmClick,
                       child: Text(
                         confirmText ?? "Confirm",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   if (onCancelClick != null)
@@ -166,7 +169,9 @@ void scaleAlertDialog({
                       child: Text(
                         cancelText ?? "Cancel",
                         style: const TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.w700),
+                          color: Colors.red,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                 ],
@@ -182,7 +187,7 @@ void scaleAlertDialog({
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
                 ),
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                backgroundColor: Theme.of(ctx).scaffoldBackgroundColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -201,7 +206,9 @@ void scaleAlertDialog({
                       child: Text(
                         cancelText ?? "Cancel",
                         style: const TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.w700),
+                          color: Colors.red,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     )
                 ],
@@ -238,7 +245,7 @@ void rotateDialog({
         angle: math.radians(a1.value * 360),
         child: AlertDialog(
           backgroundColor:
-              backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor ?? Theme.of(ctx).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(radius)),
           insetPadding: EdgeInsets.symmetric(
@@ -251,7 +258,9 @@ void rotateDialog({
                 child: Text(
                   confirmText ?? "Confirm",
                   style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             if (onCancelClick != null)
@@ -260,19 +269,20 @@ void rotateDialog({
                 child: Text(
                   cancelText ?? "Cancel",
                   style: const TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.w700),
+                    color: Colors.red,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               )
           ],
           content: SingleChildScrollView(
             child: Container(
               decoration: BoxDecoration(
-                color: backgroundColor ??
-                    Theme.of(context).scaffoldBackgroundColor,
+                color: backgroundColor ?? Theme.of(ctx).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(radius),
               ),
               height: height,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery.of(ctx).size.width,
               child: content,
             ),
           ),
@@ -314,7 +324,7 @@ void translateDialog({
         position: offsetAnimation,
         child: AlertDialog(
           backgroundColor:
-              backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor ?? Theme.of(ctx).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(radius)),
           insetPadding: EdgeInsets.symmetric(
@@ -327,7 +337,9 @@ void translateDialog({
                 child: Text(
                   confirmText ?? "Confirm",
                   style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             if (onCancelClick != null)
@@ -336,19 +348,20 @@ void translateDialog({
                 child: Text(
                   cancelText ?? "Cancel",
                   style: const TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.w700),
+                    color: Colors.red,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               )
           ],
           content: SingleChildScrollView(
             child: Container(
               decoration: BoxDecoration(
-                color: backgroundColor ??
-                    Theme.of(context).scaffoldBackgroundColor,
+                color: backgroundColor ?? Theme.of(ctx).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(radius),
               ),
               height: height,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery.of(ctx).size.width,
               child: content,
             ),
           ),

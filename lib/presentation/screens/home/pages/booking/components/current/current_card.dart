@@ -305,7 +305,7 @@ class CurrentCard extends StatelessWidget {
     if (operationReply.isSuccess()) {
       GeneralResponse generalResponse = operationReply.result;
       InformationViewer.showSuccessToast(msg: generalResponse.message);
-      Get.find<CurrentBookingController>().refreshApiCall();
+      Get.find<CurrentBookingController>().refreshApiCall(loading: false);
     } else {
       InformationViewer.showErrorToast(msg: operationReply.message);
     }

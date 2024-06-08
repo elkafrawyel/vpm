@@ -33,12 +33,12 @@ class _TimerViewState extends State<TimerView> {
   double totalCost = 0.0;
 
   String replaceFarsiNumber(String input) {
-    const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    const farsi = ['۰', '۱', '۲', '۳', '٤', '٥', '٦', '٧', '۸', '۹'];
-
     if (Get.locale?.languageCode == "en") {
       return input;
     }
+    const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const farsi = ['۰', '۱', '۲', '۳', '٤', '٥', '٦', '٧', '۸', '۹'];
+
     for (int i = 0; i < english.length; i++) {
       input = input.replaceAll(english[i], farsi[i]);
     }
@@ -53,8 +53,8 @@ class _TimerViewState extends State<TimerView> {
       const Duration(seconds: 1),
       (Timer timer) {
         // if i leave the booking tab stop timer
-        if (Get.find<HomeScreenController>().selectedTabIndex == 3 &&
-            Get.find<BookingController>().selectedIndex == 0) {
+        if (Get.find<HomeScreenController>().selectedTabIndex == 1 &&
+            Get.find<BookingController>().selectedIndex.value == 0) {
           Utils.logMessage('Timer view is active');
           setState(() {});
         }
@@ -118,7 +118,7 @@ class _TimerViewState extends State<TimerView> {
                     : Utils().formatNumbers(
                         totalCost.toString(),
                       ),
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: totalCost == 0
                     ? Colors.green
@@ -155,7 +155,8 @@ class _TimerViewState extends State<TimerView> {
                   AppText(
                     replaceFarsiNumber(totalHours.toString()),
                     color: textColor,
-                    fontSize: 20,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
                   5.pw,
                   AppText(

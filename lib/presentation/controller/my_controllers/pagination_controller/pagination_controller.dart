@@ -48,8 +48,10 @@ class PaginationController<T> extends GetxController {
     callApi();
   }
 
-  callApi() async {
-    operationReply = OperationReply.loading();
+  callApi({bool loading = true}) async {
+    if (loading) {
+      operationReply = OperationReply.loading();
+    }
     String path =
         '${configData.apiEndPoint}?paginate=$paginate&page=$page&per_page=$perPage';
     if ({configData.parameters ?? {}}.isNotEmpty) {
@@ -122,10 +124,10 @@ class PaginationController<T> extends GetxController {
     loadingMore = false;
   }
 
-  Future<void> refreshApiCall() async {
+  Future<void> refreshApiCall({bool loading = true}) async {
     page = 1;
     loadingMoreEnd = false;
     loadingMore = false;
-    await callApi();
+    await callApi(loading: loading);
   }
 }

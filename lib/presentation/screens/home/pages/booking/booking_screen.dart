@@ -30,25 +30,23 @@ class _BookingScreenState extends State<BookingScreen>
           appBar: AppBar(
             title: Text('booking'.tr),
             actions: [
-              GetBuilder<BookingController>(builder: (_) {
-                return TextButton(
-                  onPressed: () {
-                    showAppSelectorDialog<BookingFilterType>(
-                      context: context,
-                      items: BookingFilterType.values,
-                      onItemSelected: (BookingFilterType bookingFilterType) {
-                        bookingController.bookingFilterType.value =
-                            bookingFilterType;
-                      },
-                    );
-                  },
-                  child: AppText(
-                    bookingController.bookingFilterType.value.title,
-                    fontWeight: FontWeight.w700,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                );
-              }),
+              TextButton(
+                onPressed: () {
+                  showAppSelectorDialog<BookingFilterType>(
+                    context: context,
+                    items: BookingFilterType.values,
+                    onItemSelected: (BookingFilterType bookingFilterType) {
+                      bookingController.bookingFilterType.value =
+                          bookingFilterType;
+                    },
+                  );
+                },
+                child: AppText(
+                  bookingController.bookingFilterType.value.title,
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
             ],
             bottom: TabBar(
               tabAlignment: TabAlignment.fill,
