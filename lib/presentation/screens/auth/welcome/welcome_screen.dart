@@ -41,7 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // AnimationConfiguration.staggeredGrid(
@@ -73,7 +73,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             width: 300,
             fit: BoxFit.cover,
           ),
-          30.ph,
           AppText(
             "let_you_in".tr,
             fontSize: 25,
