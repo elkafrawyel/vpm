@@ -215,4 +215,6 @@ Map<String, String> ar = {
   'today': 'اليوم',
   'yesterday': 'أمس',
   'LoadingMore': 'جارٍ تحميل المزيد من البيانات...',
+  'car_text': 'حروف السيارة',
+  'edit_car': 'تعديل بيانات السيارة',
 };

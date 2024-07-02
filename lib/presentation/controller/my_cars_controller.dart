@@ -90,6 +90,7 @@ class MyCarsController extends GeneralController {
     required AnimationController animationController,
     required String name,
     required String number,
+    required String text,
     required CarTypeModel selectedType,
     required CarColorModel selectedColor,
     File? image,
@@ -118,6 +119,7 @@ class MyCarsController extends GeneralController {
                   addCarRequest: AddCarRequest(
                     name: name,
                     number: number,
+                    text: text,
                     fileId: uploadFileResponse?.data?.id,
                     carColorId: selectedColor.id,
                     carTypeId: selectedType.id,
@@ -128,6 +130,7 @@ class MyCarsController extends GeneralController {
                   addCarRequest: AddCarRequest(
                     name: name,
                     number: number,
+                    text: text,
                     fileId: uploadFileResponse?.data?.id,
                     carColorId: selectedColor.id,
                     carTypeId: selectedType.id,

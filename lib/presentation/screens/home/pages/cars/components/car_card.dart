@@ -113,7 +113,7 @@ class CarCard extends StatelessWidget {
                 ),
                 5.ph,
                 AppText(
-                  car.number ?? '',
+                  car.fullNumber ?? '',
                   color: hintColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 12,

@@ -37,9 +37,11 @@ class _AddCarScreenState extends State<AddCarScreen> {
   File? image;
   late TextEditingController carNameController;
   late TextEditingController carNumberController;
+  late TextEditingController carTextController;
 
   final GlobalKey<AppTextFormFieldState> nameState = GlobalKey();
   final GlobalKey<AppTextFormFieldState> numberState = GlobalKey();
+  final GlobalKey<AppTextFormFieldState> textState = GlobalKey();
   final MyCarsController myCarsController = Get.find();
   CarTypeModel? selectedType;
   CarColorModel? selectedColor;
@@ -49,6 +51,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
     super.initState();
     carNameController = TextEditingController(text: widget.car?.name ?? '');
     carNumberController = TextEditingController(text: widget.car?.number ?? '');
+    carTextController = TextEditingController(text: widget.car?.text ?? '');
 
     myCarsController.getCarColors().then((value) {
       selectedColor = myCarsController.carColors
@@ -67,13 +70,14 @@ class _AddCarScreenState extends State<AddCarScreen> {
     super.dispose();
     carNameController.dispose();
     carNumberController.dispose();
+    carTextController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('add_car'.tr),
+        title: Text(widget.car == null ? 'add_car'.tr : 'edit_car'.tr),
         centerTitle: false,
       ),
       body: SingleChildScrollView(
@@ -146,10 +150,24 @@ class _AddCarScreenState extends State<AddCarScreen> {
                 hintText: 'car_title'.tr,
               ),
               10.ph,
-              AppTextFormField(
-                key: numberState,
-                controller: carNumberController,
-                hintText: 'car_number'.tr,
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextFormField(
+                      key: numberState,
+                      controller: carNumberController,
+                      hintText: 'car_number'.tr,
+                    ),
+                  ),
+                  10.pw,
+                  Expanded(
+                    child: AppTextFormField(
+                      key: textState,
+                      controller: carTextController,
+                      hintText: 'car_text'.tr,
+                    ),
+                  ),
+                ],
               ),
               10.ph,
               Padding(
@@ -199,7 +217,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
               30.ph,
               Center(
                 child: AppProgressButton(
-                  text: 'add_car'.tr,
+                  text: widget.car == null ? 'add_car'.tr : 'edit_car'.tr,
                   width: MediaQuery.sizeOf(context).width * 0.8,
                   onPressed: (animationController) async {
                     _addCar(animationController);
@@ -255,6 +273,9 @@ class _AddCarScreenState extends State<AddCarScreen> {
     } else if (carNumberController.text.isEmpty) {
       numberState.currentState?.shake();
       return;
+    } else if (carTextController.text.isEmpty) {
+      textState.currentState?.shake();
+      return;
     } else if (selectedType == null) {
       FocusManager.instance.primaryFocus?.unfocus();
       InformationViewer.showSnackBar('choose_car_brand'.tr);
@@ -269,6 +290,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
       animationController: animationController,
       carId: widget.car?.id,
       name: carNameController.text,
+      text: carTextController.text,
       number: carNumberController.text,
       selectedType: selectedType!,
       selectedColor: selectedColor!,

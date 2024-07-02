@@ -5,6 +5,7 @@ class CarModel {
     this.id,
     this.name,
     this.number,
+    this.fullNumber,
     this.randomCode,
     this.createdAt,
     this.color,
@@ -15,7 +16,9 @@ class CarModel {
   CarModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
+    fullNumber = json['full_number'];
     number = json['number'];
+    text = json['text'];
     randomCode = json['random_code'];
     createdAt = json['created_at'];
     color = json['color'] != null ? ColorModel.fromJson(json['color']) : null;
@@ -26,6 +29,8 @@ class CarModel {
   String? id;
   String? name;
   String? number;
+  String? text;
+  String? fullNumber;
   String? randomCode;
   String? createdAt;
   ColorModel? color;

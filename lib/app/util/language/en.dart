@@ -218,4 +218,6 @@ Map<String, String> en = {
   'today': 'Today',
   'yesterday': 'Yesterday',
   'LoadingMore': 'Loading More Data...',
+  'car_text': 'Car Text',
+  'edit_car': 'Edit Car',
 };
