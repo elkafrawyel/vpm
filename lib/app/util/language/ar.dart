@@ -217,4 +217,6 @@ Map<String, String> ar = {
   'LoadingMore': 'جارٍ تحميل المزيد من البيانات...',
   'car_text': 'حروف السيارة',
   'edit_car': 'تعديل بيانات السيارة',
+  'parking_option': 'موقف سيارات',
+  'valet_option': 'خدمة تركين السيارات',
 };

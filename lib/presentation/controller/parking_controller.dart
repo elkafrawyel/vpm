@@ -32,6 +32,9 @@ class ParkingController extends GetxController {
 
   int myImageSize = 150;
 
+  // parking =>1,Valet =>2,
+  RxInt parkType = 1.obs;
+
   ParkingController(this._garagesRepositoryImpl);
 
   GoogleMapController? mapController;
@@ -119,7 +122,10 @@ class ParkingController extends GetxController {
 
     if (operationReply.isSuccess()) {
       GaragesResponse? garagesResponse = operationReply.result;
-      garageList = garagesResponse?.garages ?? [];
+      garageList = garagesResponse?.garages
+              ?.where((element) => element.type?.code == parkType.value)
+              .toList() ??
+          [];
       for (var element in garageList) {
         await addGarageMarker(element);
       }
@@ -390,5 +396,13 @@ class ParkingController extends GetxController {
     targetGarage = null;
     update();
     animateToPosition(myLocation);
+  }
+
+  void handleParkTypeChange(int parkTypeIndex) {
+    clearPolyline();
+    garagesMarkersMap.clear();
+    update();
+    parkType.value = parkTypeIndex + 1;
+    getGaragesListFromApi();
   }
 }

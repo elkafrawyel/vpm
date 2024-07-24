@@ -79,7 +79,7 @@ class UserInfoView extends StatelessWidget {
                             barrierDismissible: true,
                             backgroundColor: Colors.transparent,
                             content: QrCodeView(
-                              qrValue: LocalProvider().getUser()?.id ?? '',
+                              qrValue: LocalProvider().getUser()?.qrId ?? '',
                             ),
                           );
                         },

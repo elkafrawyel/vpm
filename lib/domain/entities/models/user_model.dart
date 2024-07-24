@@ -3,6 +3,7 @@ import 'image_model.dart';
 class UserModel {
   UserModel({
     this.id,
+    this.qrId,
     this.client,
     this.name,
     this.email,
@@ -18,6 +19,7 @@ class UserModel {
 
   UserModel.fromJson(dynamic json) {
     id = json['id'];
+    qrId = json['qr_id'];
     client = json['client'];
     name = json['name'];
     email = json['email'];
@@ -27,11 +29,13 @@ class UserModel {
     isVerified = json['is_verified'];
     isCompleted = json['is_completed'];
     token = json['token'];
-    avatar = json['avatar'] != null ? ImageModel.fromJson(json['avatar']) : null;
+    avatar =
+        json['avatar'] != null ? ImageModel.fromJson(json['avatar']) : null;
     createdAt = json['created_at'];
   }
 
   String? id;
+  String? qrId;
   dynamic client;
   String? name;
   String? email;
@@ -43,35 +47,6 @@ class UserModel {
   String? token;
   ImageModel? avatar;
   String? createdAt;
-
-  UserModel copyWith({
-    String? id,
-    dynamic client,
-    String? name,
-    String? email,
-    String? phone,
-    dynamic gender,
-    dynamic birthday,
-    bool? isVerified,
-    bool? isCompleted,
-    String? token,
-    ImageModel? avatar,
-    String? createdAt,
-  }) =>
-      UserModel(
-        id: id ?? this.id,
-        client: client ?? this.client,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        phone: phone ?? this.phone,
-        gender: gender ?? this.gender,
-        birthday: birthday ?? this.birthday,
-        isVerified: isVerified ?? this.isVerified,
-        isCompleted: isCompleted ?? this.isCompleted,
-        token: token ?? this.token,
-        avatar: avatar ?? this.avatar,
-        createdAt: createdAt ?? this.createdAt,
-      );
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

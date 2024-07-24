@@ -220,4 +220,6 @@ Map<String, String> en = {
   'LoadingMore': 'Loading More Data...',
   'car_text': 'Car Text',
   'edit_car': 'Edit Car',
+  'parking_option': 'Parking',
+  'valet_option': 'Valet',
 };

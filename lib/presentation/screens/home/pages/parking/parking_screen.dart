@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/presentation/controller/parking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/components/address_view.dart';
+import 'package:vpm/presentation/screens/home/pages/parking/components/park_type_view.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_dialog.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
@@ -75,7 +77,7 @@ class _ParkingScreenState extends State<ParkingScreen>
                 barrierDismissible: true,
                 backgroundColor: Colors.transparent,
                 content: QrCodeView(
-                  qrValue: LocalProvider().getUser()?.id ?? '',
+                  qrValue: LocalProvider().getUser()?.qrId ?? '',
                 ),
               );
             },
@@ -113,7 +115,13 @@ class _ParkingScreenState extends State<ParkingScreen>
                 top: MediaQuery.of(context).padding.top,
                 start: 0,
                 end: 0,
-                child: const AddressView(),
+                child: Column(
+                  children: [
+                    const AddressView(),
+                    10.ph,
+                    const ParkTypeView(),
+                  ],
+                ),
               ),
               if (parkingController.polyLinesList.isNotEmpty)
                 PositionedDirectional(

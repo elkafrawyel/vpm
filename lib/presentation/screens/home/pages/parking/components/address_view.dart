@@ -44,7 +44,7 @@ class AddressView extends StatelessWidget {
                               : parkingController.myAddressEn!,
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          maxLines: 2,
+                          maxLines: 4,
                         );
                 },
               ),
