@@ -20,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with FCMNotificationMixin, FCMNotificationClickMixin {
   final HomeScreenController homeScreenController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeScreenController>(

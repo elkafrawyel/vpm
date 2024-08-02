@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/presentation/controller/parking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/components/address_view.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/components/park_type_view.dart';
@@ -10,6 +9,7 @@ import 'package:vpm/presentation/widgets/app_widgets/app_dialog.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../../app/util/util.dart';
+import '../../../../../data/providers/storage/local_provider.dart';
 import '../menu/components/qr_code_view.dart';
 
 class ParkingScreen extends StatefulWidget {
@@ -27,6 +27,20 @@ class _ParkingScreenState extends State<ParkingScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   scaleDialog(
+    //     context: context,
+    //     barrierDismissible: true,
+    //     insetPadding: EdgeInsets.zero,
+    //     contentPadding: EdgeInsets.zero,
+    //     backgroundColor: Colors.white,
+    //     content: const VideoPlayerView(
+    //       videoUrl:
+    //           'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    //     ),
+    //   );
+    // });
   }
 
   @override
@@ -72,6 +86,17 @@ class _ParkingScreenState extends State<ParkingScreen>
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
+              // scaleDialog(
+              //   context: context,
+              //   barrierDismissible: true,
+              //   insetPadding: EdgeInsets.zero,
+              //   contentPadding: EdgeInsets.zero,
+              //   backgroundColor: Colors.white,
+              //   content: const VideoPlayerView(
+              //     videoUrl:
+              //         'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
+              //   ),
+              // );
               scaleDialog(
                 context: context,
                 barrierDismissible: true,
