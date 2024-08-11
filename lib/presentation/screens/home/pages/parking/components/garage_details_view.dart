@@ -19,7 +19,9 @@ import 'package:vpm/presentation/controller/parking_controller.dart';
 
 import '../../../../../../app/util/constants.dart';
 import '../../../../../../domain/entities/models/garage_model.dart';
+import '../../../../../widgets/app_widgets/app_dialog.dart';
 import '../../../../../widgets/app_widgets/app_text.dart';
+import '../../../../../widgets/video_player_view.dart';
 
 class GarageDetailsView extends StatelessWidget {
   final ScrollController scrollController;
@@ -262,53 +264,20 @@ class GarageDetailsView extends StatelessWidget {
               ),
             ),
             20.ph,
-            GestureDetector(
-              onTap: () {
-                Get.back();
-                Get.find<ParkingController>().getDirectionsToDestination(
-                  lineId: element.id!,
-                  destination: PointLatLng(
-                    double.parse(element.latitude!),
-                    double.parse(element.longitude!),
-                  ),
-                );
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width / 1.5,
-                decoration: BoxDecoration(
-                  color: const Color(0xffE6AF1D),
-                  borderRadius: BorderRadius.circular(kRadius),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 2,
-                  ),
-                ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12.0,
-                      horizontal: 18.0,
-                    ),
-                    child: AppText(
-                      element.type?.code == 1
-                          ? 'navigate_to_car_parking'.tr
-                          : 'navigate_to_valet'.tr,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            20.ph,
-            if (element.type?.code == 2)
-              GestureDetector(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 38.0),
+              child: GestureDetector(
                 onTap: () {
-                  _requestValet();
+                  Get.back();
+                  Get.find<ParkingController>().getDirectionsToDestination(
+                    lineId: element.id!,
+                    destination: PointLatLng(
+                      double.parse(element.latitude!),
+                      double.parse(element.longitude!),
+                    ),
+                  );
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
                   decoration: BoxDecoration(
                     color: const Color(0xffE6AF1D),
                     borderRadius: BorderRadius.circular(kRadius),
@@ -324,13 +293,76 @@ class GarageDetailsView extends StatelessWidget {
                         horizontal: 18.0,
                       ),
                       child: AppText(
-                        'request_valet'.tr,
+                        element.type?.code == 1
+                            ? 'navigate_to_car_parking'.tr
+                            : 'navigate_to_valet'.tr,
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
                       ),
                     ),
                   ),
+                ),
+              ),
+            ),
+            20.ph,
+            if (element.type?.code == 2)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 38.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          _requestValet();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xffE6AF1D),
+                            borderRadius: BorderRadius.circular(kRadius),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12.0,
+                                horizontal: 18.0,
+                              ),
+                              child: AppText(
+                                'request_valet'.tr,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (element.type?.code == 2)
+                      IconButton(
+                        onPressed: () {
+                          scaleDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            insetPadding: EdgeInsets.zero,
+                            contentPadding: EdgeInsets.zero,
+                            backgroundColor: Colors.white,
+                            content: const VideoPlayerView(
+                              videoUrl:
+                                  'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.info,
+                          color: Colors.white,
+                        ),
+                      )
+                  ],
                 ),
               ),
             20.ph,

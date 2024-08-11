@@ -27,20 +27,6 @@ class _ParkingScreenState extends State<ParkingScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
-    // Future.delayed(const Duration(seconds: 2), () {
-    //   scaleDialog(
-    //     context: context,
-    //     barrierDismissible: true,
-    //     insetPadding: EdgeInsets.zero,
-    //     contentPadding: EdgeInsets.zero,
-    //     backgroundColor: Colors.white,
-    //     content: const VideoPlayerView(
-    //       videoUrl:
-    //           'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    //     ),
-    //   );
-    // });
   }
 
   @override
@@ -86,17 +72,6 @@ class _ParkingScreenState extends State<ParkingScreen>
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
-              // scaleDialog(
-              //   context: context,
-              //   barrierDismissible: true,
-              //   insetPadding: EdgeInsets.zero,
-              //   contentPadding: EdgeInsets.zero,
-              //   backgroundColor: Colors.white,
-              //   content: const VideoPlayerView(
-              //     videoUrl:
-              //         'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
-              //   ),
-              // );
               scaleDialog(
                 context: context,
                 barrierDismissible: true,

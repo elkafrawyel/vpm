@@ -1,6 +1,7 @@
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:vpm/app/util/util.dart';
 
 class VideoPlayerView extends StatefulWidget {
   final String videoUrl;
@@ -28,6 +29,7 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
 
   @override
   void dispose() {
+    Utils.logMessage('VideoPlayer disposed');
     flickManager.dispose();
     super.dispose();
   }
