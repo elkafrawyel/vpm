@@ -128,7 +128,7 @@ Map<String, String> ar = {
   'parking': 'الرئيسية',
   'valet': 'خادم',
   'services': 'خدمات',
-  'booking': 'الحجزات',
+  'booking': 'الحجوزات',
   'menu': 'القائمة',
   'your_cars': 'سياراتك',
   'dark_mode': 'الوضع الليلي',

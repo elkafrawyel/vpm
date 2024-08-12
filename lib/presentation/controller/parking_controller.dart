@@ -34,6 +34,7 @@ class ParkingController extends GetxController {
 
   // parking =>1,Valet =>2,
   RxInt parkType = 1.obs;
+  RxBool hasRequestDriver = false.obs;
 
   ParkingController(this._garagesRepositoryImpl);
 
