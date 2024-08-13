@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:vpm/app/res/res.dart';
 import 'package:vpm/data/models/upload_file_response.dart';
+import 'package:vpm/data/models/video_response.dart';
 import 'package:vpm/data/providers/network/api_provider.dart';
 
 import '../../app/util/operation_reply.dart';
@@ -39,6 +40,14 @@ class LookUpsRepositoryIml extends LookUpsRepository {
     return await APIProvider.instance.get(
       endPoint: Res.apiCarTypes,
       fromJson: CarTypesResponse.fromJson,
+    );
+  }
+
+  @override
+  Future<OperationReply<VideoResponse>> getVideo() async {
+    return await APIProvider.instance.get(
+      endPoint: Res.apiVideo,
+      fromJson: VideoResponse.fromJson,
     );
   }
 }

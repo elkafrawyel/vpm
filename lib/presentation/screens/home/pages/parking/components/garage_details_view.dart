@@ -14,7 +14,9 @@ import 'package:vpm/app/util/information_viewer.dart';
 import 'package:vpm/app/util/operation_reply.dart';
 import 'package:vpm/app/util/util.dart';
 import 'package:vpm/data/models/general_response.dart';
+import 'package:vpm/data/models/video_response.dart';
 import 'package:vpm/data/providers/network/api_provider.dart';
+import 'package:vpm/data/repositories/lookups_repository.dart';
 import 'package:vpm/presentation/controller/parking_controller.dart';
 
 import '../../../../../../app/util/constants.dart';
@@ -344,19 +346,7 @@ class GarageDetailsView extends StatelessWidget {
                     ),
                     if (element.type?.code == 2)
                       IconButton(
-                        onPressed: () {
-                          scaleDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            insetPadding: EdgeInsets.zero,
-                            contentPadding: EdgeInsets.zero,
-                            backgroundColor: Colors.white,
-                            content: const VideoPlayerView(
-                              videoUrl:
-                                  'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
-                            ),
-                          );
-                        },
+                        onPressed: () => _getVideo(context),
                         icon: const Icon(
                           Icons.info,
                           color: Colors.white,
@@ -387,6 +377,32 @@ class GarageDetailsView extends StatelessWidget {
       Get.back();
       GeneralResponse generalResponse = operationReply.result;
       InformationViewer.showSuccessToast(msg: generalResponse.message);
+    } else {
+      InformationViewer.showErrorToast(msg: operationReply.message);
+    }
+  }
+
+  void _getVideo(BuildContext context) async {
+    OperationReply operationReply = await LookUpsRepositoryIml().getVideo();
+
+    if (operationReply.isSuccess()) {
+      VideoResponse videoResponse = operationReply.result;
+
+      if (videoResponse.data?.vedio?.filePath != null) {
+        if (context.mounted) {
+          scaleDialog(
+            context: context,
+            barrierDismissible: true,
+            insetPadding: EdgeInsets.zero,
+            contentPadding: EdgeInsets.zero,
+            backgroundColor: Colors.white,
+            content: VideoPlayerView(
+                videoUrl: videoResponse.data!.vedio!.filePath!
+                // 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
+                ),
+          );
+        }
+      }
     } else {
       InformationViewer.showErrorToast(msg: operationReply.message);
     }
