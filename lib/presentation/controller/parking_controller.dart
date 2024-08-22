@@ -57,7 +57,7 @@ class ParkingController extends GetxController {
   void onInit() async {
     super.onInit();
     await getMyPosition();
-    setupTimer();
+    // setupTimer();
   }
 
   setupTimer() {
@@ -66,7 +66,6 @@ class ParkingController extends GetxController {
       if (LocalProvider().isLogged() &&
           Get.find<HomeScreenController>().selectedTabIndex == 0) {
         await getMyPosition(loading: false);
-        await getGaragesListFromApi();
       }
       handleTargetGarage();
     });
@@ -132,6 +131,7 @@ class ParkingController extends GetxController {
       }
       update();
     }
+    _addMyMarker();
   }
 
   Future checkLocationPermission() async {
@@ -404,6 +404,6 @@ class ParkingController extends GetxController {
     garagesMarkersMap.clear();
     update();
     parkType.value = parkTypeIndex + 1;
-    getGaragesListFromApi();
+    getMyPosition(loading: false);
   }
 }

@@ -72,7 +72,7 @@ class GarageDetailsView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(kRadius * 2),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(kRadius)),
       ),
       child: SingleChildScrollView(
         controller: scrollController,
@@ -81,7 +81,7 @@ class GarageDetailsView extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadiusDirectional.vertical(
-                  top: Radius.circular(kRadius * 2),
+                  top: Radius.circular(kRadius),
                 ),
                 color: Colors.white,
               ),

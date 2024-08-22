@@ -79,13 +79,16 @@ class NotificationsCard extends StatelessWidget {
                     ),
             ),
           ),
-          Center(
-            child: AppProgressButton(
-              onPressed: (animationController) async {
-                _cancelRequest(animationController);
-              },
-              text: 'cancel_request'.tr,
-              backgroundColor: Colors.red,
+          Offstage(
+            offstage: notificationsModel.driver == null,
+            child: Center(
+              child: AppProgressButton(
+                onPressed: (animationController) async {
+                  _cancelRequest(animationController);
+                },
+                text: 'cancel_request'.tr,
+                backgroundColor: Colors.red,
+              ),
             ),
           ),
           Align(
