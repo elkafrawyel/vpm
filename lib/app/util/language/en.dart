@@ -222,4 +222,5 @@ Map<String, String> en = {
   'edit_car': 'Edit Car',
   'parking_option': 'Parking',
   'valet_option': 'Valet',
+  'cancel_request': 'Cancel Request'
 };

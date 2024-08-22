@@ -30,6 +30,7 @@ class Res {
   static const apiRequestEndParking = 'customer/request-driver-end-parking';
   static const apiNotifications = 'notification/notifications';
   static const apiVideo = 'constants/tutorial-vedio';
+  static const apiCancelRequest = 'customer/request-driver-cancel';
 
   //========================== Animation Assets  ===============================
   static const animApiLoading = 'assets/anim/loading.json';

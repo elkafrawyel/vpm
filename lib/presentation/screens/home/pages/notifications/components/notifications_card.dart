@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:vpm/app/util/util.dart';
+import 'package:vpm/presentation/controller/notifications_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_cached_image.dart';
+import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 
 import '../../../../../../app/config/app_color.dart';
 import '../../../../../../domain/entities/models/notifications_model.dart';
@@ -77,6 +79,15 @@ class NotificationsCard extends StatelessWidget {
                     ),
             ),
           ),
+          Center(
+            child: AppProgressButton(
+              onPressed: (animationController) async {
+                _cancelRequest(animationController);
+              },
+              text: 'cancel_request'.tr,
+              backgroundColor: Colors.red,
+            ),
+          ),
           Align(
             alignment: AlignmentDirectional.centerEnd,
             child: Padding(
@@ -100,5 +111,10 @@ class NotificationsCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _cancelRequest(AnimationController animationController) async {
+    await Get.find<NotificationsController>()
+        .cancelRequest(notificationsModel, animationController);
   }
 }

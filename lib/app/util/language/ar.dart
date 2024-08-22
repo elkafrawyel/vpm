@@ -219,4 +219,5 @@ Map<String, String> ar = {
   'edit_car': 'تعديل بيانات السيارة',
   'parking_option': 'موقف سيارات',
   'valet_option': 'خدمة تركين السيارات',
+  'cancel_request': 'إلغاء الطلب'
 };
