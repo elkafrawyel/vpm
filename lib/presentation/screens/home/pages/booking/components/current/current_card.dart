@@ -117,7 +117,9 @@ class CurrentCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: AppText(
-                      'hour_cost'.tr,
+                      bookingModel.garage?.type?.code == 1
+                          ? 'hour_cost'.tr
+                          : 'total_cost'.tr,
                       color: hintColor,
                     ),
                   ),
@@ -133,19 +135,21 @@ class CurrentCard extends StatelessWidget {
                           color: Theme.of(context).primaryColor,
                           fontSize: 16,
                         ),
-                        AppText(
-                          'per_hour'.tr,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                        ),
+                        if (bookingModel.garage?.type?.code == 1)
+                          AppText(
+                            'per_hour'.tr,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 16,
+                          ),
                       ],
                     ),
                   ),
                 ],
               ),
             10.ph,
-            if (bookingModel.startsAt != null)
+            if (bookingModel.startsAt != null &&
+                bookingModel.garage?.type?.code == 1)
               Center(
                 child: TimerView(
                   startTime: bookingModel.startsAt!,

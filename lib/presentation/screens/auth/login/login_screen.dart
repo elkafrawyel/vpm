@@ -54,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: Text('login'.tr),
         centerTitle: false,
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

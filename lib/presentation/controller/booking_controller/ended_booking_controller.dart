@@ -4,9 +4,4 @@ import '../../../domain/entities/models/booking_model.dart';
 
 class EndedBookingController extends PaginationController<BookingModel> {
   EndedBookingController(super.configData);
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
 }

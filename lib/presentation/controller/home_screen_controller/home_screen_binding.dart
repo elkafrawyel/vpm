@@ -57,7 +57,7 @@ class HomeScreenBinding extends Bindings {
           apiEndPoint: Res.apiBookingList,
           fromJson: BookingModel.fromJson,
           parameters: {
-            'status': 'ended',
+            'status': 'ends',
           },
         ),
       ),

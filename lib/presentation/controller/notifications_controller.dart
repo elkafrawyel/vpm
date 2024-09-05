@@ -36,25 +36,27 @@ class NotificationsController extends PaginationController<NotificationsModel> {
 
   Future cancelRequest(NotificationsModel notificationsModel,
       AnimationController animationController) async {
-    animationController.forward();
+    try {
+      animationController.forward();
 
-    OperationReply operationReply =
-        await APIProvider.instance.patch<GeneralResponse>(
-      endPoint: '${Res.apiCancelRequest}/${notificationsModel.eventId}',
-      fromJson: GeneralResponse.fromJson,
-      requestBody: {},
-    );
+      OperationReply operationReply =
+          await APIProvider.instance.patch<GeneralResponse>(
+        endPoint: '${Res.apiCancelRequest}/${notificationsModel.eventId}',
+        fromJson: GeneralResponse.fromJson,
+        requestBody: {
+          'notification_id': notificationsModel.id,
+        },
+      );
 
-    if (operationReply.isSuccess()) {
-      GeneralResponse generalResponse = operationReply.result;
-      InformationViewer.showSuccessToast(msg: generalResponse.message);
-
-      animationController.reverse();
-      paginationList.remove(notificationsModel);
-      update();
-    } else {
-      animationController.reverse();
-      InformationViewer.showErrorToast(msg: operationReply.message);
-    }
+      if (operationReply.isSuccess()) {
+        GeneralResponse generalResponse = operationReply.result;
+        InformationViewer.showSuccessToast(msg: generalResponse.message);
+        paginationList.remove(notificationsModel);
+        update();
+      } else {
+        animationController.reverse();
+        InformationViewer.showErrorToast(msg: operationReply.message);
+      }
+    } catch (e) {}
   }
 }

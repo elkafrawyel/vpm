@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vpm/app/util/operation_reply.dart';
 import 'package:vpm/data/models/balance_response.dart';
 import 'package:vpm/data/models/charge_balance_response.dart';

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vpm/presentation/controller/home_screen_controller/home_screen_controller.dart';
 
 import '../../../app/res/res.dart';
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen>
       builder: (homeScreenController) {
         return PersistentTabView(
           context,
-          padding: const NavBarPadding.all(8),
+          padding: const EdgeInsets.all(8),
           navBarHeight: 70,
           controller: homeScreenController.controller,
           screens: homeScreenController.pages,
@@ -73,27 +73,29 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
           onItemSelected: homeScreenController.handleIndexChanged,
-          confineInSafeArea: true,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           handleAndroidBackButtonPress: true,
           resizeToAvoidBottomInset: true,
           stateManagement: true,
-          hideNavigationBarWhenKeyboardShows: true,
+          hideNavigationBarWhenKeyboardAppears: true,
           decoration: NavBarDecoration(
             borderRadius: BorderRadius.circular(12.0),
             colorBehindNavBar: Theme.of(context).scaffoldBackgroundColor,
           ),
-          popAllScreensOnTapOfSelectedTab: true,
-          popActionScreens: PopActionScreensType.all,
-          itemAnimationProperties: const ItemAnimationProperties(
-            duration: Duration(milliseconds: 200),
-            curve: Curves.ease,
+          popBehaviorOnSelectedNavBarItemPress: PopBehavior.all,
+
+          animationSettings: const NavBarAnimationSettings(
+            screenTransitionAnimation: ScreenTransitionAnimationSettings(
+              animateTabTransition: true,
+              curve: Curves.ease,
+              duration: Duration(milliseconds: 200),
+            ),
+            navBarItemAnimation: ItemAnimationSettings(
+              duration: Duration(milliseconds: 200),
+              curve: Curves.ease,
+            ),
           ),
-          screenTransitionAnimation: const ScreenTransitionAnimation(
-            animateTabTransition: true,
-            curve: Curves.ease,
-            duration: Duration(milliseconds: 200),
-          ),
+
           navBarStyle: NavBarStyle.style8,
           // Choose the nav bar style with this property.
         );

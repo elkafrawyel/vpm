@@ -155,13 +155,16 @@ class EndedCard extends StatelessWidget {
                   ),
                 ],
               ),
-            10.ph,
-            if (bookingModel.hourCost != null)
+            if (bookingModel.garage?.type?.code == 1) 10.ph,
+            if (bookingModel.hourCost != null &&
+                bookingModel.garage?.type?.code == 1)
               Row(
                 children: [
                   Expanded(
                     child: AppText(
-                      'hour_cost'.tr,
+                      bookingModel.garage?.type?.code == 1
+                          ? 'hour_cost'.tr
+                          : 'total_cost'.tr,
                       color: hintColor,
                     ),
                   ),
@@ -177,37 +180,39 @@ class EndedCard extends StatelessWidget {
                           color: Theme.of(context).primaryColor,
                           fontSize: 16,
                         ),
-                        AppText(
-                          'per_hour'.tr,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 16,
-                        ),
+                        if (bookingModel.garage?.type?.code == 1)
+                          AppText(
+                            'per_hour'.tr,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 16,
+                          ),
                       ],
                     ),
                   ),
                 ],
               ),
-            10.ph,
-            Row(
-              children: [
-                Expanded(
-                  child: AppText(
-                    'total_hours'.tr,
-                    color: hintColor,
+            if (bookingModel.garage?.type?.code == 1) 10.ph,
+            if (bookingModel.garage?.type?.code == 1)
+              Row(
+                children: [
+                  Expanded(
+                    child: AppText(
+                      'total_hours'.tr,
+                      color: hintColor,
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: AppText(
-                    hours <= 0 ? "1" : hours.toString(),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                    color: Theme.of(context).primaryColor,
+                  Expanded(
+                    flex: 2,
+                    child: AppText(
+                      hours <= 0 ? "1" : hours.toString(),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
             10.ph,
             if (bookingModel.totalCost != null)
               Row(
@@ -221,11 +226,13 @@ class EndedCard extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: AppText(
-                      bookingModel.totalCost == 0
-                          ? 'free'.tr
-                          : Utils().formatNumbers(
-                              bookingModel.totalCost.toString(),
-                            ),
+                      bookingModel.garage?.type?.code == 1
+                          ? bookingModel.totalCost == 0
+                              ? 'free'.tr
+                              : Utils().formatNumbers(
+                                  bookingModel.totalCost.toString(),
+                                )
+                          : bookingModel.totalCost.toString(),
                       fontSize: 18,
                       color: bookingModel.totalCost == 0
                           ? Colors.green

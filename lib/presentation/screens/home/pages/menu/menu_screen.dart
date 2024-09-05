@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/controller/profile_controller.dart';
 import 'package:vpm/presentation/controller/wallet_controller.dart';

@@ -4,7 +4,7 @@ import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vpm/presentation/controller/booking_controller/current_booking_controller.dart';
 import 'package:vpm/presentation/controller/booking_controller/ended_booking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/notifications/notifications_screen.dart';

@@ -144,10 +144,11 @@ class GarageDetailsView extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 24,
                     ),
-                    AppText(
-                      'per_hour'.tr,
-                      color: Colors.white,
-                    ),
+                    if (element.type?.code == 1)
+                      AppText(
+                        'per_hour'.tr,
+                        color: Colors.white,
+                      ),
                   ],
                 ),
                 if (element.type?.code == 1) 40.pw,

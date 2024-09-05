@@ -79,9 +79,8 @@ class NotificationsCard extends StatelessWidget {
                     ),
             ),
           ),
-          Offstage(
-            offstage: notificationsModel.driver == null,
-            child: Center(
+          if (notificationsModel.eventPrefix == 'REQUEST_START_PARKING')
+            Center(
               child: AppProgressButton(
                 onPressed: (animationController) async {
                   _cancelRequest(animationController);
@@ -90,7 +89,6 @@ class NotificationsCard extends StatelessWidget {
                 backgroundColor: Colors.red,
               ),
             ),
-          ),
           Align(
             alignment: AlignmentDirectional.centerEnd,
             child: Padding(
@@ -117,7 +115,9 @@ class NotificationsCard extends StatelessWidget {
   }
 
   void _cancelRequest(AnimationController animationController) async {
-    await Get.find<NotificationsController>()
-        .cancelRequest(notificationsModel, animationController);
+    await Get.find<NotificationsController>().cancelRequest(
+      notificationsModel,
+      animationController,
+    );
   }
 }
