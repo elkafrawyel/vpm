@@ -7,6 +7,7 @@ import 'package:vpm/presentation/controller/wallet_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/menu/components/logout_view.dart';
 import 'package:vpm/presentation/screens/home/pages/menu/components/user_info_view.dart';
 import 'package:vpm/presentation/screens/profile/profile_screen.dart';
+import 'package:vpm/presentation/screens/subscriptions/subscriptions_screen.dart';
 import 'package:vpm/presentation/screens/users/users_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/language_views/app_language_switch.dart';
 
@@ -53,6 +54,24 @@ class _MenuScreenState extends State<MenuScreen> {
                   PersistentNavBarNavigator.pushNewScreen(
                     context,
                     screen: const ProfileScreen(),
+                    withNavBar: true,
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  );
+                },
+              ),
+              ListTile(
+                splashColor: Colors.transparent,
+                leading: const Icon(Icons.subscriptions),
+                title: Text('subscriptions'.tr),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).dividerColor,
+                  size: 20,
+                ),
+                onTap: () {
+                  PersistentNavBarNavigator.pushNewScreen(
+                    context,
+                    screen: const SubscriptionsScreen(),
                     withNavBar: true,
                     pageTransitionAnimation: PageTransitionAnimation.cupertino,
                   );

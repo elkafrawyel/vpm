@@ -31,6 +31,9 @@ class Res {
   static const apiNotifications = 'notification/notifications';
   static const apiVideo = 'constants/tutorial-vedio';
   static const apiCancelRequest = 'customer/request-driver-cancel';
+  static const apiCountries = 'country/countries?paginate=0';
+  static const apiCities = 'country/governorates';
+  static const apiSubscriptions = 'customer/parking-garages/search';
 
   //========================== Animation Assets  ===============================
   static const animApiLoading = 'assets/anim/loading.json';

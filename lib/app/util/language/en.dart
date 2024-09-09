@@ -222,5 +222,9 @@ Map<String, String> en = {
   'edit_car': 'Edit Car',
   'parking_option': 'Parking',
   'valet_option': 'Valet',
-  'cancel_request': 'Cancel Request'
+  'cancel_request': 'Cancel Request',
+  'subscriptions': 'Subscriptions',
+  'add_subscriptions': 'Add New Subscription',
+  'choose_country': 'Choose Country',
+  'choose_city': 'Choose City',
 };
