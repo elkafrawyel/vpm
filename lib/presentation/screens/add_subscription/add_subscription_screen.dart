@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/res/res.dart';
 import 'package:vpm/app/util/information_viewer.dart';
 import 'package:vpm/app/util/operation_reply.dart';
 import 'package:vpm/app/util/util.dart';
 import 'package:vpm/data/models/countries_response.dart';
+import 'package:vpm/data/models/garages_response.dart';
+import 'package:vpm/data/models/general_response.dart';
 import 'package:vpm/data/providers/network/api_provider.dart';
+import 'package:vpm/domain/entities/models/garage_model.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_drop_menu.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../data/models/cities_response.dart';
-import '../../../data/models/subscription_response.dart';
 
 class AddSubscriptionScreen extends StatefulWidget {
   const AddSubscriptionScreen({super.key});
@@ -81,18 +83,18 @@ class _AddSubscriptionScreenState extends State<AddSubscriptionScreen> {
 
   ///===================== Subscriptions ===========================================
 
-  List<SubscriptionModel> subscriptions = [];
-  SubscriptionModel? selectedSubscription;
+  List<GarageModel> garages = [];
+  GarageModel? selectedGarage;
 
   void _loadSubscriptions(CityModel cityModel) async {
     OperationReply operationReply = await APIProvider.instance.get(
-      endPoint: '${Res.apiSubscriptions}?governorate_id=${cityModel.id}',
-      fromJson: SubscriptionResponse.fromJson,
+      endPoint: '${Res.apiGaragesByCity}?governorate_id=${cityModel.id}',
+      fromJson: GaragesResponse.fromJson,
     );
 
     if (operationReply.isSuccess()) {
-      SubscriptionResponse subscriptionResponse = operationReply.result;
-      subscriptions = subscriptionResponse.data ?? [];
+      GaragesResponse garagesResponse = operationReply.result;
+      garages = garagesResponse.garages ?? [];
       setState(() {});
     } else {
       InformationViewer.showToastBasedOnReply(operationReply);
@@ -152,17 +154,17 @@ class _AddSubscriptionScreenState extends State<AddSubscriptionScreen> {
               child: ListView.separated(
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
-                    if (selectedSubscription == subscriptions[index]) {
-                      selectedSubscription = null;
+                    if (selectedGarage == garages[index]) {
+                      selectedGarage = null;
                     } else {
-                      selectedSubscription = subscriptions[index];
+                      selectedGarage = garages[index];
                     }
                     setState(() {});
                   },
                   child: Card(
                     shape: RoundedRectangleBorder(
                       side: BorderSide(
-                        color: subscriptions[index] == selectedSubscription
+                        color: garages[index] == selectedGarage
                             ? Theme.of(context).primaryColor
                             : Colors.transparent,
                         width: 2,
@@ -174,15 +176,14 @@ class _AddSubscriptionScreenState extends State<AddSubscriptionScreen> {
                       child: Column(
                         children: [
                           AppText(
-                            subscriptions[index].name ?? '',
+                            garages[index].name ?? '',
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                           ),
                           10.ph,
                           AppText(
-                            Utils().formatNumbers(subscriptions[index]
-                                .subscriptionPrice
-                                .toString()),
+                            Utils().formatNumbers(
+                                garages[index].subscriptionPrice.toString()),
                             fontSize: 16,
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.bold,
@@ -193,12 +194,12 @@ class _AddSubscriptionScreenState extends State<AddSubscriptionScreen> {
                   ),
                 ),
                 separatorBuilder: (context, index) => 10.ph,
-                itemCount: subscriptions.length,
+                itemCount: garages.length,
               ),
             ),
             AppProgressButton(
               text: 'add_subscriptions'.tr,
-              backgroundColor: selectedSubscription == null
+              backgroundColor: selectedGarage == null
                   ? Colors.grey
                   : Theme.of(context).primaryColor,
               onPressed: _addNewSubscription,
@@ -210,8 +211,29 @@ class _AddSubscriptionScreenState extends State<AddSubscriptionScreen> {
   }
 
   Future _addNewSubscription(AnimationController animationController) async {
-    if (selectedSubscription == null) {
+    if (selectedGarage == null) {
       return;
+    } else {
+      animationController.forward();
+      OperationReply operationReply = await APIProvider.instance.post(
+        endPoint: Res.apiAddSubscription,
+        fromJson: GeneralResponse.fromJson,
+        requestBody: {
+          'garage_id': selectedGarage!.id!,
+        },
+      );
+
+      if (operationReply.isSuccess()) {
+        animationController.reverse();
+        GeneralResponse generalResponse = operationReply.result;
+        InformationViewer.showSuccessToast(msg: generalResponse.message);
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
+      } else {
+        animationController.reverse();
+        InformationViewer.showToastBasedOnReply(operationReply);
+      }
     }
   }
 }

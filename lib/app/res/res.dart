@@ -33,7 +33,9 @@ class Res {
   static const apiCancelRequest = 'customer/request-driver-cancel';
   static const apiCountries = 'country/countries?paginate=0';
   static const apiCities = 'country/governorates';
-  static const apiSubscriptions = 'customer/parking-garages/search';
+  static const apiGaragesByCity = 'customer/parking-garages/search';
+  static const apiAddSubscription = 'customer/subscription';
+  static const apiSubscriptions = 'customer/subscriptions';
 
   //========================== Animation Assets  ===============================
   static const animApiLoading = 'assets/anim/loading.json';
