@@ -1,5 +1,5 @@
 class Environment {
-  static const AppMode appMode = AppMode.testing;
+  static const AppMode appMode = AppMode.live;
 
   static url() {
     switch (appMode) {

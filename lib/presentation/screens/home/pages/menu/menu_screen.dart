@@ -114,28 +114,28 @@ class _MenuScreenState extends State<MenuScreen> {
                   );
                 },
               ),
-              ListTile(
-                splashColor: Colors.transparent,
-                leading: const Icon(Icons.settings),
-                title: Text('settings'.tr),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).dividerColor,
-                  size: 20,
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                splashColor: Colors.transparent,
-                leading: const Icon(Icons.help),
-                title: Text('help'.tr),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).dividerColor,
-                  size: 20,
-                ),
-                onTap: () {},
-              ),
+              // ListTile(
+              //   splashColor: Colors.transparent,
+              //   leading: const Icon(Icons.settings),
+              //   title: Text('settings'.tr),
+              //   trailing: Icon(
+              //     Icons.arrow_forward_ios,
+              //     color: Theme.of(context).dividerColor,
+              //     size: 20,
+              //   ),
+              //   onTap: () {},
+              // ),
+              // ListTile(
+              //   splashColor: Colors.transparent,
+              //   leading: const Icon(Icons.help),
+              //   title: Text('help'.tr),
+              //   trailing: Icon(
+              //     Icons.arrow_forward_ios,
+              //     color: Theme.of(context).dividerColor,
+              //     size: 20,
+              //   ),
+              //   onTap: () {},
+              // ),
               // ListTile(
               //   leading: const Icon(Icons.dark_mode_outlined),
               //   title: Text('dark_mode'.tr),
