@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
-import 'package:vpm/app/util/information_viewer.dart';
 import 'package:vpm/presentation/controller/auth_controller/auth_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text_field/app_text_field.dart';
@@ -203,12 +202,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         (_nameState.currentState?.hasError ?? false)) {
       _nameState.currentState?.shake();
       return;
-    } else if (emailController.text.isEmpty ||
-        (_emailState.currentState?.hasError ?? false)) {
-      _emailState.currentState?.shake();
+    }
 
-      return;
-    } else if (phoneController.text.isEmpty ||
+    // else if (emailController.text.isEmpty ||
+    //     (_emailState.currentState?.hasError ?? false)) {
+    //   _emailState.currentState?.shake();
+    //
+    //   return;
+    // }
+
+    else if (phoneController.text.isEmpty ||
         (_phoneState.currentState?.hasError ?? false)) {
       _phoneState.currentState?.shake();
 
