@@ -1,16 +1,24 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/domain/entities/models/user_model.dart';
 import 'package:vpm/presentation/controller/profile_controller.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_date_selector.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_gender_picker.dart';
+import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../app/res/res.dart';
 import '../../../app/util/constants.dart';
+import '../../../app/util/information_viewer.dart';
+import '../../../app/util/operation_reply.dart';
+import '../../../data/models/general_response.dart';
+import '../../../data/providers/storage/local_provider.dart';
+import '../../../data/repositories/auth_repository.dart';
 import '../../widgets/app_widgets/app_cached_image.dart';
+import '../../widgets/app_widgets/app_dialog.dart';
 import '../../widgets/app_widgets/app_image_picker_dialog.dart';
 import '../../widgets/app_widgets/app_progress_button.dart';
 import '../../widgets/app_widgets/app_text_field/app_text_field.dart';
@@ -180,6 +188,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: GestureDetector(
+                  onTap: _deleteAccount,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AppText(
+                      'delete_account'.tr,
+                      underLine: true,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ),
               20.ph,
               AppProgressButton(
                 text: 'save'.tr,
@@ -230,5 +252,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
       birthday: birthday,
       gender: appGender,
     );
+  }
+
+  void _deleteAccount() async {
+    scaleAlertDialog(
+        context: context,
+        title: 'delete_account'.tr,
+        body: 'delete_account_message'.tr,
+        cancelText: 'cancel'.tr,
+        confirmText: 'submit'.tr,
+        barrierDismissible: true,
+        onCancelClick: () {
+          Get.back();
+        },
+        onConfirmClick: () async {
+          Get.back();
+
+          EasyLoading.show();
+
+          OperationReply operationReply =
+              await AuthRepositoryIml().deleteAccount();
+          EasyLoading.dismiss();
+
+          if (operationReply.isSuccess()) {
+            GeneralResponse generalResponse = operationReply.result;
+            InformationViewer.showSnackBar(generalResponse.message);
+            await Future.delayed(const Duration(milliseconds: 500));
+            await LocalProvider().signOut();
+          } else {
+            InformationViewer.showSnackBar(operationReply.message);
+          }
+        });
   }
 }

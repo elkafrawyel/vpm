@@ -9,6 +9,7 @@ class Res {
   //========================== Api Endpoints  ===============================
   static const apiLogin = 'auth/login';
   static const apiLogout = 'auth/logout';
+  static const apiDeleteAccount = 'auth/profile';
   static const apiRegister = 'auth/register';
   static const apiProfile = 'auth/profile';
   static const apiUploadFile = 'storage/file';

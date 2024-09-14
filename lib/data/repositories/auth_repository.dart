@@ -36,7 +36,6 @@ class AuthRepositoryIml extends AuthRepository {
   Future<OperationReply<UserResponse>> register({
     required RegisterRequest registerRequest,
   }) async {
-
     return await APIProvider.instance.post<UserResponse>(
       endPoint: Res.apiRegister,
       fromJson: UserResponse.fromJson,
@@ -78,7 +77,11 @@ class AuthRepositoryIml extends AuthRepository {
 
   @override
   Future<OperationReply<void>> deleteAccount() async {
-    return OperationReply.failed();
+    return await APIProvider.instance.delete<GeneralResponse>(
+      endPoint: Res.apiDeleteAccount,
+      fromJson: GeneralResponse.fromJson,
+      requestBody: {},
+    );
   }
 
   @override

@@ -227,4 +227,6 @@ Map<String, String> en = {
   'add_subscriptions': 'Add New Subscription',
   'choose_country': 'Choose Country',
   'choose_city': 'Choose City',
+  'delete_account': 'Delete Account',
+  'delete_account_message': 'Are you sure you want to delete this account',
 };

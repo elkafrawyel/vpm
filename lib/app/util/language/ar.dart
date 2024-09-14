@@ -224,4 +224,6 @@ Map<String, String> ar = {
   'add_subscriptions': 'إضافة اشتراك جديد',
   'choose_country': 'أختر الدولة',
   'choose_city': 'أختر المدينة',
+  'delete_account': 'حذف الحساب',
+  'delete_account_message': 'هل أنت متأكد أنك تريد حذف هذا الحساب؟',
 };
