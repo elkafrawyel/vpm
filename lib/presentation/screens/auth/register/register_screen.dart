@@ -135,6 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 radius: kRadius,
                 validateEmptyText: 'email_is_required'.tr,
                 appFieldType: AppFieldType.email,
+                required: false,
                 prefixIcon: Res.iconEmail,
               ),
               AppTextFormField(
