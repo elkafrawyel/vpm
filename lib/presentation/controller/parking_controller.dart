@@ -44,7 +44,7 @@ class ParkingController extends GetxController {
   Map<MarkerId, Marker> garagesMarkersMap = {};
   List<Polyline> polyLinesList = [];
   Timer? debouncer;
-  double cameraZoom = 5;
+  double cameraZoom = 13;
   MapType mapType = MapType.normal;
   LatLng? targetGarage;
   List<GarageModel> garageList = [];
