@@ -83,7 +83,7 @@ class LocalProvider {
 
   Future<bool> saveUser(UserModel? userModel) async {
     try {
-      if (userModel != null) {
+      if (userModel != null && userModel.token != null) {
         await save(
           LocalProviderKeys.userModel,
           jsonEncode(userModel.toJson()),

@@ -9,7 +9,6 @@ import 'package:vpm/presentation/controller/booking_controller/current_booking_c
 import 'package:vpm/presentation/controller/booking_controller/ended_booking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/notifications/notifications_screen.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/parking_screen.dart';
-import 'package:vpm/presentation/screens/home/pages/services/services_screen.dart';
 
 import '../../../domain/entities/models/notifications_model.dart';
 import '../../screens/home/pages/booking/booking_screen.dart';
@@ -27,7 +26,7 @@ class HomeScreenController extends GetxController {
     pages = [
       const ParkingScreen(),
       const BookingScreen(),
-      const AdvertisementsScreen(),
+      // const AdvertisementsScreen(),
       const NotificationsScreen(),
       const MenuScreen(),
     ];

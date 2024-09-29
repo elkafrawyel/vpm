@@ -127,6 +127,8 @@ class AuthController extends GetxController {
           () => const HomeScreen(),
           binding: HomeScreenBinding(),
         );
+      } else {
+        InformationViewer.showSnackBar('general_error'.tr);
       }
     } else {
       InformationViewer.showSnackBar(operationReply.message);

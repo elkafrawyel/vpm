@@ -46,16 +46,16 @@ class _HomeScreenState extends State<HomeScreen>
               svgName: Res.iconBooking,
             ),
 
-            bottomNavigationItem(
-              context: context,
-              selected: homeScreenController.selectedTabIndex == 2,
-              title: 'services'.tr,
-              svgName: Res.iconServices,
-            ),
+            // bottomNavigationItem(
+            //   context: context,
+            //   selected: homeScreenController.selectedTabIndex == 2,
+            //   title: 'services'.tr,
+            //   svgName: Res.iconServices,
+            // ),
 
             bottomNavigationItem(
               context: context,
-              selected: homeScreenController.selectedTabIndex == 3,
+              selected: homeScreenController.selectedTabIndex == 2,
               title: 'notifications'.tr,
               svgName: Res.iconNotifications,
             ),
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen>
             // ),
             bottomNavigationItem(
               context: context,
-              selected: homeScreenController.selectedTabIndex == 4,
+              selected: homeScreenController.selectedTabIndex == 3,
               title: 'menu'.tr,
               svgName: Res.iconMenu,
             ),
