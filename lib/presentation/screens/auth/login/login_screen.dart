@@ -9,6 +9,7 @@ import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import '../../../../app/res/res.dart';
 import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../widgets/app_widgets/app_text_field/app_text_field.dart';
+import '../forget_password/forget_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -135,19 +136,19 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             20.ph,
-            // InkWell(
-            //   onTap: () {
-            //     Get.to(() => const ForgetPasswordScreen());
-            //   },
-            //   child: Padding(
-            //     padding: const EdgeInsets.symmetric(horizontal: 38.0),
-            //     child: AppText(
-            //       'forget_password?'.tr,
-            //       color: Theme.of(context).primaryColor,
-            //       fontSize: 16,
-            //     ),
-            //   ),
-            // )
+            InkWell(
+              onTap: () {
+                Get.to(() => const ForgetPasswordScreen());
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 38.0),
+                child: AppText(
+                  'forget_password?'.tr,
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 16,
+                ),
+              ),
+            )
           ],
         ),
       ),
