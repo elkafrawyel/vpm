@@ -229,4 +229,6 @@ Map<String, String> en = {
   'choose_city': 'Choose City',
   'delete_account': 'Delete Account',
   'delete_account_message': 'Are you sure you want to delete this account',
+  'close_app': 'Close App',
+  'close_app_message': 'Are you sure you want to close the application?'
 };

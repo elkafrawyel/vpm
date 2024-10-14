@@ -37,6 +37,9 @@ class Res {
   static const apiGaragesByCity = 'customer/parking-garages/search';
   static const apiAddSubscription = 'customer/subscription';
   static const apiSubscriptions = 'customer/subscriptions';
+  static const apiSendResetPasswordCode = 'auth/send-reset-password-code';
+  static const apiVerifyCode = 'auth/check-code';
+  static const apiRestPassword = 'auth/reset-password';
 
   //========================== Animation Assets  ===============================
   static const animApiLoading = 'assets/anim/loading.json';

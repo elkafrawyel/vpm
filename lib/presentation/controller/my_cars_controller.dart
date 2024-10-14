@@ -155,6 +155,7 @@ class MyCarsController extends GeneralController {
               addCarRequest: AddCarRequest(
                 name: name,
                 number: number,
+                text: text,
                 fileId: fileId,
                 carColorId: selectedColor.id,
                 carTypeId: selectedType.id,
@@ -165,6 +166,7 @@ class MyCarsController extends GeneralController {
               addCarRequest: AddCarRequest(
                 name: name,
                 number: number,
+                text: text,
                 fileId: fileId,
                 carColorId: selectedColor.id,
                 carTypeId: selectedType.id,

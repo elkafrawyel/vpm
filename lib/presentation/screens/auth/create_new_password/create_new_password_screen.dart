@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
+import 'package:vpm/app/util/information_viewer.dart';
+import 'package:vpm/app/util/operation_reply.dart';
+import 'package:vpm/data/models/general_response.dart';
+import 'package:vpm/data/providers/network/api_provider.dart';
 
 import '../../../../app/res/res.dart';
 import '../../../widgets/app_widgets/app_progress_button.dart';
@@ -9,7 +13,11 @@ import '../../../widgets/app_widgets/app_text.dart';
 import '../../../widgets/app_widgets/app_text_field/app_text_field.dart';
 
 class CreateNewPasswordScreen extends StatefulWidget {
-  const CreateNewPasswordScreen({super.key});
+  final String otpCode;
+  const CreateNewPasswordScreen({
+    super.key,
+    required this.otpCode,
+  });
 
   @override
   State<CreateNewPasswordScreen> createState() =>
@@ -157,8 +165,25 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
     } else if (!handleConfirmPasswordMatching(confirmPasswordController.text,
         shake: true)) {
       return;
+    } else {
+      animationController.forward();
+      OperationReply operationReply = await APIProvider.instance.post(
+        endPoint: Res.apiRestPassword,
+        fromJson: GeneralResponse.fromJson,
+        requestBody: {
+          'reset_password_code': widget.otpCode,
+          'password': newPasswordController.text,
+          'confirm_password': confirmPasswordController.text,
+        },
+      );
+      animationController.reverse();
+      if (operationReply.isSuccess()) {
+        GeneralResponse generalResponse = operationReply.result;
+        InformationViewer.showSuccessToast(msg: generalResponse.message);
+        Get.until((route) => route.settings.name == '/LoginScreen');
+      } else {
+        InformationViewer.showErrorToast(msg: operationReply.message);
+      }
     }
-
-    Get.until((route) => route.settings.name == '/LoginScreen');
   }
 }

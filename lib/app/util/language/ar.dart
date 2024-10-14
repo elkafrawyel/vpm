@@ -226,4 +226,6 @@ Map<String, String> ar = {
   'choose_city': 'أختر المدينة',
   'delete_account': 'حذف الحساب',
   'delete_account_message': 'هل أنت متأكد أنك تريد حذف هذا الحساب؟',
+  'close_app': 'غلق التطبيق',
+  'close_app_message': 'هل أنت متأكد من غلق التطبيق؟'
 };

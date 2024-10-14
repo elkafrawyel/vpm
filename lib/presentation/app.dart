@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     PlatformDispatcher.instance.onLocaleChanged = () {
-      print("Locale changed");
+      // print("Locale changed");
       setState(() {});
     };
     String appLanguage = LocalProvider().getAppLanguage();
@@ -36,7 +37,7 @@ class _AppState extends State<App> {
       () => FocusRemover(
         child: OKToast(
           child: GetMaterialApp(
-            home: Container(color: Theme.of(context).scaffoldBackgroundColor),
+            home: Container(color: Colors.white),
             debugShowCheckedModeBanner:
                 Environment.appMode == AppMode.staging ||
                     Environment.appMode == AppMode.testing,

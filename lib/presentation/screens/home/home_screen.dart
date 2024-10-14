@@ -1,6 +1,7 @@
 import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,7 @@ import 'package:vpm/presentation/controller/home_screen_controller/home_screen_c
 
 import '../../../app/res/res.dart';
 import '../../controller/notifications_controller.dart';
+import '../../widgets/app_widgets/app_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -65,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen>
             //   title: 'your_cars'.tr,
             //   svgName: Res.iconValet,
             // ),
+
             bottomNavigationItem(
               context: context,
               selected: homeScreenController.selectedTabIndex == 3,
@@ -73,8 +76,30 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
           onItemSelected: homeScreenController.handleIndexChanged,
+          onWillPop: (p0) {
+            if (homeScreenController.selectedTabIndex != 0) {
+              homeScreenController.handleIndexChanged(0);
+              return Future.value(false);
+            } else {
+              scaleAlertDialog(
+                context: context,
+                title: 'close_app'.tr,
+                body: 'close_app_message'.tr,
+                cancelText: 'cancel'.tr,
+                confirmText: 'submit'.tr,
+                barrierDismissible: true,
+                onCancelClick: () {
+                  Get.back();
+                },
+                onConfirmClick: () async {
+                  SystemNavigator.pop();
+                },
+              );
+              return Future.value(true);
+            }
+          },
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          handleAndroidBackButtonPress: true,
+          handleAndroidBackButtonPress: false,
           resizeToAvoidBottomInset: true,
           stateManagement: true,
           hideNavigationBarWhenKeyboardAppears: true,
@@ -83,7 +108,6 @@ class _HomeScreenState extends State<HomeScreen>
             colorBehindNavBar: Theme.of(context).scaffoldBackgroundColor,
           ),
           popBehaviorOnSelectedNavBarItemPress: PopBehavior.all,
-
           animationSettings: const NavBarAnimationSettings(
             screenTransitionAnimation: ScreenTransitionAnimationSettings(
               animateTabTransition: true,
@@ -95,7 +119,6 @@ class _HomeScreenState extends State<HomeScreen>
               curve: Curves.ease,
             ),
           ),
-
           navBarStyle: NavBarStyle.style8,
           // Choose the nav bar style with this property.
         );

@@ -89,7 +89,7 @@ class _ParkingScreenState extends State<ParkingScreen>
                   target: parkingController.myLocation,
                   zoom: parkingController.cameraZoom,
                 ),
-                myLocationEnabled: true,
+                myLocationEnabled: false,
                 // tiltGesturesEnabled: true,
                 // compassEnabled: true,
                 scrollGesturesEnabled: true,
@@ -98,7 +98,7 @@ class _ParkingScreenState extends State<ParkingScreen>
                 myLocationButtonEnabled: false,
                 mapType: parkingController.mapType,
                 onTap: (position) {
-                  print(position);
+                  // print(position);
                 },
                 onCameraMove: (position) {},
                 onMapCreated: parkingController.onMapCreated,

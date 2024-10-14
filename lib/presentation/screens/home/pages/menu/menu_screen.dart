@@ -9,6 +9,7 @@ import 'package:vpm/presentation/screens/home/pages/menu/components/user_info_vi
 import 'package:vpm/presentation/screens/profile/profile_screen.dart';
 import 'package:vpm/presentation/screens/subscriptions/subscriptions_screen.dart';
 import 'package:vpm/presentation/screens/users/users_screen.dart';
+import 'package:vpm/presentation/screens/webview_screen/webview_screen.dart';
 import 'package:vpm/presentation/widgets/app_widgets/language_views/app_language_switch.dart';
 
 import '../cars/cars_screen.dart';
@@ -154,6 +155,24 @@ class _MenuScreenState extends State<MenuScreen> {
                 title: Text('language'.tr),
                 trailing: const AppLanguageSwitch(),
                 onTap: () {},
+              ),
+              ListTile(
+                splashColor: Colors.transparent,
+                leading: const Icon(Icons.help),
+                title: Text('help'.tr),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).dividerColor,
+                  size: 20,
+                ),
+                onTap: () {
+                  Get.to(
+                    () => WebviewScreen(
+                      paymentUrl: 'https://vpm.company/help',
+                      screenTitle: 'help'.tr,
+                    ),
+                  );
+                },
               ),
               const LogOutView(),
               200.ph,

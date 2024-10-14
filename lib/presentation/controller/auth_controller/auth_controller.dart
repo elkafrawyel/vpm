@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/util/information_viewer.dart';
 import 'package:vpm/app/util/operation_reply.dart';
+import 'package:vpm/data/models/general_response.dart';
 import 'package:vpm/data/models/user_response.dart';
+import 'package:vpm/data/providers/network/api_provider.dart';
 import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/data/repositories/auth_repository.dart';
 import 'package:vpm/domain/entities/requests/login_request.dart';
@@ -13,6 +15,7 @@ import 'package:vpm/presentation/controller/home_screen_controller/home_screen_b
 import 'package:vpm/presentation/screens/auth/register/register_screen.dart';
 import 'package:vpm/presentation/screens/home/home_screen.dart';
 
+import '../../../app/res/res.dart';
 import '../../screens/auth/verification_code/verification_code_screen.dart';
 
 class AuthController extends GetxController {
@@ -72,11 +75,27 @@ class AuthController extends GetxController {
     required AnimationController animationController,
   }) async {
     animationController.forward();
-    Get.to(
-      () => const VerificationCodeScreen(
-        phone: '01019744661',
-      ),
+
+    OperationReply operationReply = await APIProvider.instance.post(
+      endPoint: Res.apiSendResetPasswordCode,
+      fromJson: GeneralResponse.fromJson,
+      requestBody: {
+        'phone': phoneNumber,
+      },
     );
+    animationController.reverse();
+
+    if (operationReply.isSuccess()) {
+      GeneralResponse generalResponse = operationReply.result;
+      InformationViewer.showSuccessToast(msg: generalResponse.message);
+      Get.to(
+        () => VerificationCodeScreen(
+          phone: phoneNumber,
+        ),
+      );
+    } else {
+      InformationViewer.showErrorToast(msg: operationReply.message);
+    }
   }
 
   Future register({

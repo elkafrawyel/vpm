@@ -263,11 +263,13 @@ class _AddCarScreenState extends State<AddCarScreen> {
   }
 
   void _addCar(AnimationController animationController) async {
-    if (image == null && widget.car == null) {
-      FocusManager.instance.primaryFocus?.unfocus();
-      InformationViewer.showSnackBar('choose_car_image'.tr);
-      return;
-    } else if (carNameController.text.isEmpty) {
+    // if (image == null && widget.car == null) {
+    //   FocusManager.instance.primaryFocus?.unfocus();
+    //   InformationViewer.showSnackBar('choose_car_image'.tr);
+    //   return;
+    // } else
+
+    if (carNameController.text.isEmpty) {
       nameState.currentState?.shake();
       return;
     } else if (carNumberController.text.isEmpty) {
