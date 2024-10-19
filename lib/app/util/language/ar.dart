@@ -227,5 +227,6 @@ Map<String, String> ar = {
   'delete_account': 'حذف الحساب',
   'delete_account_message': 'هل أنت متأكد أنك تريد حذف هذا الحساب؟',
   'close_app': 'غلق التطبيق',
-  'close_app_message': 'هل أنت متأكد من غلق التطبيق؟'
+  'close_app_message': 'هل أنت متأكد من غلق التطبيق؟',
+  'add_car_note': 'ملاحظة: يمكنك إضافة ما يصل إلى 3 سيارات',
 };

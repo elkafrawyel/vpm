@@ -1,7 +1,6 @@
 import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +9,6 @@ import 'package:vpm/presentation/controller/home_screen_controller/home_screen_c
 
 import '../../../app/res/res.dart';
 import '../../controller/notifications_controller.dart';
-import '../../widgets/app_widgets/app_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -76,28 +74,29 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
           onItemSelected: homeScreenController.handleIndexChanged,
-          onWillPop: (p0) {
-            if (homeScreenController.selectedTabIndex != 0) {
-              homeScreenController.handleIndexChanged(0);
-              return Future.value(false);
-            } else {
-              scaleAlertDialog(
-                context: context,
-                title: 'close_app'.tr,
-                body: 'close_app_message'.tr,
-                cancelText: 'cancel'.tr,
-                confirmText: 'submit'.tr,
-                barrierDismissible: true,
-                onCancelClick: () {
-                  Get.back();
-                },
-                onConfirmClick: () async {
-                  SystemNavigator.pop();
-                },
-              );
-              return Future.value(true);
-            }
-          },
+          // onWillPop: (context) {
+          //   print("onWillPop");
+          //   if (homeScreenController.selectedTabIndex != 0) {
+          //     homeScreenController.handleIndexChanged(0);
+          //     return Future.value(false);
+          //   } else {
+          //     scaleAlertDialog(
+          //       context: context!,
+          //       title: 'close_app'.tr,
+          //       body: 'close_app_message'.tr,
+          //       cancelText: 'cancel'.tr,
+          //       confirmText: 'submit'.tr,
+          //       barrierDismissible: true,
+          //       onCancelClick: () {
+          //         Get.back();
+          //       },
+          //       onConfirmClick: () async {
+          //         SystemNavigator.pop();
+          //       },
+          //     );
+          //     return Future.value(false);
+          //   }
+          // },
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           handleAndroidBackButtonPress: false,
           resizeToAvoidBottomInset: true,

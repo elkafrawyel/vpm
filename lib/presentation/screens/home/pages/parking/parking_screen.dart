@@ -39,7 +39,7 @@ class _ParkingScreenState extends State<ParkingScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.resumed:
-        // parkingController.getMyPosition(loading: false);
+        parkingController.getMyPosition(loading: false);
         Utils.logMessage('App is resumed');
         break;
       case AppLifecycleState.detached:

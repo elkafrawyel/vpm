@@ -15,6 +15,7 @@ import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text_field/app_text_field.dart';
 
+import '../../../app/config/app_color.dart';
 import '../../../app/util/information_viewer.dart';
 import '../../../data/models/car_colors_response.dart';
 import '../../../data/models/car_types_response.dart';
@@ -224,6 +225,19 @@ class _AddCarScreenState extends State<AddCarScreen> {
                   },
                 ),
               ),
+              if (widget.car == null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 18.0,
+                    horizontal: 38.0,
+                  ),
+                  child: AppText(
+                    'add_car_note'.tr,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: errorColor,
+                  ),
+                ),
               200.ph,
             ],
           ),

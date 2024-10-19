@@ -83,18 +83,19 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   widget.user == null ? 'add_user'.tr : 'edit_user'.tr,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 18.0,
-                  horizontal: 38.0,
-                ),
-                child: AppText(
-                  'add_user_note'.tr,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: errorColor,
-                ),
-              )
+              if (widget.user == null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 18.0,
+                    horizontal: 38.0,
+                  ),
+                  child: AppText(
+                    'add_user_note'.tr,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: errorColor,
+                  ),
+                )
             ],
           ),
         ),

@@ -44,7 +44,7 @@ class ParkingController extends GetxController {
   Map<MarkerId, Marker> garagesMarkersMap = {};
   List<Polyline> polyLinesList = [];
   Timer? debouncer;
-  double cameraZoom = 14;
+  double cameraZoom = 12;
   MapType mapType = MapType.normal;
   LatLng? targetGarage;
   List<GarageModel> garageList = [];
@@ -330,10 +330,9 @@ class ParkingController extends GetxController {
       polylineId: PolylineId(lineId),
       color: Colors.blue,
       points: polylineCoordinates,
-      width: 10,
+      width: 5,
       startCap: Cap.roundCap,
       endCap: Cap.roundCap,
-      patterns: [PatternItem.dash(10), PatternItem.gap(10)],
     );
 
     polyLinesList.clear();

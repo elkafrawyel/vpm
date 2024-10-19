@@ -41,8 +41,8 @@ class HomeScreenController extends GetxController {
   }
 
   handleIndexChanged(int index) {
-    selectedTabIndex = index;
     controller.jumpToTab(index);
+    selectedTabIndex = index;
     update();
   }
 
