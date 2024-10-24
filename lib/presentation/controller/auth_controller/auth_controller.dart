@@ -13,7 +13,6 @@ import 'package:vpm/domain/entities/requests/register_request.dart';
 import 'package:vpm/presentation/controller/app_config_controller.dart';
 import 'package:vpm/presentation/controller/home_screen_controller/home_screen_binding.dart';
 import 'package:vpm/presentation/screens/auth/register/register_screen.dart';
-import 'package:vpm/presentation/screens/home/home_screen.dart';
 
 import '../../../app/res/res.dart';
 import '../../screens/auth/verification_code/verification_code_screen.dart';
@@ -61,7 +60,16 @@ class AuthController extends GetxController {
         } else {
           InformationViewer.showSnackBar(userResponse?.message);
 
-          Get.find<AppConfigController>().isLoggedIn.value = true;
+          if (userResponse?.userModel?.isVerified ?? false) {
+            Get.find<AppConfigController>().isLoggedIn.value = true;
+          } else {
+            Get.offAll(
+              () => VerificationCodeScreen(
+                phone: phone,
+                fromRegistration: true,
+              ),
+            );
+          }
         }
       }
     } else {
@@ -138,17 +146,19 @@ class AuthController extends GetxController {
       ),
     );
     if (operationReply.isSuccess()) {
-      UserResponse? userResponse = operationReply.result;
+      // UserResponse? userResponse = operationReply.result;
       //todo save user model and token
-      bool isSaved = await LocalProvider().saveUser(userResponse?.userModel);
-      if (isSaved) {
-        Get.offAll(
-          () => const HomeScreen(),
-          binding: HomeScreenBinding(),
-        );
-      } else {
-        InformationViewer.showSnackBar('general_error'.tr);
-      }
+      // bool isSaved = await LocalProvider().saveUser(userResponse?.userModel);
+      // if (isSaved) {
+      Get.offAll(
+        () => VerificationCodeScreen(
+          phone: phone,
+          fromRegistration: true,
+        ),
+      );
+      // } else {
+      //   InformationViewer.showSnackBar('general_error'.tr);
+      // }
     } else {
       InformationViewer.showSnackBar(operationReply.message);
     }

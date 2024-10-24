@@ -39,6 +39,7 @@ class Res {
   static const apiSubscriptions = 'customer/subscriptions';
   static const apiSendResetPasswordCode = 'auth/send-reset-password-code';
   static const apiVerifyCode = 'auth/check-code';
+  static const apiVerifyCodeFromRegister = 'auth/verify-mobile';
   static const apiRestPassword = 'auth/reset-password';
 
   //========================== Animation Assets  ===============================
