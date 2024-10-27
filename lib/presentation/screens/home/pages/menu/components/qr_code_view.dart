@@ -5,9 +5,9 @@ import 'package:vpm/app/util/constants.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 class QrCodeView extends StatelessWidget {
-  final String qrValue;
+  final String? qrValue;
 
-  const QrCodeView({super.key, required this.qrValue});
+  const QrCodeView({super.key, this.qrValue});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class QrCodeView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(28.0),
             child: QrImageView(
-              data: qrValue,
+              data: qrValue ?? '',
               version: QrVersions.auto,
             ),
           ),

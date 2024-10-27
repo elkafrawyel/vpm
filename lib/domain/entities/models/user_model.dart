@@ -51,6 +51,7 @@ class UserModel {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
+    map['qr_id'] = qrId;
     map['client'] = client;
     map['name'] = name;
     map['email'] = email;
