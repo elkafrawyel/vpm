@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen>
   void onNotify(RemoteMessage notification) {
     if (kDebugMode) {
       print(
-          'Notification Model====>\n${notification.data['notification_model']}');
+          'Notification Model : : "${notification.data['notification_model']}');
     }
 
     Get.find<NotificationsController>().addNewNotification(notification);

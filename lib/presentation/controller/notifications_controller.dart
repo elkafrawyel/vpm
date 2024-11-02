@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/src/animation/animation_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:vpm/app/util/information_viewer.dart';
@@ -27,15 +27,22 @@ class NotificationsController extends PaginationController<NotificationsModel> {
     if (kDebugMode) {
       print('inserting new notification');
     }
-    paginationList.insert(
-        0,
-        NotificationsModel.fromJson(
-            jsonDecode(notification.data['notification_model'].toString())));
+    NotificationsModel notificationsModel = NotificationsModel.fromJson(
+      jsonDecode(
+        notification.data['notification_model'].toString(),
+      ),
+    );
+    paginationList.removeWhere(
+      (element) => notificationsModel.eventId == element.eventId,
+    );
+    paginationList.insert(0, notificationsModel);
     operationReply = OperationReply.success();
   }
 
-  Future cancelRequest(NotificationsModel notificationsModel,
-      AnimationController animationController) async {
+  Future cancelRequest(
+    NotificationsModel notificationsModel,
+    AnimationController animationController,
+  ) async {
     try {
       animationController.forward();
 
@@ -51,7 +58,7 @@ class NotificationsController extends PaginationController<NotificationsModel> {
       if (operationReply.isSuccess()) {
         GeneralResponse generalResponse = operationReply.result;
         InformationViewer.showSuccessToast(msg: generalResponse.message);
-        paginationList.remove(notificationsModel);
+        // paginationList.remove(notificationsModel);
         update();
       } else {
         animationController.reverse();
