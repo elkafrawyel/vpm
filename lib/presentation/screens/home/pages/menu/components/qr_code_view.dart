@@ -11,6 +11,7 @@ class QrCodeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(qrValue);
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -20,7 +21,7 @@ class QrCodeView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.all(28.0),
+            padding: const EdgeInsets.all(90),
             child: QrImageView(
               data: qrValue ?? '',
               version: QrVersions.auto,
