@@ -21,7 +21,7 @@ class QrCodeView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.all(90),
+            padding: const EdgeInsets.all(100),
             child: QrImageView(
               data: qrValue ?? '',
               version: QrVersions.auto,
