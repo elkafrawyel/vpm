@@ -232,4 +232,7 @@ Map<String, String> en = {
   'close_app': 'Close App',
   'close_app_message': 'Are you sure you want to close the application?',
   'add_car_note': 'Note: You can add up to 3 cars',
+  'renew': 'Renew Subscription',
+  'subscription_fee': 'Subscription fee',
+  'auto_renew_subscription': 'Subscription auto renew.'
 };

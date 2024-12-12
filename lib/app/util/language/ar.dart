@@ -229,4 +229,7 @@ Map<String, String> ar = {
   'close_app': 'غلق التطبيق',
   'close_app_message': 'هل أنت متأكد من غلق التطبيق؟',
   'add_car_note': 'ملاحظة: يمكنك إضافة ما يصل إلى 3 سيارات',
+  'renew': 'تجديد الاشتراك',
+  'subscription_fee': 'قيمة الاشتراك ',
+  'auto_renew_subscription': 'تجديد تلقائي للاشتراك'
 };

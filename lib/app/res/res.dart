@@ -41,6 +41,7 @@ class Res {
   static const apiVerifyCode = 'auth/check-code';
   static const apiVerifyCodeFromRegister = 'auth/verify-mobile';
   static const apiRestPassword = 'auth/reset-password';
+  static const apiSwitchAutoSubscription = 'customer/subscription-renew-status';
 
   //========================== Animation Assets  ===============================
   static const animApiLoading = 'assets/anim/loading.json';

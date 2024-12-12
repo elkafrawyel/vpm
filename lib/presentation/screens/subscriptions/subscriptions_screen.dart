@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vpm/app/extensions/space.dart';
@@ -10,6 +11,7 @@ import 'package:vpm/presentation/screens/add_subscription/add_subscription_scree
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../app/util/util.dart';
+import '../../../data/models/general_response.dart';
 import '../../../data/models/subscriptions_response.dart';
 
 class SubscriptionsScreen extends StatefulWidget {
@@ -30,8 +32,8 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
     setState(() {});
   }
 
-  Future _loadSubscriptions() async {
-    loading = true;
+  Future _loadSubscriptions({willLoad = true}) async {
+    loading = loading;
 
     OperationReply operationReply = await APIProvider.instance.get(
       endPoint: Res.apiSubscriptions,
@@ -69,7 +71,7 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
             withNavBar: true,
             pageTransitionAnimation: PageTransitionAnimation.cupertino,
           );
-          _loadSubscriptions();
+          _loadSubscriptions(willLoad: false);
         },
         child: const Icon(
           Icons.add,
@@ -91,7 +93,10 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(18.0),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18.0,
+                        vertical: 8.0,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -103,13 +108,13 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
                           10.ph,
                           AppText(
                             subscriptions[index].remainingDays ?? '',
-                            color: Colors.red,
+                            color: Colors.grey.shade500,
                           ),
                           10.ph,
                           Row(
                             children: [
-                              AppText('${'amount'.tr} :'),
-                              20.pw,
+                              AppText('${'subscription_fee'.tr} :'),
+                              10.pw,
                               AppText(
                                 Utils().formatNumbers(
                                     subscriptions[index].amount.toString()),
@@ -117,6 +122,18 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
                               ),
+                            ],
+                          ),
+                          10.ph,
+                          Row(
+                            children: [
+                              Switch(
+                                value: subscriptions[index].autoRenew ?? false,
+                                onChanged: (bool value) {
+                                  _switchRenew(value, subscriptions[index].id);
+                                },
+                              ),
+                              AppText('auto_renew_subscription'.tr),
                             ],
                           ),
                         ],
@@ -129,5 +146,29 @@ class _SubscriptionsScreenState extends State<SubscriptionsScreen> {
               ),
             ),
     );
+  }
+
+  Future _switchRenew(
+    bool autoRenew,
+    String? id,
+  ) async {
+    EasyLoading.show();
+    OperationReply operationReply = await APIProvider.instance.patch(
+      endPoint: "${Res.apiSwitchAutoSubscription}/$id",
+      fromJson: GeneralResponse.fromJson,
+      requestBody: {
+        'auto_renew': autoRenew,
+      },
+    );
+
+    if (operationReply.isSuccess()) {
+      EasyLoading.dismiss();
+      GeneralResponse generalResponse = operationReply.result;
+      InformationViewer.showSuccessToast(msg: generalResponse.message);
+      _loadSubscriptions(willLoad: false);
+    } else {
+      EasyLoading.dismiss();
+      InformationViewer.showToastBasedOnReply(operationReply);
+    }
   }
 }

@@ -25,6 +25,7 @@ class SubscriptionModel {
     this.createdAt,
     this.remainingDays,
     this.garage,
+    this.autoRenew,
   });
 
   SubscriptionModel.fromJson(dynamic json) {
@@ -35,6 +36,7 @@ class SubscriptionModel {
     endsAt = json['ends_at'];
     createdAt = json['created_at'];
     remainingDays = json['remaining_days'];
+    autoRenew = json['auto_renew'];
     garage = json['garage'] != null ? Garage.fromJson(json['garage']) : null;
   }
 
@@ -46,6 +48,7 @@ class SubscriptionModel {
   String? createdAt;
   String? remainingDays;
   Garage? garage;
+  bool? autoRenew;
 
   SubscriptionModel copyWith({
     String? id,
@@ -56,6 +59,7 @@ class SubscriptionModel {
     String? createdAt,
     String? remainingDays,
     Garage? garage,
+    bool? autoRenew,
   }) =>
       SubscriptionModel(
         id: id ?? this.id,
@@ -66,6 +70,7 @@ class SubscriptionModel {
         createdAt: createdAt ?? this.createdAt,
         remainingDays: remainingDays ?? this.remainingDays,
         garage: garage ?? this.garage,
+        autoRenew: autoRenew ?? this.autoRenew,
       );
 
   Map<String, dynamic> toJson() {
@@ -77,6 +82,7 @@ class SubscriptionModel {
     map['ends_at'] = endsAt;
     map['created_at'] = createdAt;
     map['remaining_days'] = remainingDays;
+    map['auto_renew'] = autoRenew;
     if (garage != null) {
       map['garage'] = garage?.toJson();
     }
