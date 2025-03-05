@@ -24,12 +24,12 @@ class AppTheme {
     hintColor: Colors.black26,
     dividerColor: Colors.black26,
     checkboxTheme: CheckboxThemeData(
-      checkColor: MaterialStateProperty.all(Colors.white),
-      fillColor: MaterialStateProperty.all(LightThemeColor.primaryColor),
+      checkColor: WidgetStateProperty.all(Colors.white),
+      fillColor: WidgetStateProperty.all(LightThemeColor.primaryColor),
     ),
     scrollbarTheme: const ScrollbarThemeData().copyWith(
-      thumbColor: MaterialStateProperty.all(LightThemeColor.primaryColor),
-      trackColor: MaterialStateProperty.all(LightThemeColor.primaryColor),
+      thumbColor: WidgetStateProperty.all(LightThemeColor.primaryColor),
+      trackColor: WidgetStateProperty.all(LightThemeColor.primaryColor),
     ),
     textTheme: const TextTheme(
       displayLarge: displayLargeStyle,
@@ -75,11 +75,11 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor:
-            MaterialStateProperty.all<Color>(LightThemeColor.primaryColor),
+            WidgetStateProperty.all<Color>(LightThemeColor.primaryColor),
 
         /// button text color
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        textStyle: MaterialStateProperty.all<TextStyle>(buttonStyle.copyWith(
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+        textStyle: WidgetStateProperty.all<TextStyle>(buttonStyle.copyWith(
           fontFamily: Res.appFontFamily,
         )),
       ),
@@ -87,8 +87,8 @@ class AppTheme {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         /// button text color
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-        textStyle: MaterialStateProperty.all<TextStyle>(buttonStyle.copyWith(
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.black),
+        textStyle: WidgetStateProperty.all<TextStyle>(buttonStyle.copyWith(
           fontFamily: Res.appFontFamily,
         )),
       ),
@@ -96,8 +96,8 @@ class AppTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
         /// button text color
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-        textStyle: MaterialStateProperty.all<TextStyle>(buttonStyle.copyWith(
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.black),
+        textStyle: WidgetStateProperty.all<TextStyle>(buttonStyle.copyWith(
           fontFamily: Res.appFontFamily,
         )),
       ),
@@ -177,17 +177,17 @@ class AppTheme {
       ),
     ),
     checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.all(DarkThemeColor.primaryColor),
-      checkColor: MaterialStateProperty.all(Colors.white),
+      fillColor: WidgetStateProperty.all(DarkThemeColor.primaryColor),
+      checkColor: WidgetStateProperty.all(Colors.white),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         backgroundColor:
-            MaterialStateProperty.all<Color>(DarkThemeColor.primaryColor),
+            WidgetStateProperty.all<Color>(DarkThemeColor.primaryColor),
 
         /// button text color
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        textStyle: MaterialStateProperty.all<TextStyle>(
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+        textStyle: WidgetStateProperty.all<TextStyle>(
           buttonStyle.copyWith(
             color: Colors.white,
             fontFamily: Res.appFontFamily,
@@ -198,8 +198,8 @@ class AppTheme {
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         /// button text color
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        textStyle: MaterialStateProperty.all<TextStyle>(
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+        textStyle: WidgetStateProperty.all<TextStyle>(
           buttonStyle.copyWith(
             color: Colors.white,
             fontFamily: Res.appFontFamily,
@@ -210,8 +210,8 @@ class AppTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
         /// button text color
-        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-        textStyle: MaterialStateProperty.all<TextStyle>(
+        foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+        textStyle: WidgetStateProperty.all<TextStyle>(
           buttonStyle.copyWith(
             color: Colors.white,
             fontFamily: Res.appFontFamily,

@@ -8,19 +8,22 @@ class LoggingInterceptor extends Interceptor {
     Utils.logMessage("<------------------ HTTP ----------------->");
 
     Utils.logMessage("<----------- REQUEST INFORMATION --------->");
-    Utils.logMessage("HEADERS----> ${response.requestOptions.headers.toString()}");
+    Utils.logMessage(
+        "HEADERS----> ${response.requestOptions.headers.toString()}");
     Utils.logMessage("METHOD ----> ${response.requestOptions.method}");
     Utils.logMessage("URL    ----> ${response.requestOptions.uri}");
     Utils.logMessage("CODE:[${response.statusCode}]");
     Utils.logMessage("<------- RESPONSE INFORMATION ------>");
-    Utils.logMessage("==================================== DATA =====================================");
+    Utils.logMessage(
+        "==================================== DATA =====================================");
     Utils.logMessage("${response.data}");
-    Utils.logMessage("===============================================================================");
+    Utils.logMessage(
+        "===============================================================================");
     return super.onResponse(response, handler);
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     Utils.logMessage("<---- Interceptor Error ---->", isError: true);
     Utils.logMessage("-->${err.error}", isError: true);
     Utils.logMessage("-->${err.message}", isError: true);

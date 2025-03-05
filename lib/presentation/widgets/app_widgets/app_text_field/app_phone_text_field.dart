@@ -8,7 +8,6 @@ import 'package:vibration/vibration.dart';
 
 import '../../../../app/config/app_color.dart';
 import '../../../../app/util/constants.dart';
-import '../../../../data/providers/storage/local_provider.dart';
 import 'custom_shake_widget.dart';
 
 class AppPhoneTextField extends StatefulWidget {

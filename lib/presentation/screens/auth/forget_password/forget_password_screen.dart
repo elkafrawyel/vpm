@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/instance_manager.dart';
-import 'package:intl_phone_field/phone_number.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/res/res.dart';
 import 'package:vpm/presentation/controller/auth_controller/auth_controller.dart';
@@ -10,7 +9,6 @@ import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../app/util/constants.dart';
-import '../../../widgets/app_widgets/app_text_field/app_phone_text_field.dart';
 import '../../../widgets/app_widgets/app_text_field/app_text_field.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {

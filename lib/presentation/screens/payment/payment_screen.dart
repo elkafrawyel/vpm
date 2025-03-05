@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import '../../../app/util/util.dart';
-import '../../widgets/app_widgets/app_text.dart';
 
 class PaymentScreen extends StatefulWidget {
   final String paymentUrl;
@@ -85,7 +84,6 @@ class PaymentScreenState extends State<PaymentScreen> {
               initialUserScripts: UnmodifiableListView<UserScript>([]),
               initialSettings: InAppWebViewSettings(
                 useShouldOverrideUrlLoading: false,
-
               ),
               pullToRefreshController: pullToRefreshController,
               onWebViewCreated: (controller) async =>

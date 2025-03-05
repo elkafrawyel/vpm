@@ -197,7 +197,7 @@ Map<String, String> en = {
   'time': 'Time',
   'total_hours': 'Total hours',
   'hours': 'Hours',
-  'hour_cost': 'Hour cost',
+  'hour_cost': 'Hourly cost',
   'available_spaces': 'Available Spaces',
   'cancel_trip': 'Cancel Trip',
   'navigate_to_valet': 'Navigate To Valet',

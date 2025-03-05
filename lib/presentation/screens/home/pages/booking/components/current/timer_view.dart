@@ -89,9 +89,9 @@ class _TimerViewState extends State<TimerView> {
       totalCost = 0.0;
     } else {
       textColor = Theme.of(context).primaryColor;
-      totalCost = (((difference.inMinutes / 60) - widget.freeHours).ceil() *
-              widget.perHour)
-          .toDouble();
+      totalCost =
+          (((difference.inMinutes / 60) - widget.freeHours) * widget.perHour)
+              .toDouble();
     }
 
     int totalHours = ((difference.inMinutes / 60) - widget.freeHours).ceil();
@@ -127,46 +127,47 @@ class _TimerViewState extends State<TimerView> {
             ),
           ],
         ),
-        Row(
-          children: [
-            Lottie.asset(
-              Res.animClock,
-              width: 30,
-              height: 30,
-            ),
-            10.pw,
-            Expanded(
-              flex: 2,
-              child: Row(
-                children: [
-                  AppText(
-                    time,
-                    fontSize: 18,
-                    color: textColor,
-                    maxLines: 2,
-                  ),
-                  5.pw,
-                  AppText(
-                    '=',
-                    fontSize: 30,
-                    color: textColor,
-                  ),
-                  5.pw,
-                  AppText(
-                    replaceFarsiNumber(totalHours.toString()),
-                    color: textColor,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  5.pw,
-                  AppText(
-                    'hours'.tr,
-                    color: textColor,
-                  )
-                ],
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset(
+                Res.animClock,
+                width: 30,
+                height: 30,
               ),
-            ),
-          ],
+              10.pw,
+              AppText(
+                time,
+                fontSize: 28,
+                color: textColor,
+                maxLines: 2,
+              ),
+              // Row(
+              //   children: [
+              //     5.pw,
+              //     AppText(
+              //       '=',
+              //       fontSize: 30,
+              //       color: textColor,
+              //     ),
+              //     5.pw,
+              //     AppText(
+              //       replaceFarsiNumber(totalHours.toString()),
+              //       color: textColor,
+              //       fontSize: 24,
+              //       fontWeight: FontWeight.bold,
+              //     ),
+              //     5.pw,
+              //     AppText(
+              //       'hours'.tr,
+              //       color: textColor,
+              //     )
+              //   ],
+              // ),
+            ],
+          ),
         ),
       ],
     );
