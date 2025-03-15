@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/app/util/constants.dart';
+import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
 import '../../../../app/res/res.dart';
 import '../../../controller/auth_controller/auth_controller.dart';
 import '../../../widgets/app_widgets/app_text_field/app_text_field.dart';
-import '../../home/home_screen.dart';
 import '../forget_password/forget_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,16 +19,31 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<AppTextFormFieldState> _emailState = GlobalKey();
+  final GlobalKey<AppTextFormFieldState> _phoneState = GlobalKey();
   final GlobalKey<AppTextFormFieldState> _passwordState = GlobalKey();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  late TextEditingController phoneController;
+
+  late TextEditingController passwordController;
+
   bool? rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    phoneController = TextEditingController(
+      text: LocalProvider().get(LocalProviderKeys.phone),
+    );
+    passwordController = TextEditingController(
+      text: LocalProvider().get(LocalProviderKeys.password),
+    );
+
+    rememberMe = LocalProvider().get(LocalProviderKeys.rememberMe) ?? false;
+  }
 
   @override
   void dispose() {
     super.dispose();
-    emailController.dispose();
+    phoneController.dispose();
     passwordController.dispose();
   }
 
@@ -40,23 +54,21 @@ class _LoginScreenState extends State<LoginScreen> {
         title: Text('login'.tr),
         centerTitle: false,
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Hero(
-                tag: 'logo',
-                child: Image.asset(
-                  Res.logoImage,
-                  height: 200,
-                  width: 300,
-                  fit: BoxFit.cover,
-                ),
+              child: Image.asset(
+                Res.logoImage,
+                height: 200,
+                width: 300,
+                fit: BoxFit.cover,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              padding: const EdgeInsets.symmetric(horizontal: 38.0),
               child: AppText(
                 'login_to_your_account'.tr,
                 fontSize: 18,
@@ -65,36 +77,35 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             10.ph,
             AppTextFormField(
-              key: _emailState,
-              controller: emailController,
-              validateEmptyText: 'email_required'.tr,
-              hintText: 'email'.tr,
-              horizontalPadding: 18,
-              autoFillHints: const [AutofillHints.email],
+              key: _phoneState,
+              controller: phoneController,
+              validateEmptyText: 'phone_required'.tr,
+              hintText: 'phone'.tr,
+              horizontalPadding: 28,
+              autoFillHints: const [AutofillHints.telephoneNumber],
               radius: kRadius,
-              appFieldType: AppFieldType.email,
-              prefixIcon: Res.iconEmail,
+              appFieldType: AppFieldType.phone,
+              prefixIcon: Res.iconPhone,
             ),
             AppTextFormField(
               key: _passwordState,
               controller: passwordController,
               validateEmptyText: 'password_required'.tr,
               hintText: 'password'.tr,
-              horizontalPadding: 18,
-              autoFillHints: const [AutofillHints.email],
+              horizontalPadding: 28,
+              autoFillHints: const [AutofillHints.password],
               radius: kRadius,
               appFieldType: AppFieldType.password,
               prefixIcon: Res.iconPassword,
             ),
-            10.ph,
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              padding: const EdgeInsets.symmetric(horizontal: 28.0),
               child: Row(
                 children: [
                   Checkbox.adaptive(
-                    fillColor: MaterialStateProperty.all(
-                        Theme.of(context).scaffoldBackgroundColor),
-                    checkColor: Theme.of(context).primaryColor,
+                    // fillColor: MaterialStateProperty.all(
+                    //     Theme.of(context).scaffoldBackgroundColor),
+                    // checkColor: Theme.of(context).primaryColor,
                     value: rememberMe,
                     onChanged: (bool? value) {
                       setState(() {
@@ -113,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
             10.ph,
             Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                padding: const EdgeInsets.symmetric(horizontal: 28.0),
                 child: AppProgressButton(
                   text: 'login'.tr,
                   width: MediaQuery.sizeOf(context).width,
@@ -130,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Get.to(() => const ForgetPasswordScreen());
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                padding: const EdgeInsets.symmetric(horizontal: 38.0),
                 child: AppText(
                   'forget_password?'.tr,
                   color: Theme.of(context).primaryColor,
@@ -145,11 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _login(AnimationController animationController) async {
-    Get.offAll(() => HomeScreen());
-    return;
-    if (emailController.text.isEmpty ||
-        (_emailState.currentState?.hasError ?? false)) {
-      _emailState.currentState?.shake();
+    if (phoneController.text.isEmpty ||
+        (_phoneState.currentState?.hasError ?? false)) {
+      _phoneState.currentState?.shake();
       return;
     }
 
@@ -160,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     Get.find<AuthController>().login(
-      email: emailController.text,
+      phone: phoneController.text,
       password: passwordController.text,
       animationController: animationController,
       rememberMe: rememberMe,

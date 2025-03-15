@@ -8,6 +8,7 @@ class MyShimmerEffectUI extends StatelessWidget {
   final Color? highlightColor;
   final BoxShape shapeShape;
   final int? seconds;
+  final double? radius;
 
   const MyShimmerEffectUI.rectangular({
     Key? key,
@@ -16,6 +17,7 @@ class MyShimmerEffectUI extends StatelessWidget {
     this.highlightColor,
     this.seconds,
     this.width = double.infinity,
+    this.radius,
   })  : shapeShape = BoxShape.rectangle,
         super(key: key);
 
@@ -26,13 +28,14 @@ class MyShimmerEffectUI extends StatelessWidget {
     this.highlightColor,
     this.seconds,
     this.width = double.infinity,
+    this.radius,
   })  : shapeShape = BoxShape.circle,
         super(key: key);
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(
-        baseColor: baseColor ?? Colors.grey[300]!,
-        highlightColor: highlightColor ?? Colors.white,
+        baseColor: baseColor ?? Colors.grey.shade300,
+        highlightColor: highlightColor ?? Colors.white54,
         period: Duration(seconds: seconds ?? 2),
         child: Container(
           padding: EdgeInsets.zero,
@@ -41,7 +44,9 @@ class MyShimmerEffectUI extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.grey,
             shape: shapeShape,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: shapeShape == BoxShape.circle
+                ? null
+                : BorderRadius.circular(radius ?? 0),
           ),
         ),
       );

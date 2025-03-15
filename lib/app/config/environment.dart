@@ -1,13 +1,13 @@
 class Environment {
-  static const AppMode appMode = AppMode.testing;
+  static const AppMode appMode = AppMode.live;
 
   static url() {
     switch (appMode) {
       case AppMode.testing:
       case AppMode.staging:
-        return '';
+        return 'https://portal.profitsway.net/New_Parking/api/';
       case AppMode.live:
-        return '';
+        return 'https://back.vpmsystems.com/api/';
     }
   }
 }

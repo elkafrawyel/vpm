@@ -7,15 +7,29 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 import 'package:vpm/app/extensions/space.dart';
+import 'package:vpm/app/util/information_viewer.dart';
+import 'package:vpm/app/util/operation_reply.dart';
+import 'package:vpm/data/models/general_response.dart';
+import 'package:vpm/data/providers/network/api_provider.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_progress_button.dart';
 import 'package:vpm/presentation/widgets/app_widgets/app_text.dart';
 
+import '../../../../app/res/res.dart';
+import '../../../../data/models/user_response.dart';
+import '../../../../data/providers/storage/local_provider.dart';
+import '../../../controller/home_screen_controller/home_screen_binding.dart';
+import '../../home/home_screen.dart';
 import '../create_new_password/create_new_password_screen.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
   final String phone;
+  final bool fromRegistration;
 
-  const VerificationCodeScreen({super.key, required this.phone});
+  const VerificationCodeScreen({
+    super.key,
+    required this.phone,
+    this.fromRegistration = false,
+  });
 
   @override
   State<VerificationCodeScreen> createState() => _VerificationCodeScreenState();
@@ -162,7 +176,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                   timerActive
                       ? Countdown(
                           controller: countdownController,
-                          seconds: 10,
+                          seconds: 60,
                           build: (BuildContext context, double time) => AppText(
                             formattedTime(
                               time.toInt(),
@@ -216,8 +230,27 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
 
   void _resendSms(AnimationController animationController) async {
     animationController.forward();
-    await Future.delayed(const Duration(seconds: 2));
+
+    OperationReply operationReply = await APIProvider.instance.post(
+      endPoint: Res.apiSendResetPasswordCode,
+      fromJson: GeneralResponse.fromJson,
+      requestBody: {
+        'phone': widget.phone,
+      },
+    );
     animationController.reverse();
+
+    if (operationReply.isSuccess()) {
+      GeneralResponse generalResponse = operationReply.result;
+      InformationViewer.showSuccessToast(msg: generalResponse.message);
+      Get.to(
+        () => VerificationCodeScreen(
+          phone: widget.phone,
+        ),
+      );
+    } else {
+      InformationViewer.showErrorToast(msg: operationReply.message);
+    }
 
     setState(() {
       timerActive = true;
@@ -226,8 +259,51 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
   }
 
   void _verifySms(AnimationController animationController) async {
-    Get.to(() => const CreateNewPasswordScreen());
+    animationController.forward();
+
+    if (widget.fromRegistration) {
+      OperationReply operationReply = await APIProvider.instance.patch(
+        endPoint: Res.apiVerifyCodeFromRegister,
+        fromJson: UserResponse.fromJson,
+        requestBody: {
+          'mobile_verification_code': otpCode,
+        },
+      );
+      animationController.reverse();
+      if (operationReply.isSuccess()) {
+        UserResponse? userResponse = operationReply.result;
+        bool isSaved = await LocalProvider().saveUser(userResponse?.userModel);
+        if (isSaved) {
+          Get.offAll(
+            () => const HomeScreen(),
+            binding: HomeScreenBinding(),
+          );
+        }
+      } else {
+        InformationViewer.showErrorToast(msg: operationReply.message);
+      }
+    } else {
+      OperationReply operationReply = await APIProvider.instance.patch(
+        endPoint: Res.apiVerifyCode,
+        fromJson: GeneralResponse.fromJson,
+        requestBody: {
+          'reset_password_code': otpCode,
+        },
+      );
+
+      animationController.reverse();
+      if (operationReply.isSuccess()) {
+        GeneralResponse generalResponse = operationReply.result;
+        InformationViewer.showSuccessToast(msg: generalResponse.message);
+
+        Get.to(
+          () => CreateNewPasswordScreen(
+            otpCode: otpCode!,
+          ),
+        );
+      } else {
+        InformationViewer.showErrorToast(msg: operationReply.message);
+      }
+    }
   }
-
-
 }

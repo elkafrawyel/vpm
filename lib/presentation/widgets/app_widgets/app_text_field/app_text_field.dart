@@ -239,8 +239,8 @@ class AppTextFormFieldState extends State<AppTextFormField> {
                             child: SvgPicture.asset(
                               widget.prefixIcon!,
                               fit: BoxFit.fitHeight,
-                              height: 30,
-                              width: 30,
+                              height: 20,
+                              width: 20,
                               colorFilter: const ColorFilter.mode(
                                 hintColor,
                                 BlendMode.srcIn,
@@ -415,9 +415,9 @@ class AppTextFormFieldState extends State<AppTextFormField> {
 
   final List<AuthFormRule> passwordRules = [
     AuthFormRule(
-      ruleText: 'min_8_char'.tr,
+      ruleText: 'min_6_char'.tr,
       condition: (value) {
-        return value.length >= 8;
+        return value.length >= 6;
       },
     ),
     // AuthFormRule(

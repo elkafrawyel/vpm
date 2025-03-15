@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:fcm_config/fcm_config.dart';
+import 'package:vpm/data/models/general_response.dart';
+
 import '../../app/res/res.dart';
 import '../../app/util/operation_reply.dart';
 import '../../domain/entities/requests/change_password_request.dart';
@@ -14,29 +17,38 @@ import '../providers/network/api_provider.dart';
 
 class AuthRepositoryIml extends AuthRepository {
   @override
-  Future<OperationReply<UserResponse>> login(
-      {required LoginRequest loginRequest}) async {
+  Future<OperationReply<UserResponse>> login({
+    required LoginRequest loginRequest,
+  }) async {
+    String? firebaseToken = await FCMConfig.instance.messaging.getToken();
     return await APIProvider.instance.post<UserResponse>(
       endPoint: Res.apiLogin,
       fromJson: UserResponse.fromJson,
       requestBody: {
-        'email': loginRequest.phoneOrEmail,
+        'user': loginRequest.phoneOrEmail,
         'password': loginRequest.password,
-        "fcm_token": loginRequest.fcmToken,
-        'is_mobile': true,
+        'notification_token': firebaseToken,
       },
     );
   }
 
   @override
-  Future<OperationReply<UserResponse>> register(
-      {required RegisterRequest registerRequest}) async {
-    return OperationReply.failed();
+  Future<OperationReply<UserResponse>> register({
+    required RegisterRequest registerRequest,
+  }) async {
+    return await APIProvider.instance.post<UserResponse>(
+      endPoint: Res.apiRegister,
+      fromJson: UserResponse.fromJson,
+      requestBody: registerRequest.toJson(),
+    );
   }
 
   @override
-  Future<OperationReply<UserResponse>> profile({required int userId}) async {
-    return OperationReply.failed();
+  Future<OperationReply<UserResponse>> profile() async {
+    return APIProvider.instance.get(
+      endPoint: Res.apiProfile,
+      fromJson: UserResponse.fromJson,
+    );
   }
 
   @override
@@ -65,12 +77,20 @@ class AuthRepositoryIml extends AuthRepository {
 
   @override
   Future<OperationReply<void>> deleteAccount() async {
-    return OperationReply.failed();
+    return await APIProvider.instance.delete<GeneralResponse>(
+      endPoint: Res.apiDeleteAccount,
+      fromJson: GeneralResponse.fromJson,
+      requestBody: {},
+    );
   }
 
   @override
-  Future<OperationReply<void>> logOut() async {
-    return OperationReply.failed();
+  Future<OperationReply<GeneralResponse>> logOut() async {
+    return await APIProvider.instance.post<GeneralResponse>(
+      endPoint: Res.apiLogout,
+      fromJson: GeneralResponse.fromJson,
+      requestBody: {},
+    );
   }
 
   @override
@@ -82,14 +102,17 @@ class AuthRepositoryIml extends AuthRepository {
   Future<OperationReply<UserResponse>> updateProfileAvatar(
       {required File image}) async {
     return OperationReply.failed();
-
   }
 
   @override
   Future<OperationReply<UserResponse>> updateProfileInformation({
     required UpdateProfileRequest updateProfileRequest,
   }) async {
-    return OperationReply.failed();
+    return APIProvider.instance.patch<UserResponse>(
+      endPoint: Res.apiUpdateProfile,
+      requestBody: updateProfileRequest.toJson(),
+      fromJson: UserResponse.fromJson,
+    );
   }
 
   @override

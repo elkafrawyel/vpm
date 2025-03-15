@@ -1,47 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vector_math/vector_math.dart' as math;
 
 import 'app_text.dart';
-
-Future<void> showAppDialog(
-  BuildContext context,
-  //preferred as Column
-  Widget child, {
-  double? height,
-  Color? backgroundColor,
-  double horizontalPadding = 12.0,
-  double radius = 12.0,
-  bool barrierDismissible = false,
-  EdgeInsets contentPadding = const EdgeInsets.all(12.0),
-}) async {
-  await showDialog(
-    context: context,
-    barrierDismissible: barrierDismissible,
-    builder: (_) => AlertDialog(
-      backgroundColor:
-          backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(radius),
-      ),
-      insetPadding:
-          EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 0.0),
-      contentPadding: contentPadding,
-      content: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            color: backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.circular(radius),
-          ),
-          height: height,
-          width: MediaQuery.of(context).size.width,
-          child: child,
-        ),
-      ),
-    ),
-  );
-}
 
 void scaleDialog({
   required BuildContext context,
@@ -54,10 +15,13 @@ void scaleDialog({
   bool barrierDismissible = false,
   Color? backgroundColor,
   double? height,
-  double horizontalMargin = 12.0,
   double radius = 12.0,
   EdgeInsets contentPadding = const EdgeInsets.all(12.0),
   int animationDuration = 400,
+  EdgeInsets insetPadding = const EdgeInsets.symmetric(
+    horizontal: 12.0,
+    vertical: 12.0,
+  ),
 }) {
   showGeneralDialog(
     context: context,
@@ -71,41 +35,51 @@ void scaleDialog({
         scale: curve,
         child: AlertDialog(
           backgroundColor:
-              backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
+              backgroundColor ?? Theme.of(ctx).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius)),
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: horizontalMargin, vertical: 12.0),
+            borderRadius: BorderRadius.circular(radius),
+          ),
+          insetPadding: insetPadding,
           contentPadding: contentPadding,
-          actions: <Widget>[
-            if (onConfirmClick != null)
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  confirmText ?? "Confirm",
-                  style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-              ),
-            if (onCancelClick != null)
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  cancelText ?? "Cancel",
-                  style: const TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.w700),
-                ),
-              )
-          ],
+          actions: onConfirmClick == null && onCancelClick == null
+              ? null
+              : <Widget>[
+                  Offstage(
+                    offstage: onConfirmClick == null,
+                    child: TextButton(
+                      onPressed: () => onConfirmClick,
+                      child: Text(
+                        confirmText ?? "Confirm",
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Offstage(
+                    offstage: onCancelClick == null,
+                    child: TextButton(
+                      onPressed: Get.back,
+                      child: Text(
+                        cancelText ?? "Cancel",
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
           content: SingleChildScrollView(
             child: Container(
               decoration: BoxDecoration(
-                color: backgroundColor ??
-                    Theme.of(context).scaffoldBackgroundColor,
+                color: backgroundColor ?? Theme.of(ctx).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(radius),
               ),
+              padding: EdgeInsets.zero,
               height: height,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery.of(ctx).size.width,
               child: content,
             ),
           ),
@@ -138,12 +112,19 @@ void scaleAlertDialog({
         scale: curve,
         child: GetPlatform.isIOS
             ? CupertinoAlertDialog(
-                title:
-                    AppText(title, fontWeight: FontWeight.w900, fontSize: 18),
+                title: AppText(
+                  title,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                ),
                 content: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child:
-                      AppText(body, fontWeight: FontWeight.w500, fontSize: 14),
+                  child: AppText(
+                    body,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                    maxLines: 3,
+                  ),
                 ),
                 actions: [
                   if (onConfirmClick != null)
@@ -151,7 +132,9 @@ void scaleAlertDialog({
                       onPressed: onConfirmClick,
                       child: Text(
                         confirmText ?? "Confirm",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   if (onCancelClick != null)
@@ -160,19 +143,29 @@ void scaleAlertDialog({
                       child: Text(
                         cancelText ?? "Cancel",
                         style: const TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.w700),
+                          color: Colors.red,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                 ],
               )
             : AlertDialog(
-                title:
-                    AppText(title, fontWeight: FontWeight.w900, fontSize: 18),
-                content:
-                    AppText(body, fontWeight: FontWeight.w500, fontSize: 14),
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                title: AppText(
+                  title,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                ),
+                content: AppText(
+                  body,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  maxLines: 3,
+                ),
+                backgroundColor: Theme.of(ctx).scaffoldBackgroundColor,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 actions: <Widget>[
                   if (onConfirmClick != null)
                     TextButton(
@@ -188,158 +181,13 @@ void scaleAlertDialog({
                       child: Text(
                         cancelText ?? "Cancel",
                         style: const TextStyle(
-                            color: Colors.red, fontWeight: FontWeight.w700),
+                          color: Colors.red,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     )
                 ],
               ),
-      );
-    },
-  );
-}
-
-void rotateDialog({
-  required BuildContext context,
-  required Widget content,
-  String? title,
-  String? confirmText,
-  String? cancelText,
-  VoidCallback? onConfirmClick,
-  VoidCallback? onCancelClick,
-  bool barrierDismissible = false,
-  Color? backgroundColor,
-  double? height,
-  double horizontalMargin = 12.0,
-  double radius = 12.0,
-  EdgeInsets contentPadding = const EdgeInsets.all(12.0),
-  int animationDuration = 400,
-}) {
-  showGeneralDialog(
-    context: context,
-    barrierDismissible: barrierDismissible,
-    barrierLabel: 'dialog',
-    pageBuilder: (ctx, a1, a2) => Container(),
-    transitionDuration: Duration(milliseconds: animationDuration),
-    transitionBuilder: (ctx, a1, a2, child) {
-      return Transform.rotate(
-        angle: math.radians(a1.value * 360),
-        child: AlertDialog(
-          backgroundColor:
-              backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius)),
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: horizontalMargin, vertical: 12.0),
-          contentPadding: contentPadding,
-          actions: <Widget>[
-            if (onConfirmClick != null)
-              TextButton(
-                onPressed: onConfirmClick,
-                child: Text(
-                  confirmText ?? "Confirm",
-                  style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-              ),
-            if (onCancelClick != null)
-              TextButton(
-                onPressed: onCancelClick,
-                child: Text(
-                  cancelText ?? "Cancel",
-                  style: const TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.w700),
-                ),
-              )
-          ],
-          content: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                color: backgroundColor ??
-                    Theme.of(context).scaffoldBackgroundColor,
-                borderRadius: BorderRadius.circular(radius),
-              ),
-              height: height,
-              width: MediaQuery.of(context).size.width,
-              child: content,
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
-
-void translateDialog({
-  required BuildContext context,
-  required Widget content,
-  Offset? startOffset,
-  String? title,
-  String? confirmText,
-  String? cancelText,
-  VoidCallback? onConfirmClick,
-  VoidCallback? onCancelClick,
-  bool barrierDismissible = false,
-  Color? backgroundColor,
-  double? height,
-  double horizontalMargin = 12.0,
-  double radius = 12.0,
-  EdgeInsets contentPadding = const EdgeInsets.all(12.0),
-  int animationDuration = 400,
-}) {
-  showGeneralDialog(
-    context: context,
-    barrierDismissible: barrierDismissible,
-    barrierLabel: 'dialog',
-    pageBuilder: (ctx, a1, a2) => Container(),
-    transitionDuration: Duration(milliseconds: animationDuration),
-    transitionBuilder: (ctx, a1, a2, child) {
-      Offset begin = startOffset ?? const Offset(0.0, 1.0);
-      const end = Offset.zero;
-      final tween = Tween(begin: begin, end: end);
-      final offsetAnimation = a1.drive(tween);
-      return SlideTransition(
-        position: offsetAnimation,
-        child: AlertDialog(
-          backgroundColor:
-              backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius)),
-          insetPadding: EdgeInsets.symmetric(
-              horizontal: horizontalMargin, vertical: 12.0),
-          contentPadding: contentPadding,
-          actions: <Widget>[
-            if (onConfirmClick != null)
-              TextButton(
-                onPressed: onConfirmClick,
-                child: Text(
-                  confirmText ?? "Confirm",
-                  style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-              ),
-            if (onCancelClick != null)
-              TextButton(
-                onPressed: onCancelClick,
-                child: Text(
-                  cancelText ?? "Cancel",
-                  style: const TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.w700),
-                ),
-              )
-          ],
-          content: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                color: backgroundColor ??
-                    Theme.of(context).scaffoldBackgroundColor,
-                borderRadius: BorderRadius.circular(radius),
-              ),
-              height: height,
-              width: MediaQuery.of(context).size.width,
-              child: content,
-            ),
-          ),
-        ),
       );
     },
   );

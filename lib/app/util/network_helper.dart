@@ -14,8 +14,10 @@ class NetworkHelper {
   }
 
   static Future<bool> isConnected() async {
-    ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
-    return connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi;
+    ConnectivityResult connectivityResult =
+        await Connectivity().checkConnectivity();
+    return connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi;
   }
 
   ///Don't forget to cast it to function return type using [as] method
@@ -34,14 +36,21 @@ class NetworkHelper {
           errorMessage = errorMessage + errors.first.toString();
         });
         return OperationReply(OperationStatus.failed, message: errorMessage);
-      } else if (body != null && body['message'] != null && body['message'].length < 255) {
+      } else if (body != null &&
+          body['message'] != null &&
+          body['message'].length < 255) {
         if (body['message'].toString().contains('Unauthenticated')) {
           LocalProvider().signOut();
+          return OperationReply(
+            OperationStatus.failed,
+            message: 'Unauthenticated',
+          );
         }
         String errorMessage = '';
         if (body['message'].toString().isNotEmpty) {
           errorMessage = body['message'].toString();
-        } else if (body['exception'] != null && body['exception'].toString().isNotEmpty) {
+        } else if (body['exception'] != null &&
+            body['exception'].toString().isNotEmpty) {
           errorMessage = body['exception'].toString();
         }
         return OperationReply.failed(message: errorMessage);
@@ -52,14 +61,17 @@ class NetworkHelper {
           return OperationReply(OperationStatus.failed, message: errorMessage);
         } else {
           Map<String, dynamic> errorMap = body['error'];
-          errorMap.forEach((key, value) => errorMessage = errorMessage + value.toString());
+          errorMap.forEach(
+              (key, value) => errorMessage = errorMessage + value.toString());
           return OperationReply(OperationStatus.failed, message: errorMessage);
         }
       } else {
-        return OperationReply.failed(message: isAr ? 'حدث خطأ ما' : 'General Error');
+        return OperationReply.failed(
+            message: isAr ? 'حدث خطأ ما' : 'General Error');
       }
     } catch (e) {
-      return OperationReply.failed(message: isAr ? 'حدث خطأ ما' : 'General Error');
+      return OperationReply.failed(
+          message: isAr ? 'حدث خطأ ما' : 'General Error');
     }
   }
 }

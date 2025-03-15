@@ -12,6 +12,7 @@ class Constants {
   static String mainAppLanguage = Get.deviceLocale?.languageCode ?? 'en';
   static String defaultUserType = 'client';
   static String defaultApiTokenType = 'Bearer';
+
 }
 
 double kRadius = 18;

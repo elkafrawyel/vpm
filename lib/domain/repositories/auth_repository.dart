@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import '../../app/util/operation_reply.dart';
+import '../../data/models/general_response.dart';
 import '../../data/models/user_response.dart';
 import '../entities/requests/change_password_request.dart';
 import '../entities/requests/change_phone_request.dart';
@@ -14,7 +15,7 @@ abstract class AuthRepository {
 
   Future<OperationReply<UserResponse>> register({required RegisterRequest registerRequest});
 
-  Future<OperationReply<UserResponse>> profile({required int userId});
+  Future<OperationReply<UserResponse>> profile();
 
   Future<OperationReply<UserResponse>> updateProfileInformation({required UpdateProfileRequest updateProfileRequest});
 
@@ -34,5 +35,5 @@ abstract class AuthRepository {
 
   Future<OperationReply<void>> deleteAccount();
 
-  Future<OperationReply<void>> logOut();
+  Future<OperationReply<GeneralResponse>> logOut();
 }

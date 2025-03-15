@@ -92,7 +92,8 @@ class AppCachedImage extends StatelessWidget {
               imageUrl: imageUrl ?? 'image not found',
               width: width,
               height: height,
-              progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  Center(
                 child: SizedBox(
                   height: height / 4,
                   width: height / 4,
@@ -115,8 +116,12 @@ class AppCachedImage extends StatelessWidget {
                           bottomRight: Radius.circular(radius ?? 12),
                         ),
                   image: DecorationImage(
-                    image: const AssetImage(Res.notFoundImage),
+                    image: const AssetImage(Res.logoImage),
                     fit: fit ?? BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.grey.shade400,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),

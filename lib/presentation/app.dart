@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
@@ -17,17 +20,23 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final AppConfigController appConfigController =
-      Get.put(AppConfigController(), permanent: true);
+  final AppConfigController appConfigController = Get.put(
+    AppConfigController(),
+    permanent: true,
+  );
 
   @override
   Widget build(BuildContext context) {
+    PlatformDispatcher.instance.onLocaleChanged = () {
+      // print("Locale changed");
+      setState(() {});
+    };
     String appLanguage = LocalProvider().getAppLanguage();
     return Obx(
       () => FocusRemover(
         child: OKToast(
           child: GetMaterialApp(
-            home: Container(color: Theme.of(context).scaffoldBackgroundColor),
+            home: Container(color: Colors.white),
             debugShowCheckedModeBanner:
                 Environment.appMode == AppMode.staging ||
                     Environment.appMode == AppMode.testing,
@@ -44,17 +53,34 @@ class _AppState extends State<App> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            builder: (context, navigatorWidget) {
-              try {
-                return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    textScaler: const TextScaler.linear(1.0),
-                  ),
-                  child: navigatorWidget ?? const SizedBox(),
-                );
-              } catch (e) {
-                return navigatorWidget ?? const SizedBox();
-              }
+            builder: (context, child) {
+              child = EasyLoading.init()(context, child);
+              EasyLoading.instance
+                ..displayDuration = const Duration(milliseconds: 2000)
+                ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+                ..loadingStyle = EasyLoadingStyle.custom
+                ..maskType = EasyLoadingMaskType.black
+                ..indicatorSize = 50.0
+                ..radius = 10.0
+                ..progressWidth = 3
+                ..progressColor = Colors.green
+                ..textColor = Colors.black
+                ..backgroundColor = Colors.white
+                ..indicatorColor = Theme.of(context).primaryColor
+                ..maskColor = Colors.blue.withOpacity(0.5)
+                ..textStyle = const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                )
+                ..userInteractions = true
+                ..dismissOnTap = false;
+              child = MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: const TextScaler.linear(1.0),
+                ),
+                child: child,
+              );
+              return child;
             },
           ),
         ),

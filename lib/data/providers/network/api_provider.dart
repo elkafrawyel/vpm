@@ -13,7 +13,7 @@ import '../storage/local_provider.dart';
 enum DioMethods { get, post, patch, put, delete }
 
 class APIProvider {
-  static const _requestTimeOut = Duration(seconds: 10);
+  static const _requestTimeOut = Duration(seconds: 30);
 
   /// private constructor
   APIProvider._();
@@ -28,7 +28,8 @@ class APIProvider {
         HttpHeaders.acceptHeader: 'application/json',
         HttpHeaders.cacheControlHeader: 'no-Cache',
         HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
-        if (LocalProvider().isLogged()) 'Authorization': 'Bearer ${LocalProvider().getUserToken()}',
+        HttpHeaders.authorizationHeader:
+            'Bearer ${LocalProvider().getUser()?.token ?? 'No Token Found'}',
         HttpHeaders.acceptLanguageHeader: LocalProvider().getAppLanguage()
       },
       followRedirects: false,
@@ -38,9 +39,11 @@ class APIProvider {
     ),
   )..interceptors.add(
       PrettyDioLogger(
+        request: true,
         requestBody: true,
         requestHeader: true,
-        maxWidth: 120,
+        error: true,
+        maxWidth: 1000,
       ),
     );
 
@@ -48,20 +51,24 @@ class APIProvider {
     _client.options.headers[HttpHeaders.acceptLanguageHeader] = language;
   }
 
-  void updateTokenHeader(String? token) {
+  void updateTokenHeader(String? token, {String? tokenType}) {
     if (token == null) {
-      _client.options.headers.remove('Authorization');
+      _client.options.headers.remove(HttpHeaders.authorizationHeader);
       return;
     }
-    _client.options.headers['Authorization'] = 'Bearer $token';
+    _client.options.headers[HttpHeaders.authorizationHeader] =
+        '${tokenType ?? 'Bearer'} $token';
   }
 
-  Future<OperationReply<T>> get<T>({required String endPoint, required T Function(dynamic) fromJson}) async {
+  Future<OperationReply<T>> get<T>({
+    required String endPoint,
+    required T Function(dynamic) fromJson,
+  }) async {
     if (await NetworkHelper.isConnected()) {
       try {
         Response response = await _client.get(endPoint);
         if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(returnData: fromJson(response.data));
+          return OperationReply.success(result: fromJson(response.data));
         } else {
           return NetworkHelper.handleCommonNetworkCases(response).as<T>();
         }
@@ -78,6 +85,8 @@ class APIProvider {
     required T Function(dynamic) fromJson,
     required Map<String, dynamic> requestBody,
     List<MapEntry<String, File>> files = const [],
+    Function(double percentage)? onUploadProgress,
+    Function(double percentage)? onDownloadProgress,
   }) async {
     if (await NetworkHelper.isConnected()) {
       try {
@@ -90,7 +99,8 @@ class APIProvider {
               .map(
                 (e) => MapEntry(
                   e.key,
-                  MultipartFile.fromFileSync(e.value.path, filename: e.value.path.split("/").last),
+                  MultipartFile.fromFileSync(e.value.path,
+                      filename: e.value.path.split("/").last),
                 ),
               )
               .toList());
@@ -100,15 +110,22 @@ class APIProvider {
           data: haveFiles ? formData : requestBody,
           onReceiveProgress: (received, total) {
             int percentage = ((received / total) * 100).floor();
+
+            if (onDownloadProgress != null) {
+              onDownloadProgress((received / total));
+            }
             Utils.logMessage('Downloading ....$percentage');
           },
           onSendProgress: (sent, total) {
             int percentage = ((sent / total) * 100).floor();
+            if (onUploadProgress != null) {
+              onUploadProgress((sent / total));
+            }
             Utils.logMessage('Uploading ....$percentage');
           },
         );
         if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(returnData: fromJson(response.data));
+          return OperationReply.success(result: fromJson(response.data));
         } else {
           return NetworkHelper.handleCommonNetworkCases(response).as<T>();
         }
@@ -137,7 +154,8 @@ class APIProvider {
               .map(
                 (e) => MapEntry(
                   e.key,
-                  MultipartFile.fromFileSync(e.value.path, filename: e.value.path.split("/").last),
+                  MultipartFile.fromFileSync(e.value.path,
+                      filename: e.value.path.split("/").last),
                 ),
               )
               .toList());
@@ -155,7 +173,7 @@ class APIProvider {
           },
         );
         if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(returnData: fromJson(response.data));
+          return OperationReply.success(result: fromJson(response.data));
         } else {
           return NetworkHelper.handleCommonNetworkCases(response).as<T>();
         }
@@ -177,7 +195,7 @@ class APIProvider {
       try {
         Response response = await _client.delete(endPoint, data: requestBody);
         if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(returnData: fromJson(response.data));
+          return OperationReply.success(result: fromJson(response.data));
         } else {
           return NetworkHelper.handleCommonNetworkCases(response).as<T>();
         }
@@ -199,7 +217,7 @@ class APIProvider {
       try {
         Response response = await _client.patch(endPoint, data: requestBody);
         if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(returnData: fromJson(response.data));
+          return OperationReply.success(result: fromJson(response.data));
         } else {
           return NetworkHelper.handleCommonNetworkCases(response).as<T>();
         }

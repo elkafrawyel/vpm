@@ -1,9 +1,20 @@
+import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vpm/app/util/information_viewer.dart';
 import 'package:vpm/app/util/operation_reply.dart';
+import 'package:vpm/data/models/general_response.dart';
+import 'package:vpm/data/models/user_response.dart';
+import 'package:vpm/data/providers/network/api_provider.dart';
+import 'package:vpm/data/providers/storage/local_provider.dart';
 import 'package:vpm/data/repositories/auth_repository.dart';
 import 'package:vpm/domain/entities/requests/login_request.dart';
+import 'package:vpm/domain/entities/requests/register_request.dart';
+import 'package:vpm/presentation/controller/app_config_controller.dart';
+import 'package:vpm/presentation/controller/home_screen_controller/home_screen_binding.dart';
+import 'package:vpm/presentation/screens/auth/register/register_screen.dart';
 
+import '../../../app/res/res.dart';
 import '../../screens/auth/verification_code/verification_code_screen.dart';
 
 class AuthController extends GetxController {
@@ -12,23 +23,58 @@ class AuthController extends GetxController {
   AuthController(this._authRepositoryIml);
 
   void login({
-    required String email,
+    required String phone,
     required String password,
     required AnimationController animationController,
     bool? rememberMe,
   }) async {
     animationController.forward();
-    OperationReply operationReply = await _authRepositoryIml.login(
+    OperationReply<UserResponse> operationReply =
+        await _authRepositoryIml.login(
       loginRequest: LoginRequest(
-        phoneOrEmail: email,
+        phoneOrEmail: phone,
         password: password,
       ),
     );
     if (operationReply.isSuccess()) {
+      UserResponse? userResponse = operationReply.result;
       if (rememberMe ?? false) {
-        ///save email and password for next login
+        //todo save email and password for next login
+        await LocalProvider().saveUserCredentials(
+          phone: phone,
+          password: password,
+        );
       }
-    } else {}
+      //todo save user model and token
+      bool isSaved = await LocalProvider().saveUser(userResponse?.userModel);
+      if (isSaved) {
+        if (userResponse?.userModel?.isCompleted ?? false) {
+          Get.offAll(
+            () => RegisterScreen(
+              completingProfile: true,
+              name: userResponse?.userModel?.name,
+              email: userResponse?.userModel?.email,
+            ),
+            binding: HomeScreenBinding(),
+          );
+        } else {
+          InformationViewer.showSnackBar(userResponse?.message);
+
+          if (userResponse?.userModel?.isVerified ?? false) {
+            Get.find<AppConfigController>().isLoggedIn.value = true;
+          } else {
+            Get.offAll(
+              () => VerificationCodeScreen(
+                phone: phone,
+                fromRegistration: true,
+              ),
+            );
+          }
+        }
+      }
+    } else {
+      InformationViewer.showSnackBar(operationReply.message);
+    }
     animationController.reverse();
   }
 
@@ -37,8 +83,88 @@ class AuthController extends GetxController {
     required AnimationController animationController,
   }) async {
     animationController.forward();
-    Get.to(() => const VerificationCodeScreen(
-          phone: '01019744661',
-        ));
+
+    OperationReply operationReply = await APIProvider.instance.post(
+      endPoint: Res.apiSendResetPasswordCode,
+      fromJson: GeneralResponse.fromJson,
+      requestBody: {
+        'phone': phoneNumber,
+      },
+    );
+    animationController.reverse();
+
+    if (operationReply.isSuccess()) {
+      GeneralResponse generalResponse = operationReply.result;
+      InformationViewer.showSuccessToast(msg: generalResponse.message);
+      Get.to(
+        () => VerificationCodeScreen(
+          phone: phoneNumber,
+        ),
+      );
+    } else {
+      InformationViewer.showErrorToast(msg: operationReply.message);
+    }
+  }
+
+  Future register({
+    required String name,
+    required String email,
+    required String phone,
+    required String password,
+    // required File image,
+    required AnimationController animationController,
+  }) async {
+    // OperationReply<UploadFileResponse> uploadOperationReply =
+    //     await LookUpsRepositoryIml().uploadFile(
+    //   file: image,
+    //   onUploadProgress: (double percent) {
+    //     EasyLoading.showProgress(
+    //       percent,
+    //       status: 'uploading'.tr,
+    //
+    //     );
+    //   },
+    // );
+    // //todo dismiss uploading view
+    // EasyLoading.dismiss();
+    // if (uploadOperationReply.isSuccess()) {
+    //   UploadFileResponse? uploadFileResponse = uploadOperationReply.result;
+    //   if (uploadFileResponse?.data?.id == null) {
+    //     return;
+    //   }
+    animationController.forward();
+    String? firebaseToken = await FCMConfig.instance.messaging.getToken();
+
+    OperationReply<UserResponse> operationReply =
+        await _authRepositoryIml.register(
+      registerRequest: RegisterRequest(
+        name: name,
+        email: email,
+        phone: phone,
+        password: password,
+        firebaseToken: firebaseToken,
+      ),
+    );
+    if (operationReply.isSuccess()) {
+      // UserResponse? userResponse = operationReply.result;
+      //todo save user model and token
+      // bool isSaved = await LocalProvider().saveUser(userResponse?.userModel);
+      // if (isSaved) {
+      Get.offAll(
+        () => VerificationCodeScreen(
+          phone: phone,
+          fromRegistration: true,
+        ),
+      );
+      // } else {
+      //   InformationViewer.showSnackBar('general_error'.tr);
+      // }
+    } else {
+      InformationViewer.showSnackBar(operationReply.message);
+    }
+    animationController.reverse();
+    // } else {
+    //   InformationViewer.showSnackBar(uploadOperationReply.message);
+    // }
   }
 }

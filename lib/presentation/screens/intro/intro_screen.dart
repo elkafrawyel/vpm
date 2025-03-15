@@ -32,11 +32,11 @@ class _IntroScreenState extends State<IntroScreen> {
         fontSize: 16,
       ),
       skipFunctionOverride: () async {
-        await LocalProvider().save(LocalProviderKeys.intro, 1);
+        await LocalProvider().save(LocalProviderKeys.introScreen, 1);
         Get.offAll(() => const WelcomeScreen());
       },
       onFinish: () async {
-        await LocalProvider().save(LocalProviderKeys.intro, 1);
+        await LocalProvider().save(LocalProviderKeys.introScreen, 1);
         Get.offAll(() => const WelcomeScreen());
       },
       centerBackground: true,
@@ -45,7 +45,7 @@ class _IntroScreenState extends State<IntroScreen> {
           padding: const EdgeInsets.only(top: 100.0),
           child: SvgPicture.asset(
             'assets/images/intro/intro_1.svg',
-            height: 300,
+            height: 200,
             width: 300,
           ),
         ),
@@ -53,7 +53,7 @@ class _IntroScreenState extends State<IntroScreen> {
           padding: const EdgeInsets.only(top: 100.0),
           child: SvgPicture.asset(
             'assets/images/intro/intro_2.svg',
-            height: 300,
+            height: 200,
             width: 300,
           ),
         ),
@@ -61,7 +61,7 @@ class _IntroScreenState extends State<IntroScreen> {
           padding: const EdgeInsets.only(top: 100.0),
           child: SvgPicture.asset(
             'assets/images/intro/intro_3.svg',
-            height: 300,
+            height: 200,
             width: 300,
           ),
         ),

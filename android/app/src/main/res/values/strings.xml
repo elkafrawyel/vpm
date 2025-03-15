@@ -2,6 +2,6 @@
 <resources>
 
     <string name="channel_id" type="string">com.vpmsystems.parking</string>
-    <string name="map_key" translatable="false">AIzaSyCDzltRvdehaa-81Gh7T0JGW-s3x6igHMg</string>
+    <string name="map_key" translatable="false">AIzaSyDHgXWlxp6SaAFhPtgrxR-_yYraLQJka78</string>
 
 </resources>

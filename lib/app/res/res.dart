@@ -7,16 +7,51 @@ class Res {
   static String appFontFamily = GoogleFonts.cairo().fontFamily ?? '';
 
   //========================== Api Endpoints  ===============================
-  static const apiLogin = 'login';
+  static const apiLogin = 'auth/login';
+  static const apiLogout = 'auth/logout';
+  static const apiDeleteAccount = 'auth/profile';
+  static const apiRegister = 'auth/register';
+  static const apiProfile = 'auth/profile';
+  static const apiUploadFile = 'storage/file';
+  static const apiUpdateProfile = 'auth/profile';
+  static const apiCreateContact = 'customer/contact';
+  static const apiAllContact = 'customer/contacts';
+  static const apiDeleteUser = 'customer/contact';
+  static const apiCarColors = 'constants/car-colors-list';
+  static const apiCarTypes = 'constants/car-types-list';
+  static const apiCar = 'customer/car';
+  static const apiAllCars = 'customer/cars';
+  static const apiAllAdvertisements = 'customer/advertisements';
+  static const apiGetBalance = 'customer/current-balance';
+  static const apiGetPaymentOptions = 'constants/charge-price-list';
+  static const apiChargeBalance = 'customer/charge-balance';
+  static const apiSearchGarages = 'customer/garages/search';
+  static const apiBookingList = 'customer/parked-cars/search';
+  static const apiRequestDriver = 'customer/request-driver-start-parking';
+  static const apiRequestEndParking = 'customer/request-driver-end-parking';
+  static const apiNotifications = 'notification/notifications';
+  static const apiVideo = 'constants/tutorial-vedio';
+  static const apiCancelRequest = 'customer/request-driver-cancel';
+  static const apiCountries = 'country/countries?paginate=0';
+  static const apiCities = 'country/governorates';
+  static const apiGaragesByCity = 'customer/parking-garages/search';
+  static const apiAddSubscription = 'customer/subscription';
+  static const apiSubscriptions = 'customer/subscriptions';
+  static const apiSendResetPasswordCode = 'auth/send-reset-password-code';
+  static const apiVerifyCode = 'auth/check-code';
+  static const apiVerifyCodeFromRegister = 'auth/verify-mobile';
+  static const apiRestPassword = 'auth/reset-password';
+  static const apiSwitchAutoSubscription = 'customer/subscription-renew-status';
 
   //========================== Animation Assets  ===============================
-  static const String animApiLoading = 'assets/anim/api_loading.json';
-  static const String animApiEmpty = 'assets/anim/api_empty.json';
-  static const String animApiError = 'assets/anim/api_error.json';
-  static const String animDelivery = 'assets/anim/delivery.json';
-  static const String animEmptyCart = 'assets/anim/empty_cart.json';
-  static const String animSuccess = 'assets/anim/success.json';
-  static const String animDisconnect = 'assets/anim/disconnect.json';
+  static const animApiLoading = 'assets/anim/loading.json';
+  static const animApiEmpty = 'assets/anim/api_empty.json';
+  static const animApiError = 'assets/anim/api_error.json';
+  static const animDelivery = 'assets/anim/delivery.json';
+  static const animEmptyCart = 'assets/anim/empty_cart.json';
+  static const animSuccess = 'assets/anim/success.json';
+  static const animDisconnect = 'assets/anim/disconnect.json';
+  static const animClock = 'assets/anim/clock.json';
 
   //========================== Icons Assets  ===============================
   static const String iconName = 'assets/icons/name.svg';
@@ -24,26 +59,42 @@ class Res {
   static const String iconPhone = 'assets/icons/phone.svg';
   static const String iconPassword = 'assets/icons/password.svg';
   static const String iconSuccess = 'assets/icons/success.svg';
+  static const String iconError = 'assets/icons/error.svg';
   static const String iconLocation = 'assets/icons/location.svg';
   static const String iconPhoneVerified = 'assets/icons/phone_verified.svg';
   static const String iconForgetPassword = 'assets/icons/forget_password.svg';
   static const String iconParking = 'assets/icons/parking.svg';
+  static const String iconCar = 'assets/icons/car.svg';
   static const String iconValet = 'assets/icons/valet.svg';
   static const String iconServices = 'assets/icons/services.svg';
   static const String iconBooking = 'assets/icons/booking.svg';
   static const String iconMenu = 'assets/icons/menu.svg';
   static const String iconNewPassword = 'assets/icons/new_password.svg';
+  static const String iconScan = 'assets/icons/scan.svg';
+  static const String iconMale = 'assets/icons/male.svg';
+  static const String iconFemale = 'assets/icons/female.svg';
+  static const String iconEmptyUsers = 'assets/icons/empty_users.svg';
+  static const String iconEmptyCars = 'assets/icons/empty_cars.svg';
+  static const String iconEmptyServices = 'assets/icons/empty_services.svg';
+  static const String iconGarageLocation = 'assets/icons/garage_location.svg';
+  static const String iconStaff = 'assets/icons/staff.svg';
+  static const String iconClock = 'assets/icons/clock.svg';
+  static const String iconCamera = 'assets/icons/camera.svg';
+  static const String iconBlueBorder = 'assets/icons/blue_border.svg';
+  static const String iconRedBorder = 'assets/icons/red_border.svg';
+  static const String iconNotifications = 'assets/icons/notifications.svg';
 
   //========================== Images Assets  ===============================
-
-  static const splashImage = "assets/images/splash_bg.jpg";
-
+  static const locationPinImage = 'assets/images/my_pin.png';
+  static const garagePinImage = 'assets/images/garage_pin.png';
+  static const valetPinImage = 'assets/images/valet_pin.png';
+  static const redGaragePinImage = 'assets/images/red_garage_pin.png';
+  static const redValetPinImage = 'assets/images/red_valet_pin.png';
+  static const blueBorderImage = 'assets/images/blue_border.png';
   static const facebookImage = "assets/images/social/facebook.png";
   static const instagramImage = "assets/images/social/instagram.png";
   static const twitterImage = "assets/images/social/twitter.png";
-
   static const logoWhiteImage = "assets/images/launcher/logo_white.png";
   static const logoImage = "assets/images/launcher/logo.png";
-
-  static const notFoundImage = "assets/images/not_found.jpg";
+  static const personImage = "assets/images/person.png";
 }
