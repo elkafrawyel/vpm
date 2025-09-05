@@ -310,11 +310,13 @@ class ParkingController extends GetxController {
 
     PointLatLng origin = PointLatLng(myLocation.latitude, myLocation.longitude);
     targetGarage = LatLng(destination.latitude, destination.longitude);
-    PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-      googleMapKey,
-      origin,
-      destination,
-      travelMode: TravelMode.driving,
+    PolylineResult result =
+        await PolylinePoints(apiKey: googleMapKey).getRouteBetweenCoordinates(
+      request: PolylineRequest(
+        origin: origin,
+        destination: destination,
+        mode: TravelMode.driving,
+      ),
     );
     List<LatLng> polylineCoordinates = [];
 
@@ -353,7 +355,6 @@ class ParkingController extends GetxController {
     List<Placemark> placeMarks = await placemarkFromCoordinates(
       latLng.latitude,
       latLng.longitude,
-      localeIdentifier: locale,
     );
 
     Placemark placeMark = placeMarks.first;

@@ -5,7 +5,7 @@ publish_to: 'none'
 version: 1.0.4+5
 
 environment:
-  sdk: '>=3.2.1 <4.0.0'
+  sdk: '>=3.4.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -20,30 +20,28 @@ dependencies:
   dio: ^5.4.0
   image_picker: ^1.0.5
   cached_network_image: ^3.3.0
-  fluttertoast: ^8.2.4
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.0.9
   fcm_config: ^3.5.3
   shimmer: ^3.0.0
   #  dart run flutter_launcher_icons:main
-  flutter_launcher_icons: ^0.13.1
-  firebase_core: ^2.24.2
-  firebase_auth: ^4.15.3
-  firebase_analytics: ^10.7.4
-  firebase_crashlytics: ^3.4.8
-  carousel_slider: ^4.2.1
+  flutter_launcher_icons: ^0.14.4
+  firebase_core: ^4.1.0
+  firebase_auth: ^6.0.2
+  firebase_crashlytics: ^5.0.1
+  carousel_slider: ^5.1.1
   url_launcher: ^6.2.6
-  intl: ^0.19.0
-  lottie: ^2.7.0
-  connectivity_plus: ^5.0.2
+  intl: ^0.20.2
+  lottie: ^3.3.1
+  connectivity_plus: ^6.1.5
   pretty_dio_logger: ^1.3.1
   oktoast: ^3.4.0
-  package_info_plus: ^5.0.1
-  syncfusion_flutter_datepicker: ^24.1.41
+  package_info_plus: ^8.3.1
+  syncfusion_flutter_datepicker: ^30.2.7
   google_fonts: ^6.1.0
   flutter_onboarding_slider: ^1.0.11
   flutter_native_splash: ^2.3.9
-  vibration: ^1.8.4
+  vibration: ^3.1.3
   intl_phone_field: ^3.2.0
   auto_animated: ^3.2.0
   pin_code_fields: ^8.0.1
@@ -51,18 +49,18 @@ dependencies:
   persistent_bottom_nav_bar: ^6.2.1
   flutter_staggered_animations: ^1.1.1
   google_maps_flutter: ^2.5.1
-  flutter_polyline_points: ^2.0.0
+  flutter_polyline_points: ^3.0.1
   toggle_switch: ^2.1.0
   flutter_inappwebview: ^6.0.0
   flutter_easyloading: ^3.0.5
   flutter_spinkit: ^5.1.0
-  permission_handler: ^11.1.0
+  permission_handler: ^12.0.1
   qr_flutter: ^4.1.0
-  geolocator: ^10.1.1
-  geocoding: ^2.0.5
-  location: ^5.0.3
+  geolocator: ^14.0.2
+  geocoding: ^4.0.0
+  location: ^8.0.1
   lazy_load_scrollview: ^1.3.0
-  grouped_list: ^5.1.2
+  grouped_list: ^6.0.0
   video_player: ^2.9.1
   flick_video_player: ^0.9.0
 
@@ -75,7 +73,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^6.0.0
 
 
 flutter_icons:

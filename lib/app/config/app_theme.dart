@@ -64,7 +64,7 @@ class AppTheme {
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
 
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 2.0,
       color: LightThemeColor.scaffoldBackground,
       shadowColor: Colors.black,
@@ -168,7 +168,7 @@ class AppTheme {
       ),
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 2.0,
       color: DarkThemeColor.scaffoldBackground,
       shadowColor: Colors.white,

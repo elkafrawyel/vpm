@@ -31,12 +31,15 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.vpmsystems.parking.vpm"
-    compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    compileSdkVersion 36
+    ndkVersion = "29.0.14033849"
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
+
     }
 
     kotlinOptions {
@@ -52,8 +55,8 @@ android {
         applicationId "com.vpmsystems.parking"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 21
-        targetSdkVersion 34
+        minSdkVersion 23
+        targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -84,4 +87,8 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.25"
+    // ✅ Required for core library desugaring
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.5"
+}

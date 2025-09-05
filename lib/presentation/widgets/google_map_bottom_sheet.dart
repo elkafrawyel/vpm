@@ -126,12 +126,15 @@ class _GoogleMapBottomSheetState extends State<GoogleMapBottomSheet> {
     animateToPosition(myLocation, zoom: 16);
 
     PointLatLng origin = PointLatLng(myLocation.latitude, myLocation.longitude);
-    PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-      googleMapKey,
-      origin,
-      destination,
-      travelMode: TravelMode.driving,
+    PolylineResult result =
+        await PolylinePoints(apiKey: googleMapKey).getRouteBetweenCoordinates(
+      request: PolylineRequest(
+        origin: origin,
+        destination: destination,
+        mode: TravelMode.driving,
+      ),
     );
+
     List<LatLng> polylineCoordinates = [];
 
     if (result.status == 'OK' && result.points.isNotEmpty) {
