@@ -59,7 +59,8 @@ class AppConfigController extends GetxController {
     List<ConnectivityResult> connectivityResult =
         await Connectivity().checkConnectivity();
     if (connectivityResult.first == ConnectivityResult.mobile ||
-        connectivityResult.first == ConnectivityResult.wifi) {
+        connectivityResult.first == ConnectivityResult.wifi ||
+        connectivityResult.first == ConnectivityResult.ethernet) {
       // I am connected to a mobile network.
       Utils.hideGetXDialog();
     } else {
@@ -71,7 +72,8 @@ class AppConfigController extends GetxController {
         .onConnectivityChanged
         .listen((List<ConnectivityResult> result) {
       if (result.first == ConnectivityResult.mobile ||
-          result.first == ConnectivityResult.wifi) {
+          result.first == ConnectivityResult.wifi ||
+          result.first == ConnectivityResult.ethernet) {
         // I am connected to a mobile network.
         Utils.hideGetXDialog();
       } else {

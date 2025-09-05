@@ -17,7 +17,8 @@ class NetworkHelper {
     List<ConnectivityResult> connectivityResult =
         await Connectivity().checkConnectivity();
     return connectivityResult.first == ConnectivityResult.mobile ||
-        connectivityResult.first == ConnectivityResult.wifi;
+        connectivityResult.first == ConnectivityResult.wifi ||
+        connectivityResult.first == ConnectivityResult.ethernet;
   }
 
   ///Don't forget to cast it to function return type using [as] method
