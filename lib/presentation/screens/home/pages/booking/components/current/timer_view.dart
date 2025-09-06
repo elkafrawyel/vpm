@@ -53,7 +53,7 @@ class _TimerViewState extends State<TimerView> {
       const Duration(seconds: 1),
       (Timer timer) {
         // if i leave the booking tab stop timer
-        if (Get.find<HomeScreenController>().selectedTabIndex == 1 &&
+        if (Get.find<HomeScreenController>().currentIndex.value == 1 &&
             Get.find<BookingController>().selectedIndex.value == 0) {
           Utils.logMessage('Timer view is active');
           setState(() {});

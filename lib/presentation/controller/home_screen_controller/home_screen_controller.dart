@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,43 +6,53 @@ import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vpm/presentation/controller/booking_controller/current_booking_controller.dart';
 import 'package:vpm/presentation/controller/booking_controller/ended_booking_controller.dart';
-import 'package:vpm/presentation/screens/home/pages/notifications/notifications_screen.dart';
-import 'package:vpm/presentation/screens/home/pages/parking/parking_screen.dart';
 
 import '../../../domain/entities/models/notifications_model.dart';
-import '../../screens/home/pages/booking/booking_screen.dart';
-import '../../screens/home/pages/menu/menu_screen.dart';
 
 class HomeScreenController extends GetxController {
-  int? selectedTabIndex;
-  late List<Widget> pages;
-  PersistentTabController controller = PersistentTabController(initialIndex: 0);
+  PersistentTabController tabController =
+      PersistentTabController(initialIndex: 0);
+  var currentIndex = 0.obs;
+  /// Keeps track of visited main tabs in order
+  final List<int> tabHistory = [0];
+  // navigator keys for each tab
+  final List<GlobalKey<NavigatorState>> navigatorKeys = List.generate(
+    4,
+    (_) => GlobalKey<NavigatorState>(),
+  );
+
+  void changeTab(int index,{bool addToHistory=true}) {
+    if (currentIndex.value == index) return;
+
+    if(addToHistory){
+      // ✅ Push tab into history if it's a new tab
+      tabHistory.add(index);
+      debugPrint("Tab history: $tabHistory");
+    }
+
+    currentIndex.value = index;
+    tabController.index = index;
+  }
+
+  /// Pop history when going back
+  int? popTabHistory() {
+    if (tabHistory.length > 1) {
+      tabHistory.removeLast();
+      return tabHistory.last;
+    }
+    return null;
+  }
 
   @override
   void onInit() async {
     super.onInit();
-    selectedTabIndex = 0;
-    pages = [
-      const ParkingScreen(),
-      const BookingScreen(),
-      // const AdvertisementsScreen(),
-      const NotificationsScreen(),
-      const MenuScreen(),
-    ];
-
     handleInitialMessage();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    tabController.dispose();
     super.dispose();
-  }
-
-  handleIndexChanged(int index) {
-    controller.jumpToTab(index);
-    selectedTabIndex = index;
-    update();
   }
 
   void handleNotificationClick(
@@ -63,7 +72,6 @@ class HomeScreenController extends GetxController {
             /// تمت الموافقة علي طلب الانهاء
             ///ACCEPT_REQUEST_DRIVER
             Get.find<CurrentBookingController>().refreshApiCall(loading: false);
-
             break;
         }
         break;

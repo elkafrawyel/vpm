@@ -64,7 +64,7 @@ class ParkingController extends GetxController {
     timer = Timer.periodic(const Duration(seconds: 30), (timer) async {
       Utils.logMessage('<<=============Timer===============>>');
       if (LocalProvider().isLogged() &&
-          Get.find<HomeScreenController>().selectedTabIndex == 0) {
+          Get.find<HomeScreenController>().currentIndex.value == 0) {
         await getMyPosition(loading: false);
       }
       handleTargetGarage();
@@ -343,26 +343,25 @@ class ParkingController extends GetxController {
   }
 
   Future<void> _getMyAddress(LatLng latLng) async {
-    myAddressAr = await _getAddressFromLocation(latLng, locale: 'ar_SA');
-    myAddressEn = await _getAddressFromLocation(latLng, locale: 'en_US');
+    myAddressAr = await _getAddressFromLocation(latLng);
+    myAddressEn = await _getAddressFromLocation(latLng);
     update([addressControllerId]);
   }
 
-  Future<String> _getAddressFromLocation(
-    LatLng latLng, {
-    required String locale,
-  }) async {
+  Future<String> _getAddressFromLocation(LatLng latLng) async {
     List<Placemark> placeMarks = await placemarkFromCoordinates(
       latLng.latitude,
       latLng.longitude,
     );
 
-    Placemark placeMark = placeMarks.first;
-    String name = placeMark.name ?? '';
-    String city = placeMark.subAdministrativeArea ?? '';
-    String governorate = placeMark.administrativeArea ?? '';
-    String country = placeMark.country ?? '';
-    String address = "$name, $city, $governorate, $country";
+    Placemark place = placeMarks.first;
+    String address = [
+      place.street,
+      place.locality,
+      place.administrativeArea,
+      // place.postalCode,
+      place.country,
+    ].where((e) => e != null && e.isNotEmpty).join(', ');
 
     Utils.logMessage(address);
 
