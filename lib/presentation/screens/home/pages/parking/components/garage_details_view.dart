@@ -131,53 +131,49 @@ class GarageDetailsView extends StatelessWidget {
               ),
             ),
             20.ph,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    AppText(
-                      Utils().formatNumbers(
-                        element.hourCost.toString(),
-                      ),
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                    if (element.type?.code == 1)
-                      AppText(
-                        'per_hour'.tr,
-                        color: Colors.white,
-                      ),
-                  ],
-                ),
-                if (element.type?.code == 1) 40.pw,
-                if (element.type?.code == 1)
-                  Column(
-                    children: [
-                      AppText(
-                        element.availableCarCount == 0
-                            ? 'garage_completed'.tr
-                            : element.availableCarCount?.toString() ?? '0',
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                      if (element.availableCarCount != 0)
+             Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: infoWidth,
+                    child: Column(
+                      children: [
                         AppText(
-                          'available_spaces'.tr,
+                          Utils().formatNumbers(
+                            element.hourCost.toString(),
+                          ),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                        if (element.type?.code == 1)
+                          AppText(
+                            'per_hour'.tr,
+                            color: Colors.white,
+                          ),
+                      ],
+                    ),
+                  ),
+                  if (element.type?.code == 1) 10.pw,
+                  if (element.type?.code == 1)
+                    Column(
+                      children: [
+                        AppText(
+                          element.availableCarCount == 0
+                              ? 'garage_completed'.tr
+                              : element.availableCarCount?.toString() ?? '0',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
-                    ],
-                  ),
-              ],
-            ),
-            30.ph,
-            IntrinsicHeight(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
+                        if (element.availableCarCount != 0)
+                          AppText(
+                            'available_spaces'.tr,
+                            color: Colors.white,
+                          ),
+                      ],
+                    ),
                   SizedBox(
                     width: infoWidth,
                     child: Column(
@@ -214,40 +210,40 @@ class GarageDetailsView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: infoWidth,
-                    child: Column(
-                      children: [
-                        SvgPicture.asset(Res.iconCamera),
-                        5.ph,
-                        AppText(
-                          'cctv'.tr,
-                          color: Colors.white,
-                          fontSize: 16,
-                          maxLines: 4,
-                          fontWeight: FontWeight.w700,
-                          centerText: true,
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: infoWidth,
-                    child: Column(
-                      children: [
-                        SvgPicture.asset(Res.iconStaff),
-                        5.ph,
-                        AppText(
-                          'staff'.tr,
-                          color: Colors.white,
-                          fontSize: 16,
-                          maxLines: 2,
-                          fontWeight: FontWeight.w700,
-                          centerText: true,
-                        )
-                      ],
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: infoWidth,
+                  //   child: Column(
+                  //     children: [
+                  //       SvgPicture.asset(Res.iconCamera),
+                  //       5.ph,
+                  //       AppText(
+                  //         'cctv'.tr,
+                  //         color: Colors.white,
+                  //         fontSize: 16,
+                  //         maxLines: 4,
+                  //         fontWeight: FontWeight.w700,
+                  //         centerText: true,
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   width: infoWidth,
+                  //   child: Column(
+                  //     children: [
+                  //       SvgPicture.asset(Res.iconStaff),
+                  //       5.ph,
+                  //       AppText(
+                  //         'staff'.tr,
+                  //         color: Colors.white,
+                  //         fontSize: 16,
+                  //         maxLines: 2,
+                  //         fontWeight: FontWeight.w700,
+                  //         centerText: true,
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   SizedBox(
                     width: infoWidth,
                     child: Column(
@@ -265,8 +261,8 @@ class GarageDetailsView extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            20.ph,
+
+            50.ph,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 38.0),
               child: GestureDetector(

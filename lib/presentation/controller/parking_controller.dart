@@ -373,8 +373,8 @@ class ParkingController extends GetxController {
   ) async {
     showAppModalBottomSheet(
       context: Get.context!,
-      initialChildSize: 0.6,
-      minChildSize: 0.5,
+      initialChildSize: 0.5,
+      minChildSize: 0.4,
       builder: (context, scrollController) {
         return GarageDetailsView(
           scrollController: scrollController,
