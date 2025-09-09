@@ -2,7 +2,7 @@ name: vpm
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.0.4+5
+version: 1.0.6+1
 
 environment:
   sdk: ^3.6.1
