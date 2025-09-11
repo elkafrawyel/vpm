@@ -132,20 +132,21 @@ class GarageDetailsView extends StatelessWidget {
             ),
             20.ph,
              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     width: infoWidth,
                     child: Column(
                       children: [
+                        Image.asset("assets/images/price.png", width: 24, height: 24, color: Colors.white),
+                        5.ph,
                         AppText(
                           Utils().formatNumbers(
                             element.hourCost.toString(),
                           ),
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
-                          fontSize: 18,
                         ),
                         if (element.type?.code == 1)
                           AppText(
@@ -159,11 +160,12 @@ class GarageDetailsView extends StatelessWidget {
                   if (element.type?.code == 1)
                     Column(
                       children: [
+                        Image.asset("assets/images/slots.png", width: 24, height: 24, color: Colors.white),
+                        5.ph,
                         AppText(
                           element.availableCarCount == 0
                               ? 'garage_completed'.tr
                               : element.availableCarCount?.toString() ?? '0',
-                          fontSize: 18,
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
@@ -179,7 +181,7 @@ class GarageDetailsView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(Res.iconClock),
+                        Image.asset("assets/images/time.png", width: 24, height: 24, color: Colors.white),
                         5.ph,
                         AppText(
                           DateFormat(
@@ -192,7 +194,6 @@ class GarageDetailsView extends StatelessWidget {
                           ),
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
-                          fontSize: 16,
                         ),
                         AppText(
                           DateFormat(
@@ -248,12 +249,12 @@ class GarageDetailsView extends StatelessWidget {
                     width: infoWidth,
                     child: Column(
                       children: [
-                        SvgPicture.asset(Res.iconGarageLocation),
+                        Image.asset("assets/images/location.png", width: 24, height: 24, color: Colors.white),
+                        5.ph,
                         5.ph,
                         AppText(
                           howFar,
                           color: Colors.white,
-                          fontSize: 16,
                           fontWeight: FontWeight.w700,
                         )
                       ],
