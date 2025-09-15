@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 import 'package:vpm/app/extensions/space.dart';
 import 'package:vpm/presentation/controller/parking_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/parking/components/address_view.dart';
@@ -57,30 +58,68 @@ class _ParkingScreenState extends State<ParkingScreen>
     }
   }
 
+  final _controller = SuperTooltipController();
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    Future.delayed(Duration(seconds: 2), () {
+      if (!_controller.isVisible) {
+        _controller.showTooltip();
+      }
+    });
     return GetBuilder<ParkingController>(
       builder: (_) {
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.white,
-            tooltip: 'QR CODE',
-            shape: const CircleBorder(),
-            child: Icon(
-              Icons.qr_code,
-              color: Theme.of(context).primaryColor,
-            ),
-            onPressed: () {
-              scaleDialog(
-                context: context,
-                barrierDismissible: true,
-                backgroundColor: Colors.transparent,
-                content: QrCodeView(
-                  qrValue: LocalProvider().getUser()?.qrId ?? '',
+          floatingActionButton: SuperTooltip(
+            controller: _controller,
+            backgroundColor: Colors.black38,
+            showOnTap: true,
+            showBarrier: true,
+            barrierColor: Color.fromARGB(26, 47, 45, 47),
+            arrowTipDistance: 20.0,
+            popupDirection: TooltipDirection.up,
+            content: Row(
+              children: [
+                const Text(
+                  "Tap here to view your QR code",
+                  softWrap: true,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
-              );
-            },
+                10.pw,
+                GestureDetector(
+                  onTap: () {
+                    _controller.hideTooltip();
+                  },
+                  child: Icon(
+                    Icons.clear,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ),
+              ],
+            ),
+            child: FloatingActionButton(
+              backgroundColor: Colors.white,
+              tooltip: 'QR CODE',
+              shape: const CircleBorder(),
+              child: Icon(
+                Icons.qr_code,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {
+                scaleDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  backgroundColor: Colors.transparent,
+                  content: QrCodeView(
+                    qrValue: LocalProvider().getUser()?.qrId ?? '',
+                  ),
+                );
+              },
+            ),
           ),
           body: Stack(
             children: [
