@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:super_tooltip/super_tooltip.dart';
@@ -78,11 +79,14 @@ class _ParkingScreenState extends State<ParkingScreen>
             showBarrier: true,
             barrierColor: Color.fromARGB(26, 47, 45, 47),
             arrowTipDistance: 20.0,
-            popupDirection: TooltipDirection.up,
+            popupDirection: LocalProvider().isAr()
+                ? TooltipDirection.right
+                : TooltipDirection.left,
             content: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Tap here to view your QR code",
+                Text(
+                  "tooltip_text".tr,
                   softWrap: true,
                   style: TextStyle(
                     color: Colors.white,

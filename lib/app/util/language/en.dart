@@ -234,5 +234,6 @@ Map<String, String> en = {
   'add_car_note': 'Note: You can add up to 3 cars',
   'renew': 'Renew Subscription',
   'subscription_fee': 'Subscription fee',
-  'auto_renew_subscription': 'Subscription auto renew.'
+  'auto_renew_subscription': 'Subscription auto renew.',
+  'tooltip_text':'Use the QR code\nif the gate cannot read the license plates.'
 };

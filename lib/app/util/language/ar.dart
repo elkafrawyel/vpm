@@ -231,5 +231,6 @@ Map<String, String> ar = {
   'add_car_note': 'ملاحظة: يمكنك إضافة ما يصل إلى 3 سيارات',
   'renew': 'تجديد الاشتراك',
   'subscription_fee': 'قيمة الاشتراك ',
-  'auto_renew_subscription': 'تجديد تلقائي للاشتراك'
+  'auto_renew_subscription': 'تجديد تلقائي للاشتراك',
+  'tooltip_text':'استخدم رمز الاستجابة\nاذا تعذر على البوابة قراءة لوحات السيارة'
 };
