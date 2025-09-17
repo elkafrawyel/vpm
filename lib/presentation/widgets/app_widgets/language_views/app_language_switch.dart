@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:vpm/data/providers/storage/local_provider.dart';
+import 'package:vpm/presentation/controller/parking_controller.dart';
 
 import '../../../../app/util/language/language_data.dart';
 
@@ -40,6 +42,9 @@ class _AppLanguageSwitchState extends State<AppLanguageSwitch> {
             await LanguageData.changeLanguage(
               LanguageData.languageList()[index],
             );
+
+            Get.find<ParkingController>().rebuildTooltip();
+
             setState(() {
               this.index = index;
             });

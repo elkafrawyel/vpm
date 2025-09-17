@@ -59,51 +59,46 @@ class _ParkingScreenState extends State<ParkingScreen>
     }
   }
 
-  final _controller = SuperTooltipController();
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    Future.delayed(Duration(seconds: 2), () {
-      if (!_controller.isVisible) {
-        _controller.showTooltip();
-      }
-    });
+
     return GetBuilder<ParkingController>(
       builder: (_) {
         return Scaffold(
           floatingActionButton: SuperTooltip(
-            controller: _controller,
+            controller: parkingController.toolTipController,
             backgroundColor: Colors.black38,
+            barrierColor: Colors.black54,
             showOnTap: true,
             showBarrier: true,
-            barrierColor: Color.fromARGB(26, 47, 45, 47),
             arrowTipDistance: 20.0,
-            popupDirection: LocalProvider().isAr()
-                ? TooltipDirection.right
-                : TooltipDirection.left,
-            content: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "tooltip_text".tr,
-                  softWrap: true,
-                  style: TextStyle(
-                    color: Colors.white,
+            popupDirection: TooltipDirection.up,
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8, // limit width,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: AppText(
+                      "tooltip_text".tr,
+                      color: Colors.white,
+                      maxLines: 2,
+                    ),
                   ),
-                ),
-                10.pw,
-                GestureDetector(
-                  onTap: () {
-                    _controller.hideTooltip();
-                  },
-                  child: Icon(
-                    Icons.clear,
-                    color: Colors.white,
-                    size: 18,
+                  10.pw,
+                  GestureDetector(
+                    onTap: () {
+                      parkingController.toolTipController.hideTooltip();
+                    },
+                    child: Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                      size: 18,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             child: FloatingActionButton(
               backgroundColor: Colors.white,

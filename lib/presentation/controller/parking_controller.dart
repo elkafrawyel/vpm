@@ -10,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 import 'package:vpm/app/res/res.dart';
 import 'package:vpm/app/util/keys.dart';
 import 'package:vpm/app/util/operation_reply.dart';
@@ -31,6 +32,7 @@ class ParkingController extends GetxController {
   int garageImageSize = 100;
 
   int myImageSize = 150;
+  final toolTipController = SuperTooltipController();
 
   // parking =>1,Valet =>2,
   RxInt parkType = 1.obs;
@@ -58,9 +60,26 @@ class ParkingController extends GetxController {
     super.onInit();
     await getMyPosition();
     setupTimer();
+    showTooltip();
   }
 
-  setupTimer() {
+  void showTooltip() {
+    if (toolTipController.isVisible) {
+      toolTipController.hideTooltip();
+    }
+    toolTipController.showTooltip();
+  }
+
+  void rebuildTooltip() {
+    if (toolTipController.isVisible) {
+      toolTipController.hideTooltip();
+      Future.delayed(Duration(seconds: 1), () {
+        toolTipController.showTooltip();
+      });
+    }
+  }
+
+  void setupTimer() {
     timer = Timer.periodic(const Duration(seconds: 30), (timer) async {
       Utils.logMessage('<<=============Timer===============>>');
       if (LocalProvider().isLogged() &&
