@@ -201,7 +201,7 @@ class ParkingController extends GetxController {
     }
   }
 
-  _openSettingDialog() {
+  void _openSettingDialog() {
     Get.dialog(
       AppDialogView(
         title: 'location_permission'.tr,
@@ -216,7 +216,7 @@ class ParkingController extends GetxController {
     );
   }
 
-  animateToPosition(LatLng latLng, {double? zoom}) {
+  void animateToPosition(LatLng latLng, {double? zoom}) {
     if (mapController != null) {
       mapController!.animateCamera(
         CameraUpdate.newLatLngZoom(
@@ -246,7 +246,7 @@ class ParkingController extends GetxController {
       assetPath,
       garageImageSize,
     );
-    icon = markerIcon == null ? icon : BitmapDescriptor.fromBytes(markerIcon);
+    icon = markerIcon == null ? icon : BitmapDescriptor.bytes(markerIcon);
 
     LatLng latLng = LatLng(
       double.parse(element.latitude!),
@@ -289,7 +289,7 @@ class ParkingController extends GetxController {
       Res.locationPinImage,
       myImageSize,
     );
-    icon = markerIcon == null ? icon : BitmapDescriptor.fromBytes(markerIcon);
+    icon = markerIcon == null ? icon : BitmapDescriptor.bytes(markerIcon);
 
     UserModel? userModel = LocalProvider().getUser();
     if (userModel != null) {
@@ -404,7 +404,7 @@ class ParkingController extends GetxController {
     );
   }
 
-  switchMapType() {
+  void switchMapType() {
     mapType = MapType.values[(mapType.index + 1) % MapType.values.length];
     if (mapType == MapType.none) mapType = MapType.normal;
     update();

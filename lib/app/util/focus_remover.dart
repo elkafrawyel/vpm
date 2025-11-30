@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 class FocusRemover extends StatelessWidget {
   final Widget _child;
 
-  const FocusRemover({Key? key, required Widget child})
-      : _child = child,
-        super(key: key);
+  const FocusRemover({super.key, required Widget child})
+      : _child = child;
 
   @override
   Widget build(BuildContext context) {

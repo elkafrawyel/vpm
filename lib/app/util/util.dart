@@ -16,13 +16,13 @@ class Utils {
     }
   }
 
-  static hideGetXDialog() {
+  static void hideGetXDialog() {
     if (Get.isDialogOpen ?? false) {
       Get.back();
     }
   }
 
-  static showNoConnectionDialog({String? text}) {
+  static void showNoConnectionDialog({String? text}) {
     if (Get.isDialogOpen ?? false) {
       Get.back();
     }
@@ -43,7 +43,7 @@ class Utils {
     )} ${symbol ?? (Get.locale?.languageCode == 'ar' ? 'ريال' : 'SAR')}';
   }
 
-  static callPhoneNumber({required String phoneNumber}) {
+  static void callPhoneNumber({required String phoneNumber}) {
     try {
       launchUrlString("tel://$phoneNumber");
     } catch (exception) {

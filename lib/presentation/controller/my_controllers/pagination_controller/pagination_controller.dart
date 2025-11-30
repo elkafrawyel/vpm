@@ -35,7 +35,7 @@ class PaginationController<T> extends GetxController {
     update();
   }
 
-  get loadingMoreEnd => _loadingMoreEnd;
+  bool get loadingMoreEnd => _loadingMoreEnd;
 
   set loadingMoreEnd(value) {
     _loadingMoreEnd = value;
@@ -48,7 +48,7 @@ class PaginationController<T> extends GetxController {
     callApi();
   }
 
-  callApi({bool loading = true}) async {
+  Future<void> callApi({bool loading = true}) async {
     if (loading) {
       operationReply = OperationReply.loading();
     }

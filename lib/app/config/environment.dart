@@ -1,7 +1,7 @@
 class Environment {
   static const AppMode appMode = AppMode.live;
 
-  static url() {
+  static String url() {
     switch (appMode) {
       case AppMode.testing:
       case AppMode.staging:

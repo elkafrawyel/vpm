@@ -23,8 +23,8 @@ class _BookingScreenState extends State<BookingScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return PopScope(
-      onPopInvoked: (bool popped) {
-        print("Booking popped");
+      onPopInvokedWithResult: (bool popped,dynamic val) {
+       debugPrint("Booking popped $val");
       },
       child: Obx(
         () => DefaultTabController(

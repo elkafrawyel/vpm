@@ -118,7 +118,7 @@ class AppTheme {
       iconColor: Colors.black,
     ),
     bottomAppBarTheme:
-        const BottomAppBarTheme(color: LightThemeColor.bottomBarColor),
+        const BottomAppBarThemeData(color: LightThemeColor.bottomBarColor),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -235,6 +235,6 @@ class AppTheme {
       iconColor: Colors.white,
     ),
     bottomAppBarTheme:
-        const BottomAppBarTheme(color: DarkThemeColor.bottomBarColor),
+        const BottomAppBarThemeData(color: DarkThemeColor.bottomBarColor),
   );
 }

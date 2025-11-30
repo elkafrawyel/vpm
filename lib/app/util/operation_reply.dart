@@ -8,9 +8,9 @@ class OperationReply<ReturnType> {
   OperationReply(this.status,
       {this.message = "Some thing went wrong", this.result});
 
-  load() => status = OperationStatus.loading;
+  OperationStatus load() => status = OperationStatus.loading;
 
-  success() => status = OperationStatus.success;
+  OperationStatus success() => status = OperationStatus.success;
 
   bool isLoading() {
     return status == OperationStatus.loading;
@@ -29,7 +29,7 @@ class OperationReply<ReturnType> {
   }
 
   ///casts the object to another type ONLY IF it holds no data
-  as<NewType>() {
+  OperationReply<NewType> as<NewType>() {
     assert(result == null);
     return OperationReply<NewType>(
       status,

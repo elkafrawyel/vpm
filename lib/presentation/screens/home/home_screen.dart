@@ -1,10 +1,8 @@
 import 'package:fcm_config/fcm_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:vpm/presentation/controller/home_screen_controller/home_screen_controller.dart';
 import 'package:vpm/presentation/screens/home/pages/booking/booking_screen.dart';
@@ -14,7 +12,6 @@ import 'package:vpm/presentation/screens/home/pages/parking/parking_screen.dart'
 
 import '../../../app/res/res.dart';
 import '../../controller/notifications_controller.dart';
-import '../../widgets/app_widgets/app_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen>
   final HomeScreenController homeScreenController = Get.find();
 
   Future<bool> _onWillPop(BuildContext context) async {
-    print(
+    debugPrint(
         "➡️ onWillPop called, tab: ${homeScreenController.currentIndex.value}");
 
     final currentIndex = homeScreenController.currentIndex.value;
@@ -169,6 +166,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () => _onWillPop(context),
       child: Scaffold(

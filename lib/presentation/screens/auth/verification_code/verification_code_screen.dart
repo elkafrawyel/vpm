@@ -44,7 +44,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
   CountdownController countdownController =
       CountdownController(autoStart: true);
 
-  snackBar(String? message) {
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> snackBar(String? message) {
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message!),

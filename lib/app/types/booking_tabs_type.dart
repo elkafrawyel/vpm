@@ -16,10 +16,6 @@ extension BookingTabItem on BookingTabsType {
         return 'active'.tr;
       case BookingTabsType.completed:
         return 'completed'.tr;
-      // case BookingTabsType.cancelled:
-      //   return 'cancelled'.tr;
-      default:
-        return 'active'.tr;
-    }
+      }
   }
 }

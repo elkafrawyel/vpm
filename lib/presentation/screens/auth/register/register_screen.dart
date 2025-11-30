@@ -44,9 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     phoneController = TextEditingController();
     nameController = TextEditingController(text: widget.name ?? '');
     emailController = TextEditingController(text: widget.email ?? '');

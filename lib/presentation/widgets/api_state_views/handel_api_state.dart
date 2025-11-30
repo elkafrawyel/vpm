@@ -15,22 +15,22 @@ class HandleApiState extends StatelessWidget {
   final Widget? emptyView;
 
   const HandleApiState.controller({
-    Key? key,
+    super.key,
     required this.generalController,
     required this.child,
     this.operationReply,
     this.shimmerLoader,
     this.emptyView,
-  }) : super(key: key);
+  });
 
   const HandleApiState.operation({
-    Key? key,
+    super.key,
     required this.operationReply,
     required this.child,
     this.generalController,
     this.shimmerLoader,
     this.emptyView,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +54,7 @@ class HandleApiState extends StatelessWidget {
               );
         case OperationStatus.disConnected:
           return const ApiConnectionErrorView();
-        default:
-          return const SizedBox();
-      }
+        }
     } else if (operationReply != null) {
       switch (operationReply!.status) {
         case OperationStatus.init:
@@ -74,9 +72,7 @@ class HandleApiState extends StatelessWidget {
               ApiEmptyView(
                 emptyText: generalController!.operationReply.message,
               );
-        default:
-          return const SizedBox();
-      }
+        }
     } else {
       return const SizedBox();
     }

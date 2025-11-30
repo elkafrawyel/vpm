@@ -17,7 +17,7 @@ import '../../domain/entities/models/notifications_model.dart';
 class NotificationsController extends PaginationController<NotificationsModel> {
   NotificationsController(super.configData);
 
-  convertDate(String? dateString) => dateString == null
+  String convertDate(String? dateString) => dateString == null
       ? ''
       : DateFormat('EE, dd MMMM', Get.locale.toString()).format(
           DateTime.parse(dateString),
@@ -64,6 +64,8 @@ class NotificationsController extends PaginationController<NotificationsModel> {
         animationController.reverse();
         InformationViewer.showErrorToast(msg: operationReply.message);
       }
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

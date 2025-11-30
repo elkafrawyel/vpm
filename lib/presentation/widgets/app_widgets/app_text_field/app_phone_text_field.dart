@@ -151,7 +151,7 @@ class AppPhoneTextFieldState extends State<AppPhoneTextField> {
   Future shake() async {
     _focusNode.requestFocus();
     _shakerKey.currentState?.shake();
-    if ((await Vibration.hasVibrator()) ?? false) {
+    if ((await Vibration.hasVibrator())) {
       Vibration.vibrate();
     }
   }

@@ -46,7 +46,7 @@ class AppConfigController extends GetxController {
     _initialize();
   }
 
-  _initialize() async {
+  Future<void> _initialize() async {
     await _watchNetworkState();
     isLoggedIn.value = LocalProvider().isLogged();
     _applySavedTheme();

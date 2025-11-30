@@ -12,12 +12,12 @@ class PaymentScreen extends StatefulWidget {
   final String screenTitle;
 
   const PaymentScreen({
-    Key? key,
+    super.key,
     required this.paymentUrl,
     required this.onPaymentSuccess,
     required this.onPaymentFailed,
     required this.screenTitle,
-  }) : super(key: key);
+  });
 
   @override
   PaymentScreenState createState() => PaymentScreenState();

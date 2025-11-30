@@ -21,7 +21,7 @@ class AppDateSelector extends StatefulWidget {
   final bool allowFutureDates;
 
   const AppDateSelector({
-    Key? key,
+    super.key,
     required this.hint,
     required this.onChanged,
     this.validationText,
@@ -30,7 +30,7 @@ class AppDateSelector extends StatefulWidget {
     this.dateFormat = 'yyyy-MM-dd',
     this.withTime = false,
     this.allowFutureDates = false,
-  }) : super(key: key);
+  });
 
   @override
   State<AppDateSelector> createState() => AppDateSelectorState();
@@ -165,7 +165,7 @@ class AppDateSelectorState extends State<AppDateSelector> {
                 initialDateTime: selectedDate,
                 onDateTimeChanged: (DateTime picked) {
                   selectedDate = picked;
-                  String date = _formatSelectedDate(selectedDate!);
+                  // String date = _formatSelectedDate(selectedDate!);
                   widget.onChanged.call(picked);
                   // ignore: invalid_use_of_protected_member
                   formFieldState?.setValue(picked);

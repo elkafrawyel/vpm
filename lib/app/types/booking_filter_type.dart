@@ -21,9 +21,7 @@ extension TabItem on BookingFilterType {
         return 'monthly'.tr;
       case BookingFilterType.yearly:
         return 'yearly'.tr;
-      default:
-        return 'all'.tr;
-    }
+      }
   }
 
   String get value {
@@ -36,8 +34,6 @@ extension TabItem on BookingFilterType {
         return 'month';
       case BookingFilterType.yearly:
         return 'year';
-      default:
-        return 'all';
-    }
+      }
   }
 }

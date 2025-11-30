@@ -58,7 +58,7 @@ class AppTextFormField extends StatefulWidget {
   final bool alwaysShowRules;
 
   const AppTextFormField({
-    Key? key,
+    super.key,
     required this.controller,
     this.keyboardType,
     this.backgroundColor,
@@ -90,7 +90,7 @@ class AppTextFormField extends StatefulWidget {
     this.checkRules = true,
     this.required = true,
     this.alwaysShowRules = false,
-  }) : super(key: key);
+  });
 
   @override
   AppTextFormFieldState createState() => AppTextFormFieldState();
@@ -345,12 +345,12 @@ class AppTextFormFieldState extends State<AppTextFormField> {
   Future shake() async {
     _shakerKey.currentState?.shake();
     _focusNode.requestFocus();
-    if ((await Vibration.hasVibrator()) ?? false) {
+    if (await Vibration.hasVibrator()) {
       Vibration.vibrate();
     }
   }
 
-  _validateRules(String value, List<AuthFormRule> rules) {
+  void _validateRules(String value, List<AuthFormRule> rules) {
     if (!widget.required) {
       return;
     }

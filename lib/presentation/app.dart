@@ -13,7 +13,7 @@ import '../data/providers/storage/local_provider.dart';
 import 'controller/app_config_controller.dart';
 
 class App extends StatefulWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   State<App> createState() => _AppState();
@@ -67,7 +67,7 @@ class _AppState extends State<App> {
                 ..textColor = Colors.black
                 ..backgroundColor = Colors.white
                 ..indicatorColor = Theme.of(context).primaryColor
-                ..maskColor = Colors.blue.withOpacity(0.5)
+                ..maskColor = Colors.blue.withValues(alpha: 0.5)
                 ..textStyle = const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

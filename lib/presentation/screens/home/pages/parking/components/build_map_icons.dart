@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:vpm/presentation/controller/parking_controller.dart';
 
 class BuildMapIcons extends StatelessWidget {
-  BuildMapIcons({Key? key}) : super(key: key);
+  BuildMapIcons({super.key});
 
   final ParkingController parkingController = Get.find<ParkingController>();
 

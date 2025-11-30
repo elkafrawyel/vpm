@@ -15,7 +15,7 @@ class AddressView extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 18.0),
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+        color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(kRadius),
       ),
       child: Padding(

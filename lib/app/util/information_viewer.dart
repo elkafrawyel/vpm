@@ -7,7 +7,7 @@ import 'package:oktoast/oktoast.dart' as ok_toast;
 import 'operation_reply.dart';
 
 abstract class InformationViewer {
-  static showToast({
+  static void showToast({
     required String msg,
     double fontSize = 16.0,
     required Color backgroundColor,
@@ -23,7 +23,7 @@ abstract class InformationViewer {
     );
   }
 
-  static showErrorToast({
+  static void showErrorToast({
     required String msg,
     double fontSize = 16.0,
     Color textColor = Colors.white,
@@ -36,7 +36,7 @@ abstract class InformationViewer {
     );
   }
 
-  static showToastBasedOnReply(OperationReply reply) {
+  static void showToastBasedOnReply(OperationReply reply) {
     if (reply.isSuccess()) {
       showSuccessToast(msg: reply.message);
     } else if (reply.status == OperationStatus.failed) {
@@ -46,7 +46,7 @@ abstract class InformationViewer {
     }
   }
 
-  static showSuccessToast({
+  static void showSuccessToast({
     required String msg,
     double fontSize = 16.0,
     Color textColor = Colors.white,
@@ -59,7 +59,7 @@ abstract class InformationViewer {
     );
   }
 
-  static showSnackBar(
+  static void showSnackBar(
     String? message, {
     bool popPage = false,
     int duration = 5,

@@ -11,7 +11,6 @@ class QrCodeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(qrValue);
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
