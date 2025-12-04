@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace "com.vpmsystems.parking.vpm"
     compileSdkVersion 36
-    ndkVersion = "29.0.14033849"
+    ndkVersion = "29.0.13599879"
 
 
     compileOptions {
